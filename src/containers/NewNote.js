@@ -19,7 +19,9 @@ export default class NewNote extends Component {
   }
 
   validateForm() {
-    return this.state.content.length > 0;
+    //return this.state.content.length > 0;
+    // populate with logic for checking if a file is chosen
+    return true;
   }
 
   handleChange = event => {
