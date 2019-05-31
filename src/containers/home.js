@@ -1,15 +1,90 @@
-import React from "react";
-import './Home.css'
+import React, { Component } from "react";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import LoaderButton from "../components/LoaderButton";
+import config from "../config";
+import "./Home.css";
+import { s3Upload } from "../libs/awsLib";
 
-let Home = () => {
-  return(
-  <div className="Home">
-  <div className="lander">
-    <h1>Scratch</h1>
-    <p>A simple note taking app</p>
-  </div>
-</div>
-);
+
+
+export default class NewNote extends Component {
+  constructor(props) {
+    super(props);
+
+    this.file = null;
+
+    this.state = {
+      isLoading: null,
+      content: ""
+    };
+  }
+
+  validateForm() {
+    //return this.state.content.length > 0;
+    // populate with logic for checking if a file is chosen
+    return true;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  dropped = file => {
+    this.file = file;
+  }
+
+  handleFileChange = event => {
+    this.file = event.target.files[0];
+  }
+
+  handleSubmit = async event => {
+    event.preventDefault();
+  
+    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+      alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
+      return;
+    }
+  
+    this.setState({ isLoading: true });
+  
+    try {
+      const attachment = this.file
+        ? await s3Upload(this.file)
+        : null;
+        this.setState({isLoading: false})
+        
+      //this.props.history.push("/");
+    } catch (e) {
+      alert(e);
+      this.setState({ isLoading: false });
+    }
+    
+  }
+  
+
+
+
+  render() {
+    return (
+      <div className="NewNote">
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="file">
+            <ControlLabel>Attachment</ControlLabel>
+            <FormControl className = "big" onChange={this.handleFileChange} type="file" />
+          </FormGroup>
+          <LoaderButton
+            bsStyle="primary"
+            bsSize="large"
+            disabled={!this.validateForm()}
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="Submit"
+            loadingText="Submitting…"
+          />
+        </form>
+      </div>
+    );
+  }
 }
-
-export default Home
