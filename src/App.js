@@ -54,10 +54,10 @@ class App extends React.Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <Navbar fluid collapseOnSelect>
+        <Navbar className = "nbar" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Scratch</Link>
+              <Link style = {{color: "white"}} to="/">simplelogs</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -77,7 +77,10 @@ class App extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        <div  className = "everything-else" >
         <Routes childProps={childProps} />
+        </div>
+        
       </div>
     );
   }  

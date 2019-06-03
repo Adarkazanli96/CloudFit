@@ -15,7 +15,8 @@ export default class NewNote extends Component {
 
     this.state = {
       isLoading: null,
-      content: ""
+      content: "",
+      file: null
     };
   }
 
@@ -31,13 +32,13 @@ export default class NewNote extends Component {
     });
   }
 
-  dropped = file => {
-    this.file = file;
-  }
 
   handleFileChange = event => {
     this.file = event.target.files[0];
+    this.setState({file: event.target.files[0]})
   }
+
+
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -51,30 +52,42 @@ export default class NewNote extends Component {
   
     try {
       const attachment = this.file
-        ? await s3Upload(this.file)
+        ? await s3Upload(this.state.file)
         : null;
         this.setState({isLoading: false})
         
       //this.props.history.push("/");
     } catch (e) {
       alert(e);
+      console.log("there was an error")
       this.setState({ isLoading: false });
     }
+
+    document.getElementById('drop-form').reset();
+    this.file = null;
+    this.setState({file : null})
     
-  }
+}
+  
+
   
 
 
-
   render() {
+
     return (
-      <div className="NewNote">
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="file">
-            <ControlLabel>Attachment</ControlLabel>
-            <FormControl className = "big" onChange={this.handleFileChange} type="file" />
-          </FormGroup>
-          <LoaderButton
+      
+      <div>
+        
+        <form onSubmit={this.handleSubmit} className = "upload-form" id = "drop-form">
+        <div className="file-drop-area">
+          <span className="fake-btn" >Choose file</span>
+          <span className="file-msg">{this.state.file === null || typeof(this.state.file) === "undefined"? "or drag and drop files here" : this.state.file.name}</span>
+          <input className="file-input" type="file" onChange={this.handleFileChange}/>
+        </div>
+
+        <LoaderButton
+      style = {{marginTop: "7px"}}
             bsStyle="primary"
             bsSize="large"
             disabled={!this.validateForm()}
@@ -84,6 +97,7 @@ export default class NewNote extends Component {
             loadingText="Submitting…"
           />
         </form>
+        
       </div>
     );
   }
