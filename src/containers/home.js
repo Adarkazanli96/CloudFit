@@ -4,6 +4,7 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Home.css";
 import { s3Upload } from "../libs/awsLib";
+import Popup from '../components/Popup'
 
 
 
@@ -15,15 +16,17 @@ export default class NewNote extends Component {
 
     this.state = {
       isLoading: null,
-      content: "",
-      file: null
+      file: null,
+      showPopup: false,
+      error: false
     };
   }
 
   validateForm() {
-    //return this.state.content.length > 0;
-    // populate with logic for checking if a file is chosen
-    return true;
+    if(this.state.file !== null && typeof(this.state.file) !== "undefined"){
+      return true;
+    }
+    return false;
   }
 
   handleChange = event => {
@@ -34,8 +37,8 @@ export default class NewNote extends Component {
 
 
   handleFileChange = event => {
-    this.file = event.target.files[0];
-    this.setState({file: event.target.files[0]})
+      this.file = event.target.files[0];
+      this.setState({file: event.target.files[0]})
   }
 
 
@@ -54,18 +57,23 @@ export default class NewNote extends Component {
       const attachment = this.file
         ? await s3Upload(this.state.file)
         : null;
-        this.setState({isLoading: false})
+        this.setState({isLoading: false, error: false})
         
       //this.props.history.push("/");
     } catch (e) {
       alert(e);
       console.log("there was an error")
-      this.setState({ isLoading: false });
+      this.setState({ isLoading: false, error: true});
     }
 
     document.getElementById('drop-form').reset();
+    this.setState({showPopup: true, file: null})
     this.file = null;
-    this.setState({file : null})
+
+    // add a timer to popup
+    setTimeout(function(){
+      this.setState({showPopup:false});
+      }.bind(this),5000);
     
 }
   
@@ -75,12 +83,28 @@ export default class NewNote extends Component {
 
   render() {
 
+    let popup;
+      
+      if(!this.state.error){
+        popup = <Popup
+          content = {"File upload successful"}
+          color = {"green"}
+          />
+      }
+      else{
+        popup = <Popup
+                    content = {"There was an error in uploading the file"}
+                    color = {"red"}
+                    />
+      }
+
     return (
       
-      <div>
+      <div className = "upload-form">
+        <form onSubmit={this.handleSubmit} id = "drop-form">
         
-        <form onSubmit={this.handleSubmit} className = "upload-form" id = "drop-form">
         <div className="file-drop-area">
+        {this.state.showPopup ? popup : null}
           <span className="fake-btn" >Choose file</span>
           <span className="file-msg">{this.state.file === null || typeof(this.state.file) === "undefined"? "or drag and drop files here" : this.state.file.name}</span>
           <input className="file-input" type="file" onChange={this.handleFileChange}/>
