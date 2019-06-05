@@ -5,6 +5,7 @@ import config from "../config";
 import "./Home.css";
 import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
+import { Auth } from 'aws-amplify';
 
 
 
@@ -27,6 +28,15 @@ export default class NewNote extends Component {
       return true;
     }
     return false;
+  }
+
+  getSheetAttributes = async (event) =>{
+    //console.log(JSON.stringify(this.state.file)); // see what the contents of the file looks like
+  
+    
+
+    let userInfo = await Auth.currentUserInfo();
+    console.log("this is the user id" + JSON.stringify(userInfo));
   }
 
   handleChange = event => {
@@ -57,6 +67,8 @@ export default class NewNote extends Component {
       const attachment = this.file
         ? await s3Upload(this.state.file)
         : null;
+
+        this.getSheetAttributes(this.state.file);
         this.setState({isLoading: false, error: false})
         
       //this.props.history.push("/");
@@ -73,7 +85,7 @@ export default class NewNote extends Component {
     // add a timer to popup
     setTimeout(function(){
       this.setState({showPopup:false});
-      }.bind(this),5000);
+      }.bind(this),2500);
     
 }
   
