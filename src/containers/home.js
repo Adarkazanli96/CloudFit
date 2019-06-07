@@ -5,7 +5,7 @@ import config from "../config";
 import "./Home.css";
 import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
 
 
@@ -20,7 +20,9 @@ export default class NewNote extends Component {
       isLoading: null,
       file: null,
       showPopup: false,
-      error: false
+      error: false,
+      sheets : null,
+      sheetsLoading: true
     };
   }
 
@@ -29,13 +31,6 @@ export default class NewNote extends Component {
       return true;
     }
     return false;
-  }
-
-  getSheetAttributes = async (event) =>{
-    console.log(this.state.file); // see what the contents of the file looks like
-  
-    let userInfo = await Auth.currentUserInfo();
-    console.log("this is the user id" + JSON.stringify(userInfo));
   }
 
   handleChange = event => {
@@ -48,6 +43,29 @@ export default class NewNote extends Component {
   handleFileChange = event => {
       this.file = event.target.files[0];
       this.setState({file: event.target.files[0]})
+  }
+
+  async componentDidMount(){
+    this.getSheets()
+  }
+
+  getSheets = async () =>{
+    
+      //this.setState({ sheetsLoading: true });
+    
+    try {
+      let sheets;
+
+      await API.get('sheets', '/').then(response => {
+        console.log("this is the response from the api: " + response)
+        sheets = response
+    })
+      this.setState({ sheets });
+    } catch (e) {
+      alert(e);
+    }
+  
+    this.setState({ sheetsLoading: false });
   }
 
 
@@ -67,8 +85,8 @@ export default class NewNote extends Component {
         ? await s3Upload(this.state.file)
         : null;
 
-        this.getSheetAttributes(this.state.file);
-        this.setState({isLoading: false, error: false})
+        this.setState({isLoading: false, error: false, sheetsLoading: true})
+        //this.getSheets();
         
       //this.props.history.push("/");
     } catch (e) {
@@ -85,6 +103,10 @@ export default class NewNote extends Component {
     setTimeout(function(){
       this.setState({showPopup:false});
       }.bind(this),2500);
+    
+      setTimeout(function(){
+        this.getSheets();
+        }.bind(this),3500);
     
 }
   
@@ -109,6 +131,8 @@ export default class NewNote extends Component {
                     />
       }
 
+      console.log("state of the sheets in render " + this.state.sheets)
+
     return (
       
       <div className = "upload-form">
@@ -132,7 +156,7 @@ export default class NewNote extends Component {
             loadingText="Submitting…"
           />
         </form>
-        <Sheets isAuthenticated = {this.props.isAuthenticated} />
+        {this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />}
         
       </div>
     );

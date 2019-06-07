@@ -1,5 +1,6 @@
 import React from "react";
 import { Auth, API } from 'aws-amplify'
+import Sheet from '../components/Sheet'
 
 export default class Sheets extends React.Component{
     constructor(props) {
@@ -11,7 +12,7 @@ export default class Sheets extends React.Component{
           };
     }
 
-    async componentDidMount(){
+    /*async componentDidMount(){
         if (!this.props.isAuthenticated) {
             return;
           }
@@ -41,10 +42,21 @@ export default class Sheets extends React.Component{
         return API.get('sheets', '/').then(response => {
           console.log(response)
       })
-    }
+    }*/
 
     render(){
-        console.log(JSON.stringify(this.state.notes))
-        return(<div>this is all the sheets</div>);
+        //console.log(JSON.stringify(this.state.notes))
+        console.log("this is the sheet property passed down", this.props.sheets)
+        let sheets = "There are no sheets uploaded"
+        if(this.props.sheets != null){
+          sheets = this.props.sheets.map((sheet, index) =>{
+            return <Sheet
+                    data = {sheet}
+                    key = {index}
+                    id = {index}
+                    />
+            })
+        }
+        return(<div>{sheets}</div>);
     }
 }
