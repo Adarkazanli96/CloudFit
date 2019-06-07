@@ -57,7 +57,6 @@ export default class NewNote extends Component {
       let sheets;
 
       await API.get('sheets', '/').then(response => {
-        console.log("this is the response from the api: " + response)
         sheets = response
     })
       this.setState({ sheets });
@@ -130,8 +129,6 @@ export default class NewNote extends Component {
                     color = {"red"}
                     />
       }
-
-      console.log("state of the sheets in render " + this.state.sheets)
 
     return (
       

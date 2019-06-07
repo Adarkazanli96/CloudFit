@@ -1,3 +1,35 @@
 .sheet{
+    margin: 20px;
     padding: 20px;
+    background-color: #333639;
+    width: 600px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -300px;
+    text-align: left;
+}
+
+.date{
+    margin-right: 20px;
+    font-weight: bold;
+}
+.time{
+    font-weight: bold;
+}
+
+.left-block{
+    float: left
+}
+
+.right-block{
+    float: right
+}
+
+.graph{
+    height: 120px;
+    width: 300px;
+    background-color: white;
+    color: black;
+    text-align: center;
 }
