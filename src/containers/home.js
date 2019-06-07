@@ -6,6 +6,7 @@ import "./Home.css";
 import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth } from 'aws-amplify';
+import Sheets from './Sheets'
 
 
 
@@ -31,10 +32,8 @@ export default class NewNote extends Component {
   }
 
   getSheetAttributes = async (event) =>{
-    //console.log(JSON.stringify(this.state.file)); // see what the contents of the file looks like
+    console.log(this.state.file); // see what the contents of the file looks like
   
-    
-
     let userInfo = await Auth.currentUserInfo();
     console.log("this is the user id" + JSON.stringify(userInfo));
   }
@@ -133,6 +132,7 @@ export default class NewNote extends Component {
             loadingText="Submitting…"
           />
         </form>
+        <Sheets isAuthenticated = {this.props.isAuthenticated} />
         
       </div>
     );
