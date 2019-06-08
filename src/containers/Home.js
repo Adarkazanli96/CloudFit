@@ -14,10 +14,8 @@ export default class NewNote extends Component {
   constructor(props) {
     super(props);
 
-    this.file = null;
-
     this.state = {
-      isLoading: null,
+      isSubmitting: null,
       file: null,
       showPopup: false,
       error: false,
@@ -41,11 +39,13 @@ export default class NewNote extends Component {
 
 
   handleFileChange = event => {
-      this.file = event.target.files[0];
       this.setState({file: event.target.files[0]})
   }
 
   async componentDidMount(){
+    if (!this.props.isAuthenticated) {
+      return;
+    }
     this.getSheets()
   }
 
@@ -72,21 +72,20 @@ export default class NewNote extends Component {
   handleSubmit = async event => {
     event.preventDefault();
   
-    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+    if (this.state.file && this.state.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
       return;
     }
   
-    this.setState({ isLoading: true });
+    this.setState({ isSubmitting: true });
   
     try {
       let name;
       let userId;
 
-      const attachment = this.file
+      const attachment = this.state.file
         ? await s3Upload(this.state.file).then(response => {
           name = response
-          console.log(response)
         })
         : null;
 
@@ -94,7 +93,6 @@ export default class NewNote extends Component {
         await Auth.currentUserCredentials().then(
           res => {
             userId = res.data.IdentityId
-            console.log(res.data.IdentityId)
           }
         )
 
@@ -107,35 +105,73 @@ export default class NewNote extends Component {
       }
       await API.post('postSheet', '/', params).then(response => {
         console.log(response.body);
-        this.setState({ sheets: [...this.state.sheets, response.body] })
+        if(this.state.sheets === null){ // sheets are empty
+          this.setState({sheets : [response.body]})
+        }
+        else{ // sheets array not empty
+          this.setState({ sheets: [...this.state.sheets, response.body] })
+        }
+        
       })
 
-      this.setState({isLoading: false, error: false})
+      this.setState({isSubmitting: false, error: false})
 
-        //this.getSheets();
-        
-      //this.props.history.push("/");
+
     } catch (e) {
       alert(e);
       console.log("there was an error")
-      this.setState({ isLoading: false, error: true});
+      this.setState({ isSubmitting: false, error: true});
     }
 
 
     document.getElementById('drop-form').reset();
     this.setState({showPopup: true, file: null})
-    this.file = null;
 
-    // add a timer to popup
+    // add a timer for the popup
     setTimeout(function(){
       this.setState({showPopup:false});
       }.bind(this),2500);
     
-}
+    }
   
 
+    renderLander(){
+      return (
+        <div className="lander">
+          <h1>CloudFit</h1>
+          <p>A simple fitness logger app</p>
+        </div>
+      );
+    }
   
+    renderSheets(popup) {
+      return (
+        <div className = "upload-form">
+        <form onSubmit={this.handleSubmit} id = "drop-form">
+        
+        <div className="file-drop-area">
+        {this.state.showPopup ? popup : null}
+          <span className="fake-btn" >Choose file</span>
+          <span className="file-msg">{this.state.file === null || typeof(this.state.file) === "undefined"? "or drag and drop files here" : this.state.file.name}</span>
+          <input className="file-input" type="file" onChange={this.handleFileChange}/>
+        </div>
 
+        <LoaderButton
+      style = {{marginTop: "7px"}}
+            bsStyle="primary"
+            bsSize="large"
+            disabled={!this.validateForm()}
+            type="submit"
+            isLoading={this.state.isSubmitting}
+            text="Submit"
+            loadingText="Submitting…"
+          />
+        </form>
+        {this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />}
+        
+      </div>
+      );
+    }
 
   render() {
 
@@ -155,31 +191,9 @@ export default class NewNote extends Component {
       }
 
     return (
-      
-      <div className = "upload-form">
-        <form onSubmit={this.handleSubmit} id = "drop-form">
-        
-        <div className="file-drop-area">
-        {this.state.showPopup ? popup : null}
-          <span className="fake-btn" >Choose file</span>
-          <span className="file-msg">{this.state.file === null || typeof(this.state.file) === "undefined"? "or drag and drop files here" : this.state.file.name}</span>
-          <input className="file-input" type="file" onChange={this.handleFileChange}/>
+        <div className = "Home">
+          {this.props.isAuthenticated ? this.renderSheets(popup) : this.renderLander()}
         </div>
-
-        <LoaderButton
-      style = {{marginTop: "7px"}}
-            bsStyle="primary"
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-            isLoading={this.state.isLoading}
-            text="Submit"
-            loadingText="Submitting…"
-          />
-        </form>
-        {this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />}
-        
-      </div>
     );
   }
 }

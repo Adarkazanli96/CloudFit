@@ -57,7 +57,7 @@ class App extends React.Component {
         <Navbar className = "nbar" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link style = {{color: "white"}} to="/">simplelogs</Link>
+              <Link style = {{color: "white"}} to="/">CloudFit</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
