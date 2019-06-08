@@ -21,7 +21,7 @@ export default class NewNote extends Component {
       file: null,
       showPopup: false,
       error: false,
-      sheets : null,
+      sheets : [],
       sheetsLoading: true
     };
   }
