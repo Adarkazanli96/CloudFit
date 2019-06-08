@@ -56,7 +56,7 @@ export default class NewNote extends Component {
     try {
       let sheets;
 
-      await API.get('sheets', '/').then(response => {
+      await API.get('getSheets', '/').then(response => {
         sheets = response
     })
       this.setState({ sheets });
@@ -80,11 +80,38 @@ export default class NewNote extends Component {
     this.setState({ isLoading: true });
   
     try {
+      let name;
+      let userId;
+
       const attachment = this.file
-        ? await s3Upload(this.state.file)
+        ? await s3Upload(this.state.file).then(response => {
+          name = response
+          console.log(response)
+        })
         : null;
 
+        
+
         this.setState({isLoading: false, error: false, sheetsLoading: true})
+
+        await Auth.currentUserCredentials().then(
+          res => {
+            userId = res.data.IdentityId
+            console.log(res.data.IdentityId)
+          }
+        )
+
+      const params = {
+        body: {
+          name,
+          bucket: "excel-sheets-storage",
+          userId
+        }
+      }
+      await API.post('postSheet', '/', params).then(response => {
+        console.log(response);
+      })
+
         //this.getSheets();
         
       //this.props.history.push("/");
@@ -92,6 +119,19 @@ export default class NewNote extends Component {
       alert(e);
       console.log("there was an error")
       this.setState({ isLoading: false, error: true});
+    }
+
+      
+      //console.log(binary);
+
+
+      
+
+    try {
+      
+
+    } catch (e) {
+      alert(e);
     }
 
     document.getElementById('drop-form').reset();

@@ -2,7 +2,7 @@ import React from 'react'
 import "./Sheet.css"
 
 let sheet = props =>{
-    console.log(props.data.body);
+    //console.log(props.data.body);
         return(
                 <div className = "sheet">
                     <span className = "left-block">

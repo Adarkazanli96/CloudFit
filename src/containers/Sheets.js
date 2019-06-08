@@ -46,7 +46,7 @@ export default class Sheets extends React.Component{
 
     render(){
         //console.log(JSON.stringify(this.state.notes))
-        console.log(this.props.sheets)
+        //console.log(this.props.sheets)
         let sheets = "There are no sheets uploaded"
         if(this.props.sheets != null){
           sheets = this.props.sheets.map((sheet, index) =>{

@@ -23,10 +23,15 @@ Amplify.configure({
     API: {
       endpoints: [
         {
-          name: 'sheets',
+          name: 'getSheets',
           endpoint: config.apiGateway.URL,
           region: config.apiGateway.REGION
         },
+        {
+          name: 'postSheet',
+          endpoint: 'https://ml7j1zkvo2.execute-api.us-east-1.amazonaws.com/test',
+          region: config.apiGateway.REGION
+        }
       ]
     }
   });
