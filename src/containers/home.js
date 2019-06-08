@@ -90,10 +90,7 @@ export default class NewNote extends Component {
         })
         : null;
 
-        
-
-        this.setState({isLoading: false, error: false, sheetsLoading: true})
-
+    
         await Auth.currentUserCredentials().then(
           res => {
             userId = res.data.IdentityId
@@ -109,8 +106,11 @@ export default class NewNote extends Component {
         }
       }
       await API.post('postSheet', '/', params).then(response => {
-        console.log(response);
+        console.log(response.body);
+        this.setState({ sheets: [...this.state.sheets, response.body] })
       })
+
+      this.setState({isLoading: false, error: false})
 
         //this.getSheets();
         
@@ -121,18 +121,6 @@ export default class NewNote extends Component {
       this.setState({ isLoading: false, error: true});
     }
 
-      
-      //console.log(binary);
-
-
-      
-
-    try {
-      
-
-    } catch (e) {
-      alert(e);
-    }
 
     document.getElementById('drop-form').reset();
     this.setState({showPopup: true, file: null})
@@ -142,10 +130,6 @@ export default class NewNote extends Component {
     setTimeout(function(){
       this.setState({showPopup:false});
       }.bind(this),2500);
-    
-      setTimeout(function(){
-        this.getSheets();
-        }.bind(this),3500);
     
 }
   
