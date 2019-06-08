@@ -3,8 +3,9 @@
     padding: 20px;
     background-color: #333639;
     width: 600px;
+    height: 160px;
     border-radius: 10px;
-    position: absolute;
+    position: relative;
     left: 50%;
     margin-left: -300px;
     text-align: left;
