@@ -25,6 +25,20 @@ body{
   
 }
 
+.homelink{
+  width: 250px;
+    float: left;
+}
+
+.homelink img {
+  height: 40px;
+  width: 40px;
+    float: left;
+  position: relative;
+  left: 6px;
+    bottom: 15px;
+}
+
 
 .everything-else{
   position: relative;

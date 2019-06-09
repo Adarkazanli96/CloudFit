@@ -5,6 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Nav, NavItem, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
+import Icon from './assets/images/logo.png'
 
 
 class App extends React.Component {
@@ -57,7 +58,7 @@ class App extends React.Component {
         <Navbar className = "nbar" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link style = {{color: "white"}} to="/">CloudFit</Link>
+              <Link className = "homelink" style = {{color: "white"}} to="/"><span style = {{display: "inline", float: "left"}}>CloudFit</span><img src = {Icon}/></Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

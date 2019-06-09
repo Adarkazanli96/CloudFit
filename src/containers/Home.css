@@ -78,6 +78,13 @@
     color: #999;
   }
 
+  .lander img{
+    height: 100px;
+    position: relative;
+    left: 20px;
+    bottom: 20px;
+  }
+
 
   .loader,
   .loader:before,

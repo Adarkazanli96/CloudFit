@@ -7,6 +7,9 @@ import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
+import logo from '../assets/images/logo.png'
+import Signup from '../containers/Signup'
+//import { ReactComponent as Logo } from '../assets/images/logo.png'
 
 
 
@@ -138,8 +141,10 @@ export default class NewNote extends Component {
     renderLander(){
       return (
         <div className="lander">
-          <h1>CloudFit</h1>
+          <h1 style = {{display: "inline"}}>CloudFit</h1>
+          <img src = {logo}/>
           <p>A simple fitness logger app</p>
+          <Signup/>
         </div>
       );
     }
