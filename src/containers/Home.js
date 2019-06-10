@@ -8,6 +8,11 @@ import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
 import logo from '../assets/images/logo.png'
+import image1 from '../assets/images/1.jpg'
+import image2 from '../assets/images/2.jpeg'
+import image3 from '../assets/images/3.jpg'
+import image4 from '../assets/images/4.jpg'
+import image5 from '../assets/images/5.jpg'
 import Signup from '../containers/Signup'
 //import { ReactComponent as Logo } from '../assets/images/logo.png'
 
@@ -141,10 +146,19 @@ export default class NewNote extends Component {
     renderLander(){
       return (
         <div className="lander">
-          <h1 style = {{display: "inline"}}>CloudFit</h1>
-          <img src = {logo}/>
-          <p>A simple fitness logger app</p>
-          <Signup/>
+          <div className = "welcome"><h1 style = {{display: "inline"}}>Welcome to CloudFit</h1>
+          <p>A simple way to track workouts</p></div>
+          <div id= "crossfade" class="shadow">
+            <img src={image1} />
+            <img src={image2} />
+            <img src={image3} />
+            <img src={image4} />
+            <img src={image5} />
+          </div>
+            
+          <div  className = "sp"><Signup/></div>
+          
+          
         </div>
       );
     }

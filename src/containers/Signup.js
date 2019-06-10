@@ -108,10 +108,10 @@ export default class Signup extends Component {
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
-                <h2>Signup</h2>
+                <h2>Create an account</h2>
         <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
           <FormControl
+          placeholder="Email"
             autoFocus
             type="email"
             value={this.state.email}
@@ -119,19 +119,19 @@ export default class Signup extends Component {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
           <FormControl
             value={this.state.password}
             onChange={this.handleChange}
+            placeholder = "Password"
             type="password"
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             value={this.state.confirmPassword}
             onChange={this.handleChange}
             type="password"
+            placeholder = "Confirm Password"
           />
         </FormGroup>
         <LoaderButton
@@ -140,7 +140,7 @@ export default class Signup extends Component {
           disabled={!this.validateForm()}
           type="submit"
           isLoading={this.state.isLoading}
-          text="Signup"
+          text="Get started"
           loadingText="Signing up…"
         />
       </form>

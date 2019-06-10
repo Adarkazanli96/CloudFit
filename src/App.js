@@ -58,9 +58,9 @@ class App extends React.Component {
         <Navbar className = "nbar" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link className = "homelink" style = {{color: "white"}} to="/"><span style = {{display: "inline", float: "left"}}>CloudFit</span><img src = {Icon}/></Link>
+              <Link className = "homelink" style = {{color: "white"}} to="/"><span style = {{display: "inline", float: "left", fontSize: "20pt"}}>CloudFit</span><img src = {Icon}/></Link>
             </Navbar.Brand>
-            <Navbar.Toggle />
+            <Navbar.Toggle style = {{top: "10px"}}/>
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
