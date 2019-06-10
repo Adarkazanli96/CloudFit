@@ -55,7 +55,7 @@ class App extends React.Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <Navbar className = "nbar" fluid collapseOnSelect>
+        <Navbar className = "nbar" id = "the-nav" fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
               <Link className = "homelink" style = {{color: "white"}} to="/"><span style = {{display: "inline", float: "left", fontSize: "20pt"}}>CloudFit</span><img src = {Icon}/></Link>

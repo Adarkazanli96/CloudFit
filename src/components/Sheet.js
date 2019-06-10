@@ -1,22 +1,42 @@
 import React from 'react'
 import "./Sheet.css"
+import Collapsible from 'react-collapsible';
 
-let sheet = props =>{
-    //console.log(props.data.body);
-        return(
+
+class sheet extends React.Component {
+        constructor(props){
+        super(props);
+        this.state = {
+                open: false
+                }
+        }
+
+
+togglePanel = (e) => {
+        this.setState({open: !this.state.open})
+}
+                
+render() {
+        let collapsibleTitle = <div className = "collapsible">{this.props.data.body.workoutDate}{this.props.data.body.workoutTime}</div>
+
+    return(
+
+                <div className = "wrap">
+                <div onClick={(e)=>this.togglePanel(e)} className='header'>{this.props.data.body.workoutDate}{this.props.data.body.workoutTime}</div>
+
+                {this.state.open ?
                 <div className = "sheet">
                     <span className = "left-block">
-                    <span className = "date">Date: {props.data.body.workoutDate}</span>
-                    <span className = "time">Time: {props.data.body.workoutTime}
-                    </span>
+
+
                     <br/>
-                    Duration: {props.data.body.duration}
+                    Duration: {this.props.data.body.duration}
                     <br/>
-                    Maximum Heart Rate: {props.data.body.maximumHeartRate}
+                    Maximum Heart Rate: {this.props.data.body.maximumHeartRate}
                     <br/>
-                    Mean Heart Rate: {props.data.body.meanHeartRate}
+                    Mean Heart Rate: {this.props.data.body.meanHeartRate}
                     <br/>
-                    Notes: {props.data.body.notes}
+                    Notes: {this.props.data.body.notes}
                 
                         </span>
 
@@ -24,10 +44,10 @@ let sheet = props =>{
                             <div className = "graph">Data</div>
                         </span>
 
-                </div>
-        
+                </div> : null}
+        </div>
         );
-    
+    }
 }
 
 export default sheet;

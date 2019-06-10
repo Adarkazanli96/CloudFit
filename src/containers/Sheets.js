@@ -57,6 +57,6 @@ export default class Sheets extends React.Component{
                     />
             })
         }
-        return(<div>{sheets}</div>);
+        return(<div style = {{padding: "20px", paddingBottom: "40px"}}>{sheets}</div>);
     }
 }

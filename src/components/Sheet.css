@@ -1,14 +1,14 @@
 .sheet{
-    margin: 20px;
     padding: 20px;
     background-color: #333639;
     width: 600px;
     height: 160px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     position: relative;
     left: 50%;
     margin-left: -300px;
     text-align: left;
+
 }
 
 .date{
@@ -34,3 +34,34 @@
     color: black;
     text-align: center;
 }
+
+.collapsible{
+    color: grey;
+    margin: 0 auto;
+    width: 600px;
+    background-color: #333639;
+}
+
+.header{
+    cursor: pointer;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    position: relative;
+
+left: 50%;
+    margin-left: -300px;
+    width:600px;
+
+    font-family: verdana;
+    
+
+   }
+
+   .wrap{
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+    border: solid 1px white;
+    width: 650px;
+    border-radius: 10px;
+
+   }

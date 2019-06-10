@@ -21,6 +21,9 @@ body{
   background-color: black;
   height: 70px;
   background-color: rgba(33, 36, 39, 0);
+  position: fixed;
+  z-index:4;
+  transition: background-color 500ms ease;
   
 }
 

@@ -14,8 +14,6 @@ import image3 from '../assets/images/3.jpg'
 import image4 from '../assets/images/4.jpg'
 import image5 from '../assets/images/5.jpg'
 import Signup from '../containers/Signup'
-//import { ReactComponent as Logo } from '../assets/images/logo.png'
-
 
 
 export default class NewNote extends Component {
@@ -50,11 +48,33 @@ export default class NewNote extends Component {
       this.setState({file: event.target.files[0]})
   }
 
+  handleScroll = event =>{
+    //alert("sup");
+  }
+
   async componentDidMount(){
+    window.addEventListener("scroll", function() {
+      var elementTarget = document.getElementById("the-nav");
+      if (window.scrollY > 70 && window.scrollY < 100) {
+        document.getElementById('the-nav').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+      }
+      if (window.scrollY > 100) {
+        document.getElementById('the-nav').style.backgroundColor = 'rgba(0, 0, 0, 1)'
+      }
+      if (window.scrollY < 70) {
+        document.getElementById('the-nav').style.backgroundColor = "transparent";
+      }
+    });
+
     if (!this.props.isAuthenticated) {
       return;
     }
     this.getSheets()
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll);
+
   }
 
   getSheets = async () =>{
@@ -186,6 +206,7 @@ export default class NewNote extends Component {
             loadingText="Submitting…"
           />
         </form>
+
         {this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />}
         
       </div>
