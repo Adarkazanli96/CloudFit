@@ -94,14 +94,21 @@
 
   }
 
-  @media (min-width: 480px){
+  @media (max-width: 480px){
     .sp{
       width: default;
       position: default;
+      background-color: transparent;
+    box-shadow: none;
+    border: none;
+    }
+
+    .welcome{
+      display: none;
     }
 
     .Home .lander{
-      padding: 0;
+      padding: 20px;
     }
   }
 
