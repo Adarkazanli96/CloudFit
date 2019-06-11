@@ -183,9 +183,7 @@ export default class NewNote extends Component {
           </div></Col>
         <Col md = {7} sm = {7}><div  className = "sp"><Signup/></div></Col>
         </Row>
-        
-          <div style = {{width: "50px", height: "50px", backgroundColor: "black"}}></div>
-        </div>
+                </div>
       );
     }
   
