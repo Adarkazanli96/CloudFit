@@ -38,9 +38,9 @@ class App extends React.Component {
       this.userHasAuthenticated(true);
     }
     catch(e) {
-      if (e !== 'No current user') {
-        alert(e);
-      }
+      //if (e !== 'No current user') {
+        //alert(e);
+      //}
     }
   
     this.setState({ isAuthenticating: false });
