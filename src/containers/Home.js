@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, Media, Row, Col} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Home.css";
@@ -9,10 +9,10 @@ import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
 import logo from '../assets/images/logo.png'
 import image1 from '../assets/images/1.jpg'
-import image2 from '../assets/images/2.jpeg'
+import image2 from '../assets/images/2.jpg'
 import image3 from '../assets/images/3.jpg'
 import image4 from '../assets/images/4.jpg'
-import image5 from '../assets/images/5.jpg'
+import image5 from '../assets/images/5.jpeg'
 import Signup from '../containers/Signup'
 
 
@@ -55,13 +55,10 @@ export default class NewNote extends Component {
   async componentDidMount(){
     window.addEventListener("scroll", function() {
       var elementTarget = document.getElementById("the-nav");
-      if (window.scrollY > 70 && window.scrollY < 100) {
-        document.getElementById('the-nav').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+      if (window.scrollY > 30) {
+        document.getElementById('the-nav').style.backgroundColor = '#1B4F72'
       }
-      if (window.scrollY > 100) {
-        document.getElementById('the-nav').style.backgroundColor = 'rgba(0, 0, 0, 1)'
-      }
-      if (window.scrollY < 70) {
+      else{
         document.getElementById('the-nav').style.backgroundColor = "transparent";
       }
     });
@@ -166,26 +163,35 @@ export default class NewNote extends Component {
     renderLander(){
       return (
         <div className="lander">
-          <div className = "welcome"><h1 style = {{display: "inline"}}>Welcome to CloudFit</h1>
-          <p>A simple way to track workouts</p></div>
-          <div id= "crossfade" class="shadow">
+<div id= "crossfade" class="shadow">
             <img src={image1} />
             <img src={image2} />
             <img src={image3} />
             <img src={image4} />
             <img src={image5} />
           </div>
-            
-          <div  className = "sp"><Signup/></div>
+        <Row style = {{position: "relative", top: "85px"}}>
+        <Col md = {5} sm = {5}><div className = "welcome">
+            <h1 style = {{display: "inline"}}>Welcome to CloudFit</h1>
+            <p>A simple way to track workouts</p>
+            <span style = {{textAlign: "left"}}>
+              <ul>upload your workouts  (upload icon)</ul>
+            <ul>Track/iterate your mile stones/records (silhouette running)</ul>
+            <ul>Compare results  (notebook picture)</ul>
+              </span>
           
-          
+          </div></Col>
+        <Col md = {7} sm = {7}><div  className = "sp"><Signup/></div></Col>
+        </Row>
+        
+          <div style = {{width: "50px", height: "50px", backgroundColor: "black"}}></div>
         </div>
       );
     }
   
     renderSheets(popup) {
       return (
-        <div className = "upload-form">
+        <div className = "upload-form" style = {{position: "relative", top: "85px"}}>
         <form onSubmit={this.handleSubmit} id = "drop-form">
         
         <div className="file-drop-area">

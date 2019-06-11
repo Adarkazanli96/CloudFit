@@ -1,6 +1,5 @@
 import React from 'react'
 import "./Sheet.css"
-import Collapsible from 'react-collapsible';
 
 
 class sheet extends React.Component {

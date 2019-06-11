@@ -110,28 +110,34 @@ export default class Signup extends Component {
       <form onSubmit={this.handleSubmit}>
                 <h2>Create an account</h2>
         <FormGroup controlId="email" bsSize="large">
+        <ControlLabel>Email</ControlLabel>
+
           <FormControl
-          placeholder="Email"
             autoFocus
             type="email"
             value={this.state.email}
             onChange={this.handleChange}
           />
         </FormGroup>
+        
+
         <FormGroup controlId="password" bsSize="large">
+          <ControlLabel>Password</ControlLabel>
           <FormControl
             value={this.state.password}
             onChange={this.handleChange}
-            placeholder = "Password"
             type="password"
           />
         </FormGroup>
+
+        
+
         <FormGroup controlId="confirmPassword" bsSize="large">
+          <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             value={this.state.confirmPassword}
             onChange={this.handleChange}
             type="password"
-            placeholder = "Confirm Password"
           />
         </FormGroup>
         <LoaderButton

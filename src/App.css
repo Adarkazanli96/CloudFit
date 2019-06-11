@@ -47,7 +47,6 @@ body{
 
 
 .everything-else{
-  position: relative;
 
   top : 55px; /* make page content start 55px below navbar*/
 }

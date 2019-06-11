@@ -1,12 +1,10 @@
 .sheet{
     padding: 20px;
     background-color: #333639;
-    width: 600px;
     height: 160px;
     border-radius: 0 0 10px 10px;
     position: relative;
-    left: 50%;
-    margin-left: -300px;
+
     text-align: left;
 
 }
@@ -48,10 +46,8 @@
     background-color: black;
     color: white;
     position: relative;
+border-radius: 10px;
 
-left: 50%;
-    margin-left: -300px;
-    width:600px;
 
     font-family: verdana;
     
@@ -61,7 +57,10 @@ left: 50%;
    .wrap{
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
     border: solid 1px white;
-    width: 650px;
+    width: 600px;
+    margin: 0 auto;
     border-radius: 10px;
+    margin: 20px;
+
 
    }
