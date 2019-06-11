@@ -5,7 +5,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to right, black, #4568dc);
     color: #D7D7EF;
     font-family: 'Lato', sans-serif;
   }
@@ -189,6 +188,7 @@ background-color: rgba(33, 36, 39, 0.2);
 
   .welcome{
     z-index: 4;
+    min-width: 350px;
   }
 
   .shadow{
@@ -200,10 +200,14 @@ background-color: rgba(33, 36, 39, 0.2);
     position: absolute;
     top: 0px;
     left: 0px;
+    bottom: 0px;
+    right: 0px;
     background-repeat: no-repeat;
+    overflow: hidden;
   background-size: cover;
     color: transparent;
     background-size:100% 100%;
+    position: fixed;
     margin: 0;
     opacity: 0;
     z-index: -1;
