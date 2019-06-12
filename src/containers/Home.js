@@ -12,7 +12,7 @@ import image1 from '../assets/images/1.jpg'
 import image2 from '../assets/images/2.jpg'
 import image3 from '../assets/images/3.jpg'
 import image4 from '../assets/images/4.jpg'
-import image5 from '../assets/images/5.jpeg'
+import image5 from '../assets/images/6.jpg'
 import Signup from '../containers/Signup'
 
 
@@ -56,7 +56,7 @@ export default class NewNote extends Component {
     window.addEventListener("scroll", function() {
       var elementTarget = document.getElementById("the-nav");
       if (window.scrollY > 30) {
-        document.getElementById('the-nav').style.backgroundColor = '#1B4F72'
+        document.getElementById('the-nav').style.backgroundColor = 'black'
       }
       else{
         document.getElementById('the-nav').style.backgroundColor = "transparent";
@@ -171,17 +171,17 @@ export default class NewNote extends Component {
             <img src={image5} />
           </div>
         <Row style = {{position: "relative", top: "85px"}}>
-        <Col md = {5} sm = {7} xs = {9}><div className = "welcome">
+        <Col md = {5} sm = {7}><div className = "welcome">
             <h1 style = {{display: "inline"}}>Welcome to CloudFit</h1>
             <p>A simple way to track workouts</p>
             <span style = {{textAlign: "left"}}>
-              <ul>upload your workouts  (upload icon)</ul>
-            <ul>Track/iterate your mile stones/records (silhouette running)</ul>
-            <ul>Compare results  (notebook picture)</ul>
+              <ul>Upload workout data (upload icon)</ul>
+            <ul>Track your progress (silhouette running)</ul>
+            <ul>Compare and share results (notebook picture)</ul>
               </span>
           
           </div></Col>
-        <Col md = {7} sm = {5} xs = {3}><div  className = "sp"><Signup/></div></Col>
+        <Col md = {7} sm = {5}><div  className = "sp"><Signup/></div></Col>
         </Row>
                 </div>
       );
