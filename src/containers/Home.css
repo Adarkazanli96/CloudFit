@@ -94,7 +94,7 @@
 
   }
 
-  @media (max-width: 480px){
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .sp{
       width: default;
       position: default;
@@ -112,6 +112,13 @@
     }
   }
 
+  @media (min-width: 768px){
+    .welcome{
+      position: relative;
+      top: 170px;
+    }
+  }
+
   .lander img{
     height: 100px;
     position: relative;
@@ -119,9 +126,9 @@
     bottom: 20px;
   }
   .lander .signup-form{
-text-align: left;
-width: 400px;
-background-color: rgba(33, 36, 39, 0.2);
+  text-align: left;
+  width: 400px;
+  background-color: rgba(33, 36, 39, 0.2);
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
   padding-top: 80px;
   padding: 60px;
