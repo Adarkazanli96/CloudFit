@@ -73,12 +73,15 @@
   .Home .lander h1 {
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
+    font-size: 30pt;
+  }
+
+  .Home .lander p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15pt;
   }
   
-  .Home .lander p {
-    color: #999;
 
-  }
 
   .sp{
     background-color: rgba(33, 36, 39, 0.7);
@@ -110,12 +113,25 @@
     .Home .lander{
       padding: 20px;
     }
+
+    .row{
+      top: 15px;
+    }
+  }
+
+  .row{
+    position: relative;
+    top: 15px;
   }
 
   @media (min-width: 768px){
+    .row{
+      position: relative;
+      top: 85px;
+    }
     .welcome{
       position: relative;
-      top: 170px;
+      top: 80px;
     }
   }
 
@@ -196,7 +212,14 @@
 
   .welcome{
     z-index: 4;
-    min-width: 350px;
+    text-shadow: 0 1px 0 black;
+  }
+
+  ul{
+    font-family: "Open Sans", sans-serif;
+    margin-top: 20px;
+    font-size: 20px;
+    
   }
 
   .shadow{
