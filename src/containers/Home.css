@@ -94,11 +94,10 @@
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, .2);
 
-
   }
 
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    .sp{
+    .lander .sp{
       max-width: 320;
       background-color: transparent;
     box-shadow: none;
@@ -137,7 +136,7 @@
     }
     .welcome{
       position: relative;
-      top: 80px;
+      top: 60px;
     }
   }
 
@@ -221,7 +220,7 @@
 
   ul{
     font-family: "Open Sans", sans-serif;
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 20px;
   }
 
