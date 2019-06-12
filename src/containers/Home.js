@@ -171,7 +171,7 @@ export default class NewNote extends Component {
             <img src={image5} />
           </div>
         <Row className = "row">
-        <Col md = {6} sm = {8} xs = {0}><div className = "welcome">
+        <Col md = {6} sm = {8}><div className = "welcome">
             <h1>Welcome to CloudFit</h1>
             <p>A simple way to track workouts</p>
             <span style = {{textAlign: "left"}}>
@@ -181,7 +181,7 @@ export default class NewNote extends Component {
               </span>
           
           </div></Col>
-        <Col md = {6} sm = {4} xs = {12} ><div  className = "sp"><Signup/></div></Col>
+        <Col md = {6} sm = {4}><div  className = "sp"><Signup/></div></Col>
         </Row>
                 </div>
       );
