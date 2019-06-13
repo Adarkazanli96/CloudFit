@@ -7,7 +7,10 @@ import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
-import logo from '../assets/images/logo.png'
+
+import cloud from '../assets/images/cloud-upload.png'
+import runner from '../assets/images/running.png'
+import share from '../assets/images/share.png'
 import image1 from '../assets/images/1.jpg'
 import image2 from '../assets/images/2.jpg'
 import image3 from '../assets/images/3.jpg'
@@ -175,9 +178,12 @@ export default class NewNote extends Component {
             <h1>Welcome to CloudFit</h1>
             <p>A simple way to track workouts</p>
             <span style = {{textAlign: "left"}}>
-              <ul>Upload workout data (upload icon)</ul>
-            <ul>Track your progress (silhouette running)</ul>
-            <ul>Compare and share results (notebook picture)</ul>
+              <ul>
+                <li>Upload your workout data<img src = {cloud}/></li>
+            <li>Track your progress<img src = {runner}/></li>
+            <li>Compare and share results<img src = {share}/></li>
+              </ul>
+              
               </span>
           
           </div></Col>

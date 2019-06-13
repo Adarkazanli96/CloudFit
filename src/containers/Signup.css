@@ -13,8 +13,6 @@
       text-align: center;
       font-size: 35px;
       font-family: "Open Sans", sans-serif;
-
-      
     }
   
   .Signup form span.help-block {
@@ -28,5 +26,4 @@
       margin: 0 auto;
       max-width: 300px;
     }
-
   }
