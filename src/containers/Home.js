@@ -180,14 +180,14 @@ export default class NewNote extends Component {
                 <h1>Welcome to CloudFit</h1>
                 <p>A simple way to track workouts</p>
                   <ul>
-                    <li>Upload your workout data<img src = {cloud}/></li>
-                    <li>Track your progress<img src = {runner}/></li>
-                    <li>Compare and share results<img src = {share}/></li>
+                    <li><img src = {cloud}/>Upload your workout data</li>
+                    <li><img src = {runner}/>Track your progress</li>
+                    <li><img src = {share}/>Compare and share results</li>
                   </ul>
               </div>
             </Col>
             <Col md = {6} sm = {4}>
-              <div  className = "signup-wrapper"><Signup/></div>
+              <div  className = "signup-wrapper"><Signup {...this.props} /></div>
             </Col>
           </Row>
       </div>

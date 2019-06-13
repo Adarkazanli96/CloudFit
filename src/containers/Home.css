@@ -74,7 +74,8 @@
   .Home .lander .welcome ul{
     list-style: none;
     color: white;
-    margin-left: 30px;
+    position: relative;
+    left: 35px;
     text-align: left;
   }
 
@@ -88,12 +89,12 @@
     height: 30px;
     width: auto;
     position: relative;
-    left: 8px;
+    margin-right: 10px;
     bottom: 1px;
   }
 
   .welcome{
-    z-index: 4;
+    z-index: 3;
     text-shadow: 0 1px 0 black;
     position: relative;
     top: 60px;
@@ -102,6 +103,13 @@
   .row1{
     position: relative;
     top: 85px;
+  }
+
+  /* medium to large screens */
+  @media (min-width: 768px) and (max-width: 1199px){
+    .Home .lander .welcome ul{
+      left: 0px;
+    }
   }
 
   /* small screens and lower */
@@ -117,7 +125,7 @@
     }
   
     .Home .lander .welcome ul{
-      margin-left: 0px;
+      left: -35px;
     }
     .row1{
       top: 15px;
@@ -130,16 +138,29 @@
   /* smart phones only */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px){
 
-    .welcome{
-      display: none;
-    }
-
     .Home .lander{
       padding: 20px;
     }
 
     .row1{
-      top: 25px;
+      top: 55px;
+    }
+
+    .Home .lander .welcome ul{
+      display: none;
+    }
+
+    .welcome{
+      font-size: 10px;
+    }
+
+    .Home .lander .welcome h1 {
+      font-weight: 600;
+      font-size: 25pt;
+    }
+  
+    .Home .lander .welcome p {
+      font-size: 14pt;
     }
   }
 
