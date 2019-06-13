@@ -1,5 +1,5 @@
 
-
+/* sheets page */
   .upload-form{
     position: relative;
     top: 50px;
@@ -59,57 +59,76 @@
   .Home .lander {
     padding: 50px 0;
     text-align: center;
-
+    font-family: "Open Sans", sans-serif;
   }
   
   .Home .lander .welcome h1 {
-    font-family: "Open Sans", sans-serif;
     font-weight: 600;
     font-size: 30pt;
   }
 
   .Home .lander .welcome p {
-    font-family: "Open Sans", sans-serif;
     font-size: 15pt;
   }
 
   .Home .lander .welcome ul{
-    font-family: "Open Sans", sans-serif;
     list-style: none;
     color: white;
     margin-left: 30px;
     text-align: left;
   }
 
-  .welcome li{
+  .Home .lander .welcome li{
     margin-top: 30px;
     font-size: 20px;
     text-shadow: none;
   }
 
-  .lander .welcome img{
+  .Home .lander .welcome img{
     height: 30px;
     width: auto;
-    top: 0px;
-  }
-  
-  .Home .lander .signup-wrapper{
-    background-color: rgba(33, 36, 39, 0.7);
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
-    margin: 0 auto;
-    padding-top: 10px;
     position: relative;
-    padding-bottom: 100px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, .2);
+    left: 8px;
+    bottom: 1px;
   }
 
-  @media only screen and (min-device-width : 320px) and (max-device-width : 480px){
-    .Home .lander .signup-wrapper{
-      background-color: transparent;
-    box-shadow: none;
-    border: none;
+  .welcome{
+    z-index: 4;
+    text-shadow: 0 1px 0 black;
+    position: relative;
+    top: 60px;
+  }
+
+  .row1{
+    position: relative;
+    top: 85px;
+  }
+
+  /* small screens and lower */
+  @media (max-width: 767px){
+    .Home .lander .welcome li{
+      font-size: 16px;
+      margin-top: 5px;
     }
+  
+    .Home .lander .welcome img{
+      height: 20px;
+      width: auto;
+    }
+  
+    .Home .lander .welcome ul{
+      margin-left: 0px;
+    }
+    .row1{
+      top: 15px;
+    }
+    .welcome{
+      top: 0px;
+    }
+  }
+
+  /* smart phones only */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px){
 
     .welcome{
       display: none;
@@ -124,105 +143,7 @@
     }
   }
 
-  .row1{
-    position: relative;
-    top: 15px;
-  }
-
-  
-
-  @media (min-width: 768px){
-    .row1{
-      position: relative;
-      top: 85px;
-    }
-    .welcome{
-      position: relative;
-      top: 60px;
-    }
-
-    .signup-wrapper{
-      width: 400px;
-    }
-  }
-
-
-  .lander img{
-    height: 100px;
-    position: relative;
-    left: 20px;
-    bottom: 20px;
-    display: inline-block;
-  }
-
-
-  .loader,
-  .loader:before,
-  .loader:after {
-    border-radius: 50%;
-    width: 1.5em;
-    height: 1.5em;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation: load7 1s infinite ease-in-out;
-    animation: load7 1s infinite ease-in-out;
-  }
-  .loader {
-    color: #ffffff;
-    font-size: 10px;
-    margin: 40px auto;
-    position: relative;
-    text-indent: -9999em;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-  }
-  .loader:before,
-  .loader:after {
-    content: '';
-    position: absolute;
-    top: 0;
-  }
-  .loader:before {
-    left: -3.5em;
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-  }
-  .loader:after {
-    left: 3.5em;
-  }
-  @-webkit-keyframes load7 {
-    0%,
-    80%,
-    100% {
-      box-shadow: 0 2.5em 0 -1.3em;
-    }
-    40% {
-      box-shadow: 0 2.5em 0 0;
-    }
-  }
-  @keyframes load7 {
-    0%,
-    80%,
-    100% {
-      box-shadow: 0 2.5em 0 -1.3em;
-    }
-    40% {
-      box-shadow: 0 2.5em 0 0;
-    }
-  }
-
-
-  .welcome{
-    z-index: 4;
-    text-shadow: 0 1px 0 black;
-  }
-
-  .shadow{
-  }
-
+  /* transitioning images*/
   #crossfade > img { 
     height: 100%;
     width: 100%;
@@ -233,7 +154,7 @@
     right: 0px;
     background-repeat: no-repeat;
     overflow: hidden;
-  background-size: cover;
+    background-size: cover;
     color: transparent;
     background-size:100% 100%;
     position: fixed;
@@ -280,19 +201,6 @@
   animation-delay: 24s; 
 }
 
-@media (max-width: 767px){
-  .lander .welcome li{
-    font-size: 18px;
-    margin-top: 5px;
-  }
-
-  .welcome ul{
-    margin-left: 0px;
-  }
-}
-
-
-/* transitioning images*/
 @-webkit-keyframes imageAnimation { 
   0% { opacity: 0;
   -webkit-animation-timing-function: ease-in; }
@@ -341,4 +249,63 @@
   17% { opacity: 1 }
   25% { opacity: 0 }
   100% { opacity: 0 }
+}
+
+/* spinner css */
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1s infinite ease-in-out;
+  animation: load7 1s infinite ease-in-out;
+}
+.loader {
+  color: #ffffff;
+  font-size: 10px;
+  margin: 40px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
 }
