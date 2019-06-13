@@ -5,10 +5,6 @@
 
 }
 
-body{
-  margin: 0px;
- }
-
 .nbar{
   padding: 0;
   font-family: "Open Sans", sans-serif;
@@ -43,10 +39,4 @@ body{
   position: relative;
   left: 9px;
     bottom: 18px;
-}
-
-
-.everything-else{
-
-  top : 55px; /* make page content start 55px below navbar*/
 }

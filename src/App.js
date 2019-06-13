@@ -78,10 +78,7 @@ class App extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <div  className = "everything-else" >
-        <Routes childProps={childProps} />
-        </div>
-        
+        <Routes childProps={childProps} />        
       </div>
     );
   }  
