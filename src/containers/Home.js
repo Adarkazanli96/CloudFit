@@ -29,7 +29,7 @@ export default class NewNote extends Component {
       showPopup: false,
       error: false,
       sheets : [],
-      sheetsLoading: true
+      sheetsLoading: false
     };
   }
 
@@ -56,7 +56,7 @@ export default class NewNote extends Component {
   }
 
   async componentDidMount(){
-    window.addEventListener("scroll", function() {
+    window.addEventListener('scroll', function() {
       var elementTarget = document.getElementById("the-nav");
       if (window.scrollY > 30) {
         document.getElementById('the-nav').style.backgroundColor = 'black'
@@ -73,13 +73,21 @@ export default class NewNote extends Component {
   }
 
   componentWillUnmount(){
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll');
+
+  }
+
+  async componentWillReceiveProps(nextProps){
+    console.log("in component will recieve props")
+    if(nextProps.isAuthenticated !== this.props.isAuthenticated && this.props.isAuthenticated === false){
+      await this.getSheets();
+    }
 
   }
 
   getSheets = async () =>{
     
-      //this.setState({ sheetsLoading: true });
+      this.setState({ sheetsLoading: true });
     
     try {
       let sheets;

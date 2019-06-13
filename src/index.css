@@ -8,6 +8,7 @@ body {
   justify-content: space-between;
   color: #D7D7EF;
   font-family: 'Lato', sans-serif;
+  background: linear-gradient(to right, black, #4568dc);
 }
 
 code {

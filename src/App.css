@@ -1,11 +1,10 @@
 
 
 .App .navbar-brand {
-
-
+  color: white;
 }
 
-.nbar{
+.App .navbar{
   padding: 0;
   font-family: "Open Sans", sans-serif;
   position: absolute;
@@ -24,19 +23,19 @@
 }
 
 .homelink{
-  width: 250px;
-    float: left;
-    height: 70px;
     position: relative;
     top: 10px;
     left: 20px;
+    height: 70px;
+    font-size: 20pt;
+    color: white;
 }
 
 .homelink img {
   height: 50px;
   width: 50px;
-    float: left;
   position: relative;
   left: 9px;
-    bottom: 18px;
+  bottom: 18px;
+  float: right;
 }
