@@ -5,21 +5,15 @@
 }
 
 .App .navbar{
-  padding: 0;
   font-family: "Open Sans", sans-serif;
-  position: absolute;
   left: 0;
   right: 0;
   border-radius: 0px;
   border-style: none;
-
-  background-color: black;
-  height: 70px;
-  background-color: rgba(33, 36, 39, 0);
+  background: none;
   position: fixed;
   z-index:4;
   transition: background-color 500ms ease;
-  
 }
 
 .homelink{
