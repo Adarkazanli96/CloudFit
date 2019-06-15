@@ -72,7 +72,7 @@ class App extends React.Component {
         </Modal>
 
         <Toolbar>
-        {this.state.isAuthenticated? <Dropdown/> : <div>Login</div>}
+        {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <div onClick = {this.handleModalShow}>Login</div>}
         </Toolbar>
         <Routes childProps={childProps} />
       </div>

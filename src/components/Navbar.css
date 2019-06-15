@@ -6,6 +6,7 @@
     height: 65px;
     z-index: 4;
     transition: background-color 500ms ease;
+    color: white;
   }
   
   .toolbar__navigation {
@@ -16,11 +17,28 @@
   }
   
   .toolbar__logo {
-    margin-left: 1rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
   }
   
+  .toolbar__logo img{
+    height: 50px;
+    width: auto;
+    position: relative;
+    bottom: 10px;
+    left: 8px;
+
+  }
+
+  .toolbar__logo h3{
+    height: 50px;
+    width: auto;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  
+
   .toolbar__logo a {
-    color: white;
     text-decoration: none;
     font-size: 1.5rem;
   }
@@ -46,16 +64,10 @@
 
   .toolbar_navigation-items span {
     padding: 0 0.5rem;
-    margin: 20px;
   }
   
   .toolbar_navigation-items a {
-    color: white;
     text-decoration: none;
   }
-  
-  .toolbar_navigation-items a:hover,
-  .toolbar_navigation-items a:active {
-    color: #fa923f;
-  }
+
   
