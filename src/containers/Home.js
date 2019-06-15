@@ -227,7 +227,7 @@ export default class NewNote extends Component {
           />
         </form>
 
-        {this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />}
+        {/*this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />*/}
         
       </div>
       );
