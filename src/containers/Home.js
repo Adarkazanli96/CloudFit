@@ -7,6 +7,7 @@ import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
+import Table from './Table'
 
 import cloud from '../assets/images/cloud-upload.png'
 import runner from '../assets/images/running.png'
@@ -188,9 +189,9 @@ export default class NewNote extends Component {
     }
   
     renderSheets(popup) {
-    document.body.style.background = "linear-gradient(to right, black, #4568dc)";
+    document.body.style.background = "#F2F2F2)";
       return (
-        <div className = "upload-form" style = {{position: "relative", top: "85px"}}>
+        <div className = "dashboard" style = {{position: "relative", top: "85px"}}>
         <form onSubmit={this.handleSubmit} id = "drop-form">
         
         <div className="file-drop-area">
@@ -213,7 +214,7 @@ export default class NewNote extends Component {
         </form>
 
         {/*this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />*/}
-        
+        {this.state.sheetsLoading ? <div className = 'loader'></div> : <div className = "sheets"><Table  sheets = {this.state.sheets} /></div>}
       </div>
       );
     }

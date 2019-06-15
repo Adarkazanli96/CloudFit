@@ -1,0 +1,23 @@
+
+  
+  #students {
+    text-align: left;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: #7C7C7C;
+  }
+  
+  #students td, #students th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #students tr:hover {background-color: #ddd;}
+  
+  #students th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: #4B4B4B;
+  }
