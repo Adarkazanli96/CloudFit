@@ -33,3 +33,21 @@
   bottom: 18px;
   float: right;
 }
+
+.login-btn{
+  background: none;
+  border-radius: 7px;
+  padding: 6px 22px 6px 22px;
+  border-width: 2px;
+  transition: background-color 500ms ease;
+  border-color: white;
+  font-weight:bold;
+}
+
+.login-btn:hover{
+  background: rgba(255, 255, 255, 1);
+
+  color: #666666;
+}
+
+

@@ -56,25 +56,10 @@ export default class NewNote extends Component {
   }
 
   async componentDidMount(){
-    window.addEventListener('scroll', function() {
-      var elementTarget = document.getElementById("the-nav");
-      if (window.scrollY > 30) {
-        document.getElementById('the-nav').style.backgroundColor = 'black'
-      }
-      else{
-        document.getElementById('the-nav').style.backgroundColor = "transparent";
-      }
-    });
-
     if (!this.props.isAuthenticated) {
       return;
     }
     this.getSheets()
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('scroll');
-
   }
 
   async componentWillReceiveProps(nextProps){

@@ -5,10 +5,10 @@ import { Auth } from 'aws-amplify'
 
 
 let dropdown = (props) =>(
-<div class="dropdown1">
-  <button class="dropbtn1">A</button>
-  <div class="dropdown-content1">
-    <a>Account</a>
+<div class="dropdown">
+  <button class="dropbtn"><img src = {account} /></button>
+  <div class="dropdown-content">
+    <a>My Account</a>
     <a>Help Center</a>
     <button onClick = {props.logout}>Sign Out</button>
   </div>

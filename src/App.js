@@ -56,6 +56,15 @@ class App extends React.Component {
     }
   
     this.setState({ isAuthenticating: false });
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 30) {
+        document.getElementById('the-nav').style.backgroundColor = 'black'
+      }
+      else{
+        document.getElementById('the-nav').style.backgroundColor = "transparent";
+      }
+    });
   }
   
   render() {
@@ -72,7 +81,7 @@ class App extends React.Component {
         </Modal>
 
         <Toolbar>
-        {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <div onClick = {this.handleModalShow}>Login</div>}
+        {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>Login</button>}
         </Toolbar>
         <Routes childProps={childProps} />
       </div>
