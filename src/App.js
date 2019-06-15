@@ -7,6 +7,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 import logo from './assets/images/logo.png'
 import LoginModal from './components/LoginModal'
+import Toolbar from './components/Navbar'
+import Dropdown from './components/Dropdown'
 
 
 class App extends React.Component {
@@ -68,25 +70,11 @@ class App extends React.Component {
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <LoginModal {...childProps} onHide = {this.handleModalClose}/>
         </Modal>
-        <Navbar id = "the-nav" fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link className = "homelink" to="/" style = {{color: "white"}}>CloudFit<img src = {logo}/></Link>
-            </Navbar.Brand>
-            <Navbar.Toggle style = {{top: "10px"}}/>
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
-              {this.state.isAuthenticated
-                ? <NavItem onClick={this.handleLogout}><span style = {{color:"white"}}>Logout</span></NavItem>
-                : <Fragment>
-                      <NavItem onClick = {this.handleModalShow}><span style = {{color:"white"}}>Login</span></NavItem>
-                  </Fragment>
-              }
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-        <Routes childProps={childProps} />        
+
+        <Toolbar>
+        {this.state.isAuthenticated? <Dropdown/> : <div>Login</div>}
+        </Toolbar>
+        <Routes childProps={childProps} />
       </div>
     );
   }  
