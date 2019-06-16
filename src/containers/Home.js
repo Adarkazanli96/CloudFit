@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel, Media, Row, Col} from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, Media, Row, Col, Modal} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Home.css";
@@ -8,6 +8,7 @@ import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 import Sheets from './Sheets'
 import Table from './Table'
+import UploadModal from '../components/UploadModal'
 
 import cloud from '../assets/images/cloud-upload.png'
 import runner from '../assets/images/running.png'
@@ -30,7 +31,8 @@ export default class NewNote extends Component {
       showPopup: false,
       error: false,
       sheets : [],
-      sheetsLoading: false
+      sheetsLoading: false,
+      showModal: false
     };
   }
 
@@ -52,21 +54,68 @@ export default class NewNote extends Component {
       this.setState({file: event.target.files[0]})
   }
 
-  handleScroll = event =>{
-    //alert("sup");
+  handleModalClose = () =>{
+    this.setState({showModal: false})
+  }
+
+  handleModalShow = () =>{
+    this.setState({showModal: true})
   }
 
   async componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+
     if (!this.props.isAuthenticated) {
+      //document.getElementById("the-nav").style.transition = "background-color 500ms ease"
+      window.addEventListener('scroll', this.changeNavColor);
       return;
     }
     this.getSheets()
+
+    if(this.props.isAuthenticated === true){
+      document.getElementById("the-nav").style.background = "#4594E9";
+    }
+
+    
+  
   }
+
+  changeNavColor = () =>
+    {
+      if (window.scrollY > 30) {
+      document.getElementById('the-nav').style.background = 'rgba(0, 0, 0, 0.8)'
+    }
+    else{
+      document.getElementById('the-nav').style.background = "transparent";
+    }
+  }  
+
 
   async componentWillReceiveProps(nextProps){
     console.log("in component will recieve props")
+    
+    // going from authenticated is false to true
     if(nextProps.isAuthenticated !== this.props.isAuthenticated && this.props.isAuthenticated === false){
+      //document.getElementById("the-nav").style.transition = "none"
+      window.scrollTo(0, 0) // scroll to top of page
+      document.getElementById("the-nav").style.background = "#4594E9";
+      window.removeEventListener('scroll', this.changeNavColor);
+
+
       await this.getSheets();
+      
+    }
+    
+    else if(nextProps.isAuthenticated !== this.props.isAuthenticated && this.props.isAuthenticated === true){
+      // scroll to top of page
+      //document.getElementById("the-nav").style.transition = "background-color 500ms ease"
+      window.scrollTo(0, 0)
+      document.getElementById("the-nav").style.background = "transparent";
+      window.addEventListener('scroll', this.changeNavColor);
+
+
     }
 
   }
@@ -156,8 +205,8 @@ export default class NewNote extends Component {
     
     }
   
-
     renderLander(){
+
       document.body.style.background = "black";
       return (
         <div className="lander">
@@ -189,38 +238,40 @@ export default class NewNote extends Component {
     }
   
     renderSheets(popup) {
-    document.body.style.background = "#F2F2F2)";
+    document.body.style.background = "white";
+
       return (
         <div className = "dashboard" style = {{position: "relative", top: "85px"}}>
-        <form onSubmit={this.handleSubmit} id = "drop-form">
         
-        <div className="file-drop-area">
-        {this.state.showPopup ? popup : null}
-          <span className="fake-btn" >Choose file</span>
-          <span className="file-msg">{this.state.file === null || typeof(this.state.file) === "undefined"? "or drag and drop files here" : this.state.file.name}</span>
-          <input className="file-input" type="file" onChange={this.handleFileChange}/>
-        </div>
 
-        <LoaderButton
-      style = {{marginTop: "7px"}}
-            bsStyle="primary"
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-            isLoading={this.state.isSubmitting}
-            text="Submit"
-            loadingText="Submitting…"
-          />
-        </form>
+        <button onClick = {this.handleModalShow}>Upload File<img/></button>
 
-        {/*this.state.sheetsLoading ? <div className = 'loader'></div> : <Sheets sheets = {this.state.sheets} />*/}
+        <Modal show={this.state.showModal} onHide={this.handleModalClose}>
+          <UploadModal close = {this.handleModalClose}>
+          <form onSubmit={this.handleSubmit} id = "drop-form">
+        
+        <input type="file" onChange={this.handleFileChange}/>
+      <LoaderButton
+          bsStyle="primary"
+          bsSize="large"
+          disabled={!this.validateForm()}
+          type="submit"
+          isLoading={this.state.isSubmitting}
+          text="Submit"
+          loadingText="Submitting…"
+        />
+      </form>
+
+          </UploadModal>
+        </Modal>
+
         {this.state.sheetsLoading ? <div className = 'loader'></div> : <div className = "sheets"><Table  sheets = {this.state.sheets} /></div>}
       </div>
       );
     }
 
   render() {
-
+    
     let popup;
       
       if(!this.state.error){
@@ -235,6 +286,8 @@ export default class NewNote extends Component {
                     color = {"red"}
                     />
       }
+
+      
 
     return (
         <div className = "Home">

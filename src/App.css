@@ -1,38 +1,5 @@
 
 
-.App .navbar-brand {
-  color: white;
-}
-
-.App .navbar{
-  font-family: "Open Sans", sans-serif;
-  left: 0;
-  right: 0;
-  border-radius: 0px;
-  border-style: none;
-  background: none;
-  position: fixed;
-  z-index:4;
-  transition: background-color 500ms ease;
-}
-
-.homelink{
-    position: relative;
-    top: 10px;
-    left: 20px;
-    height: 70px;
-    font-size: 20pt;
-    color: white;
-}
-
-.homelink img {
-  height: 50px;
-  width: 50px;
-  position: relative;
-  left: 9px;
-  bottom: 18px;
-  float: right;
-}
 
 .login-btn{
   background: none;
@@ -46,7 +13,6 @@
 
 .login-btn:hover{
   background: rgba(255, 255, 255, 1);
-
   color: #666666;
 }
 

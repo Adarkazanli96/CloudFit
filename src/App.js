@@ -2,14 +2,10 @@ import React, { Fragment } from "react";
 import './App.css';
 import Routes from './Routes'
 import { Link, withRouter } from "react-router-dom";
-import { Nav, NavItem, Navbar, Modal } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
-import logo from './assets/images/logo.png'
 import LoginModal from './components/LoginModal'
-import Toolbar from './components/Navbar'
+import Navbar from './components/Navbar'
 import Dropdown from './components/Dropdown'
-
 
 class App extends React.Component {
   constructor(props) {
@@ -57,17 +53,11 @@ class App extends React.Component {
   
     this.setState({ isAuthenticating: false });
 
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 30) {
-        document.getElementById('the-nav').style.backgroundColor = 'black'
-      }
-      else{
-        document.getElementById('the-nav').style.backgroundColor = "transparent";
-      }
-    });
+    
   }
   
   render() {
+
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
@@ -76,13 +66,11 @@ class App extends React.Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <Modal show={this.state.showModal} onHide={this.handleModalClose}>
-          <LoginModal {...childProps} onHide = {this.handleModalClose}/>
-        </Modal>
+          <LoginModal {...childProps} show = {this.state.showModal} onHide = {this.handleModalClose}/>
 
-        <Toolbar>
+        <Navbar {...childProps}>
         {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>Login</button>}
-        </Toolbar>
+        </Navbar>
         <Routes childProps={childProps} />
       </div>
     );

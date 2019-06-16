@@ -172,7 +172,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    top: 0px;
+    top:0px;/*top: 65px; shift the images right below the navbar*/
     left: 0px;
     bottom: 0px;
     right: 0px;
