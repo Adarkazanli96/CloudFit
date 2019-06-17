@@ -117,6 +117,7 @@ export default class Signup extends Component {
             type="email"
             value={this.state.email}
             onChange={this.handleChange}
+            placeholder = "Enter email"
           />
         </FormGroup>
         
@@ -127,6 +128,7 @@ export default class Signup extends Component {
             value={this.state.password}
             onChange={this.handleChange}
             type="password"
+            placeholder = "Enter password"
           />
         </FormGroup>
 
@@ -138,13 +140,15 @@ export default class Signup extends Component {
             value={this.state.confirmPassword}
             onChange={this.handleChange}
             type="password"
+            placeholder = "Re-enter password"
           />
         </FormGroup>
         <LoaderButton
           block
           bsSize="large"
-          disabled={!this.validateForm()}
           type="submit"
+          color= "white"
+          backgroundColor = "#4594E9"
           isLoading={this.state.isLoading}
           text="GET STARTED"
           loadingText="Signing up…"

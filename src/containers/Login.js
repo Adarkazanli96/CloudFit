@@ -55,6 +55,7 @@ export default class Login extends Component {
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
+              placeholder = "Enter email"
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
@@ -63,17 +64,18 @@ export default class Login extends Component {
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
+              placeholder = "Enter password"
             />
           </FormGroup>
           <LoaderButton
             block
             bsSize="large"
-            disabled={!this.validateForm()}
             type="submit"
             isLoading={this.state.isLoading}
             text="LOG IN"
             loadingText="Logging in…"
-            loadingColor = "#292c32"
+            backgroundColor = "#292c32"
+            color = "white"
           />
 
 
