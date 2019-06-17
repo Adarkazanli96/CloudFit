@@ -1,3 +1,6 @@
+.Home{
+  color: white;
+}
 
 /* sheets page */
   .dashboard{
@@ -76,7 +79,6 @@
 
   .Home .lander .welcome ul{
     list-style: none;
-    color: white;
     position: relative;
     left: 35px;
     text-align: left;

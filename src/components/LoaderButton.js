@@ -8,12 +8,14 @@ export default ({
   loadingText,
   className = "",
   disabled = false,
+  loadingColor,
   ...props
 }) =>
   <Button
     className={`LoaderButton ${className}`}
     disabled={disabled || isLoading}
     {...props}
+    style = {isLoading ? {backgroundColor: loadingColor} : {}}
   >
     {isLoading && <Glyphicon glyph="refresh" className="spinning" />}
     {!isLoading ? text : loadingText}

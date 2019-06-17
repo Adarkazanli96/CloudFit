@@ -7,9 +7,7 @@ body {
   align-items: center;
   justify-content: space-between;
   /*color: #D7D7EF;*/
-  color: white;
-  font-family: 'Lato', sans-serif;
-  background: linear-gradient(to right, black, #4568dc);
+  /*font-family: 'Lato', sans-serif;*/
 }
 
 code {

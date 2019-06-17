@@ -66,15 +66,15 @@ export default class Login extends Component {
             />
           </FormGroup>
           <LoaderButton
-  block
-  bsSize="large"
-  disabled={!this.validateForm()}
-  type="submit"
-  isLoading={this.state.isLoading}
-  text="LOG IN"
-  loadingText="Logging in…"
-  color = "black"
-/>
+            block
+            bsSize="large"
+            disabled={!this.validateForm()}
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="LOG IN"
+            loadingText="Logging in…"
+            loadingColor = "#292c32"
+          />
 
 
         </form>

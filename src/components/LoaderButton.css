@@ -16,6 +16,7 @@
     border: none;
     height: 60px;
     font-size: 13pt;
+    letter-spacing: .1rem;
   }
 
   .Signup .LoaderButton{
