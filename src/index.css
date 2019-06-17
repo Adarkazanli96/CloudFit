@@ -6,7 +6,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  color: #D7D7EF;
+  /*color: #D7D7EF;*/
+  color: white;
   font-family: 'Lato', sans-serif;
   background: linear-gradient(to right, black, #4568dc);
 }

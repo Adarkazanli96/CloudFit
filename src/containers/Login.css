@@ -1,10 +1,20 @@
 @media all and (min-width: 480px) {
-    .Login {
-      padding: 60px 0;
-    }
   
     .Login form {
       margin: 0 auto;
       max-width: 320px;
+      font-family: "Open Sans", sans-serif;
+      color: #5f6572;
     }
   }
+
+  .Login h2{
+    text-align: left;
+    color: #5f6572;
+font-weight: 100;
+  font-family: 'Roboto', sans-serif;
+
+
+  }
+
+  

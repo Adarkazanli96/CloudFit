@@ -85,7 +85,7 @@
   .Home .lander .welcome li{
     margin-top: 30px;
     font-size: 20px;
-    text-shadow: none;
+    /*text-shadow: none;*/
   }
 
   .Home .lander .welcome img{
@@ -98,7 +98,7 @@
 
   .welcome{
     z-index: 3;
-    text-shadow: 0 1px 0 black;
+    /*text-shadow: 0 1px 0 black;*/
     position: relative;
     top: 60px;
   }

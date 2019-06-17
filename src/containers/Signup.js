@@ -110,7 +110,7 @@ export default class Signup extends Component {
       <form onSubmit={this.handleSubmit}>
                 <h2>Create an account</h2>
         <FormGroup controlId="email" bsSize="large">
-        <ControlLabel>Email</ControlLabel>
+        <ControlLabel>EMAIL</ControlLabel>
 
           <FormControl
             autoFocus
@@ -122,7 +122,7 @@ export default class Signup extends Component {
         
 
         <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
+          <ControlLabel>PASSWORD</ControlLabel>
           <FormControl
             value={this.state.password}
             onChange={this.handleChange}
@@ -133,7 +133,7 @@ export default class Signup extends Component {
         
 
         <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
+          <ControlLabel>CONFIRM PASSWORD</ControlLabel>
           <FormControl
             value={this.state.confirmPassword}
             onChange={this.handleChange}
@@ -146,7 +146,7 @@ export default class Signup extends Component {
           disabled={!this.validateForm()}
           type="submit"
           isLoading={this.state.isLoading}
-          text="Get started"
+          text="GET STARTED"
           loadingText="Signing up…"
         />
       </form>
