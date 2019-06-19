@@ -32,6 +32,7 @@
 
 .control-label{
   font-size: 10pt;
+  margin-top: 10px;
 }
 
 
@@ -50,8 +51,8 @@
 .modal-header button {
   color: #6D778E;
   position: relative;
-  right: 18px;
-  top: 8px;
+  right: 20px;
+  top: 10px;
 font-size: 35pt;
 font-weight: lighter;
 opacity: 1;

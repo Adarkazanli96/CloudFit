@@ -1,12 +1,12 @@
 
     .Signup {
-      text-align: left;
+    text-align: left;
     background-color: rgba(33, 36, 39, 0.8);
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
     margin: 0 auto;
     position: relative;
     padding-top:15px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     border: 1px solid rgba(255, 255, 255, .2);
     width: 400px;
       
@@ -19,7 +19,6 @@
 
     .Signup h2{
       font-size: 35px;
-      text-align: left;
       font-weight: 300;
     }
   

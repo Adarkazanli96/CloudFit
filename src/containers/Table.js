@@ -1,4 +1,9 @@
 import React from 'react';
+import LineChart from '../components/LineChart'
+import Collapsible from 'react-collapsible';
+import triangleOpen from '../assets/images/triangle-open.png'
+import triangleClosed from '../assets/images/triangle-closed.png'
+
 import './Table.css'
 
 class table extends React.Component {
@@ -9,17 +14,22 @@ class table extends React.Component {
     }
  
     renderTableData() {
+
         return this.props.sheets.map((sheet, index) => {
-           const { _id, workoutDate, workoutTime, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes} = sheet.body //destructuring
+           const { _id, workoutDate, workoutTime, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, filteredRecords} = sheet.data //destructuring
            return (
               <tr key={index}>
                  <td>{workoutDate}</td>
                  <td>{workoutTime}</td>
                  <td>{duration}</td>
                  <td>{caloriesBurned}</td>
-                 <td>{maximumHeartRate}</td>
-                 <td>{meanHeartRate}</td>
                  <td>{notes}</td>
+           <td><Collapsible transitionTime = "100"
+           trigger={<span className = "trigger"><img src = {triangleClosed}/>Show</span>}
+           triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {filteredRecords}/><div className = "heart-rates">Max Heart Rate: {maximumHeartRate}</div>
+           <div className = "heart-rates">Mean Heart Rate: {meanHeartRate}</div></Collapsible>
+                 
+                 </td>
               </tr>
            )
         })
@@ -28,19 +38,19 @@ class table extends React.Component {
      render() {
          console.log(this.props.sheets)
         return (
-           <div>
+           <div className = "table-container">
               <table id='students'>
                  <tbody>
                     <tr>
-                        <th>WORKOUT DATE</th>
-                        <th>WORKOUT TIME</th>
-                        <th>DURATION</th>
-                        <th>CALORIES BURNED</th>
-                        <th>MAX HEART RATE</th>
-                        <th>MEAN HEART RATE</th>
-                        <th>NOTES</th>
+                        <th style = {{width: "150px"}}>DATE</th>
+                        <th style = {{width: "150px"}}>TIME</th>
+                        <th style = {{width: "150px"}}>DURATION</th>
+                        <th style = {{width: "150px"}}>CALORIES</th>
+                        <th style = {{width: "200px"}}>NOTES</th>
+                        <th style = {{width: "300px"}}>GRAPH</th>
                     </tr>
-                    {this.renderTableData()}
+                    {this.props.loading? <div className = "spinner-container"><div className = "loader"></div></div> : this.renderTableData()}
+                    
                  </tbody>
               </table>
            </div>

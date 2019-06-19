@@ -5,12 +5,11 @@
       max-width: 320px;
       color: #5f6572;
       position:relative;
-      bottom: 25px;
+      bottom: 30px;
     }
   }
 
   .Login h2{
-    text-align: left;
     color: #5f6572;
     font-weight: 100;
   }

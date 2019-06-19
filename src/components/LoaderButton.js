@@ -16,7 +16,7 @@ export default ({
     className={`LoaderButton ${className}`}
     disabled={disabled || isLoading}
     {...props}
-    style = {{borderRadius: "0px", border: "none", height: "60px", fontSize: "13pt", letterSpacing: ".1rem", backgroundColor: backgroundColor, color : color}}
+    style = {{borderRadius: "0px", border: "none", height: "60px", fontSize: "13pt", marginTop: "20px", letterSpacing: ".1rem", backgroundColor: backgroundColor, color : color}}
   >
     {isLoading && <Glyphicon glyph="refresh" className="spinning" />}
     {!isLoading ? text : loadingText}

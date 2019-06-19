@@ -18,6 +18,7 @@ import image2 from '../assets/images/2.jpg'
 import image3 from '../assets/images/3.jpg'
 import image4 from '../assets/images/4.jpg'
 import image5 from '../assets/images/6.jpg'
+import uploadIcon from '../assets/images/upload-icon.png'
 import Signup from '../containers/Signup'
 
 
@@ -72,7 +73,11 @@ export default class NewNote extends Component {
       window.addEventListener('scroll', this.changeNavColor);
       return;
     }
+
     this.getSheets()
+    
+
+    
 
     if(this.props.isAuthenticated === true){
       document.getElementById("the-nav").style.background = "#4594E9";
@@ -121,20 +126,28 @@ export default class NewNote extends Component {
   }
 
   getSheets = async () =>{
-    
+  
       this.setState({ sheetsLoading: true });
     
     try {
       let sheets;
 
+      let t0 = await performance.now();
       await API.get('getSheets', '/').then(response => {
         sheets = response
+        console.log(response)
     })
-      this.setState({ sheets });
+
+    
+
+      await this.setState({ sheets });
+      let t1 = performance.now();
+console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     } catch (e) {
       alert(e);
     }
   
+    
     this.setState({ sheetsLoading: false });
   }
 
@@ -223,9 +236,9 @@ export default class NewNote extends Component {
                 <h1>Welcome To CloudFit</h1>
                 <p>A simple way to track workouts</p>
                   <ul>
-                    <li><img src = {cloud}/><span style = {{fontWeight: "bold"}}>Upload</span> your workout sheets</li>
-                    <li><img src = {runner}/><span style = {{fontWeight: "bold"}}>Track</span> your progress</li>
-                    <li><img src = {share}/><span style = {{fontWeight: "bold"}}>Share</span> and compare results</li>
+                    <li><img src = {cloud}/><span style = {{fontWeight: "normal"}}>Upload</span> your workout sheets</li>
+                    <li><img src = {runner}/><span style = {{fontWeight: "normal"}}>Track</span> your progress</li>
+                    <li><img src = {share}/><span style = {{fontWeight: "normal"}}>Share</span> and compare results</li>
                   </ul>
               </div>
             </Col>
@@ -244,7 +257,7 @@ export default class NewNote extends Component {
         <div className = "dashboard" style = {{position: "relative", top: "85px"}}>
         
 
-        <button onClick = {this.handleModalShow}>Upload File<img/></button>
+        <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
 
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <UploadModal close = {this.handleModalClose}>
@@ -265,7 +278,7 @@ export default class NewNote extends Component {
           </UploadModal>
         </Modal>
 
-        {this.state.sheetsLoading ? <div className = 'loader'></div> : <div className = "sheets"><Table  sheets = {this.state.sheets} /></div>}
+        <div className = "sheets"><Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>
       </div>
       );
     }
