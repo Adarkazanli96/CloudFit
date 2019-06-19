@@ -5,8 +5,8 @@ import { Link, withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import LoginModal from './components/LoginModal'
 import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
 import Dropdown from './components/Dropdown'
+import Sidebar from "react-sidebar";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,9 +15,17 @@ class App extends React.Component {
     this.state = {
       isAuthenticated: false,
       isAuthenticating: true,
-      showModal: false
+      showModal: false,
+      sidebarOpen: true
     };
+
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+
     
+  }
+
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
   }
 
   handleModalClose = () =>{
@@ -63,6 +71,23 @@ class App extends React.Component {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
     };
+
+    let styles = {
+      root:{
+        
+      },
+      sidebar: {
+        zIndex: 2,
+        position: "absolute",
+        top: "100px",
+        bottom: 0,
+        transition: "transform .3s ease-out",
+        WebkitTransition: "-webkit-transform .3s ease-out",
+        willChange: "transform",
+        overflowY: "auto",
+        width: "250px"
+      }
+    }
   
     return (
       !this.state.isAuthenticating &&
@@ -72,8 +97,17 @@ class App extends React.Component {
         <Navbar {...childProps}>
         {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>LOG IN</button>}
         </Navbar>
-        <Sidebar/>
-        <Routes childProps={childProps} />
+        <Sidebar
+        sidebar={<b><a>stuff 1</a><a>stuff 2</a></b>}
+        open={true}
+        docked = {true}
+        styles={styles}
+      >
+        <button onClick={() => this.onSetSidebarOpen(true)}>
+          Open sidebar
+        </button>
+      </Sidebar>
+        <div style = {{position: "absolute", left: "250px"}}><Routes childProps={childProps} /></div>
       </div>
     );
   }  
