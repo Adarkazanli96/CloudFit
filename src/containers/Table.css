@@ -6,6 +6,7 @@
     color: #7C7C7C;
     width: 100%; /* this and the style below make it so the table is as big as it's elements*/
     table-layout: fixed;
+    font-size: 10pt;
   }
   
   #students td, #students th {
@@ -40,6 +41,7 @@
     left: 25px;
   }
 
+
   /*xs*/
   @media (max-width: 575px){
 
@@ -70,14 +72,13 @@
 
   /* spinner css */
   .spinner-container{
-    width: 200px;
-    margin: 0 auto;
+    width: 64px;
     position: absolute;
-    left: 50%;
-    left: 0;
-right: 0;
-margin-left: auto;
-margin-right: auto;
+
+margin-top: 100px;
+    left:50%;
+    margin-left:-32px;
+
   }
 
 .loader,
@@ -138,5 +139,64 @@ margin-right: auto;
   40% {
     box-shadow: 0 -2em;
     height: 5em;
+  }
+}
+
+
+
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #4593e8;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
   }
 }

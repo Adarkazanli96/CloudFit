@@ -1,0 +1,22 @@
+/* The sidebar menu */
+.sidenav {
+    color: black;
+    background-color: grey;
+    height: 2000px;
+    float: left;
+left: 0
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }

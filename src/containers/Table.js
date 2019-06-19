@@ -19,8 +19,8 @@ class table extends React.Component {
            const { _id, workoutDate, workoutTime, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, filteredRecords} = sheet.data //destructuring
            return (
               <tr key={index}>
-                 <td>{workoutDate}</td>
-                 <td>{workoutTime}</td>
+                 <td>...</td>
+                 <td>{workoutDate}{" "}{workoutTime}</td>
                  <td>{duration}</td>
                  <td>{caloriesBurned}</td>
                  <td>{notes}</td>
@@ -42,14 +42,14 @@ class table extends React.Component {
               <table id='students'>
                  <tbody>
                     <tr>
-                        <th style = {{width: "150px"}}>DATE</th>
-                        <th style = {{width: "150px"}}>TIME</th>
+                        <th style = {{width: "50px"}}></th>
+                        <th style = {{width: "200px"}}>DATE</th>
                         <th style = {{width: "150px"}}>DURATION</th>
                         <th style = {{width: "150px"}}>CALORIES</th>
                         <th style = {{width: "200px"}}>NOTES</th>
                         <th style = {{width: "300px"}}>GRAPH</th>
                     </tr>
-                    {this.props.loading? <div className = "spinner-container"><div className = "loader"></div></div> : this.renderTableData()}
+                    {this.props.loading? <div className = "spinner-container">Loading...<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div> : this.renderTableData()}
                     
                  </tbody>
               </table>

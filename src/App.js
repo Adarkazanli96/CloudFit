@@ -5,6 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import LoginModal from './components/LoginModal'
 import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 import Dropdown from './components/Dropdown'
 
 class App extends React.Component {
@@ -71,6 +72,7 @@ class App extends React.Component {
         <Navbar {...childProps}>
         {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>LOG IN</button>}
         </Navbar>
+        <Sidebar/>
         <Routes childProps={childProps} />
       </div>
     );
