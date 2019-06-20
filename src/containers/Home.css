@@ -1,5 +1,5 @@
 .Home{
-  color: #4B4B4B;
+  color: white;
 }
 
 .upload-btn{
@@ -12,8 +12,15 @@
   background-color: #4594E9;
   /*border-radius: 5px;*/
   padding: 7px 15px 7px 15px;
-  display: block;
-  margin-left: auto;
+  float: right;
+}
+
+.sort-btn{
+float: left;
+}
+
+.select-date-btn{
+  float: left;
 }
 
 .upload-btn img{
@@ -28,14 +35,15 @@
   .dashboard{
     position: relative;
     top: 45px;
-
-    text-align: center;
-    background-color: #edecec;
+    color: #4B4B4B;
+    text-align: left;
   }
 
   .sheets{
-    background-color: blue;
-    padding: 20px;
+    background-color: white;
+    padding-top: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
   }
   .file-drop-area {
     position: relative;

@@ -49,7 +49,7 @@ class table extends React.Component {
                         <th style = {{width: "200px"}}>NOTES</th>
                         <th style = {{width: "300px"}}>GRAPH</th>
                     </tr>
-                    {this.props.loading? <div className = "spinner-container">Loading...<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div> : this.renderTableData()}
+                    {this.props.loading? <div className = "spinner-container"><div class="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div> : this.renderTableData()}
                     
                  </tbody>
               </table>

@@ -255,9 +255,8 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
       return (
         <div className = "dashboard">
-        <h1>Logs</h1>
-
-        <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
+      
+        
 
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <UploadModal close = {this.handleModalClose}>
@@ -278,7 +277,14 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
           </UploadModal>
         </Modal>
 
-        <div className = "sheets"><Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>
+        <div className = "sheets">
+        <h2>Logging</h2>
+        <hr/>
+          <button className = "select-date-btn">SELECT A DATE RANGE TO SEARCH</button>
+        <button className = "sort-btn">SORT BY</button>
+        <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
+
+        <Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>
       </div>
       );
     }

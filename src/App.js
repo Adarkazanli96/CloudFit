@@ -85,7 +85,7 @@ class App extends React.Component {
         WebkitTransition: "-webkit-transform .3s ease-out",
         willChange: "transform",
         width: "250px",
-        backgroundColor: "white",
+        backgroundColor: "#FAFAFA",
         color: "#4B4B4B",
         fontWeight: "bold",
         fontSize: "10pt",
@@ -97,12 +97,12 @@ class App extends React.Component {
       <div className = "sidebar-content">
         
       <ul>
-      <li><h3>Menu</h3></li>
+      <li><h4 style = {{fontWeight: "bold"}}>Menu</h4></li>
       <li>Dashboard</li>
       <li>Logs</li>
-      <li>Schedules</li>
+      <li>Progress</li>
       <li>Bookmarks</li>
-      <li>Connect</li>
+      <li>Share</li>
       <li>Settings</li>
     </ul>
       </div>
@@ -124,7 +124,7 @@ class App extends React.Component {
         transitions = {false}
       >
       </Sidebar> : null}
-        <div style = {{position: "absolute", left: "250px"}}><Routes childProps={childProps} /></div>
+        <div style = {this.state.isAuthenticated? {position: "absolute", left: "250px"} : {}}><Routes childProps={childProps} /></div>
       </div>
     );
   }  
