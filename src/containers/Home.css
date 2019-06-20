@@ -1,5 +1,5 @@
 .Home{
-  color: white;
+  color: #4B4B4B;
 }
 
 .upload-btn{
@@ -8,6 +8,7 @@
   border: none;
   border: 2px solid #00AA66;
   border: none;
+  color: white;
   background-color: #4594E9;
   /*border-radius: 5px;*/
   padding: 7px 15px 7px 15px;
@@ -26,17 +27,16 @@
 /* sheets page */
   .dashboard{
     position: relative;
-    top: 50px;
-    width: 100%; /*remove*/
-    margin: 0 auto;
+    top: 45px;
+
     text-align: center;
+    background-color: #edecec;
   }
 
   .sheets{
-    background-color: white;
+    background-color: blue;
     padding: 20px;
   }
-
   .file-drop-area {
     position: relative;
     display: flex;

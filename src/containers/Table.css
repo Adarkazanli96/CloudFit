@@ -7,10 +7,12 @@
     width: 100%; /* this and the style below make it so the table is as big as it's elements*/
     table-layout: fixed;
     font-size: 10pt;
+    position: relative;
   }
   
   #students td, #students th {
     border-bottom: 1px solid #ddd;
+    background-color: white;
   }
 
   #students td {
@@ -39,6 +41,12 @@
     font-weight: bold;
     position: relative;
     left: 25px;
+  }
+
+  .table-container{
+    position: relative;
+    padding: 10px;
+    min-height: 400px;
   }
 
 

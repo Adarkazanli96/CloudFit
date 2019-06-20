@@ -78,16 +78,35 @@ class App extends React.Component {
       },
       sidebar: {
         zIndex: 2,
-        position: "absolute",
-        top: "100px",
+        position: "fixed",
+        top: "65px",
         bottom: 0,
         transition: "transform .3s ease-out",
         WebkitTransition: "-webkit-transform .3s ease-out",
         willChange: "transform",
-        overflowY: "auto",
-        width: "250px"
+        width: "250px",
+        backgroundColor: "white",
+        color: "#4B4B4B",
+        fontWeight: "bold",
+        fontSize: "10pt",
+        height: "100%"
       }
     }
+
+    let sidebarContent = (
+      <div className = "sidebar-content">
+        
+      <ul>
+      <li><h3>Menu</h3></li>
+      <li>Dashboard</li>
+      <li>Logs</li>
+      <li>Schedules</li>
+      <li>Bookmarks</li>
+      <li>Connect</li>
+      <li>Settings</li>
+    </ul>
+      </div>
+    )
   
     return (
       !this.state.isAuthenticating &&
@@ -97,16 +116,14 @@ class App extends React.Component {
         <Navbar {...childProps}>
         {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>LOG IN</button>}
         </Navbar>
-        <Sidebar
-        sidebar={<b><a>stuff 1</a><a>stuff 2</a></b>}
+        {this.state.isAuthenticated? <Sidebar
+        sidebar={sidebarContent}
         open={true}
         docked = {true}
         styles={styles}
+        transitions = {false}
       >
-        <button onClick={() => this.onSetSidebarOpen(true)}>
-          Open sidebar
-        </button>
-      </Sidebar>
+      </Sidebar> : null}
         <div style = {{position: "absolute", left: "250px"}}><Routes childProps={childProps} /></div>
       </div>
     );

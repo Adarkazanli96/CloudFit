@@ -254,8 +254,8 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     document.body.style.background = "white";
 
       return (
-        <div className = "dashboard" style = {{position: "relative", top: "85px"}}>
-        
+        <div className = "dashboard">
+        <h1>Logs</h1>
 
         <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
 

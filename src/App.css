@@ -64,3 +64,16 @@ border: none;
 margin: 0px;
 padding: 0px;
   }
+
+  .sidebar-content{
+    position: relative;
+    right: 20px;
+  }
+  .sidebar-content ul{
+    list-style: none;
+  }
+
+  .sidebar-content li{
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
