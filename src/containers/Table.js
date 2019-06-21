@@ -38,8 +38,7 @@ class table extends React.Component {
      render() {
          console.log(this.props.sheets)
         return (
-           <div className = "table-container">
-              <table id='students'>
+              <table id='logs-table'>
                  <tbody>
                     <tr>
                         <th style = {{width: "50px"}}></th>
@@ -53,7 +52,6 @@ class table extends React.Component {
                     
                  </tbody>
               </table>
-           </div>
         )
      }
  }

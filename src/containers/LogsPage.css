@@ -1,11 +1,11 @@
-.logs{
+.logs-page{
     position: relative;
     top: 45px;
     color: #4B4B4B;
     text-align: left;
   }
 
-  .logs h1 img{
+  .logs-page h1 img{
     height: 50px;
     width: auto;
     margin: 10px;
@@ -14,7 +14,7 @@
     left: 5px;
   }
 
-  .sheets{
+  .logs-container{
     padding-top: 30px;
     padding-right: 30px;
     padding-left: 30px;

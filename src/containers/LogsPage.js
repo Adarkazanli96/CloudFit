@@ -181,7 +181,7 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
     return (
 
-        <div className = "logs">
+        <div className = "logs-page">
       
         
 
@@ -204,7 +204,7 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
           </UploadModal>
         </Modal>
 
-        <div className = "sheets">
+        <div className = "logs-container">
         <h1>Logs<img src = {logsIcon}/></h1>
         <hr/>
           <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
