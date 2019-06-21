@@ -24,8 +24,6 @@ export default class NewNote extends Component {
 
   async componentDidMount(){
 
-    window.scrollTo(0, 0)
-
     document.getElementById("the-nav").style.background = "transparent";      //document.getElementById("the-nav").style.transition = "background-color 500ms ease"
       window.addEventListener('scroll', this.changeNavColor);
       return;
@@ -46,44 +44,37 @@ export default class NewNote extends Component {
     }
   }
   
-    renderLander(){
-
-      document.body.style.background = "black";
-      return (
-        <div className="lander">
-            <div id= "crossfade">
-              <img src={image1} />
-              <img src={image2} />
-              <img src={image3} />
-              <img src={image4} />
-              <img src={image5} />
-            </div>
-          <Row className = "row1">
-            <Col md = {6} sm = {8}>
-              <div className = "welcome">
-                <h1>Welcome To CloudFit</h1>
-                <p>A simple way to track workouts</p>
-                  <ul>
-                    <li><img src = {cloud}/><span style = {{fontWeight: "normal"}}>Upload</span> your workout sheets</li>
-                    <li><img src = {runner}/><span style = {{fontWeight: "normal"}}>Track</span> your progress</li>
-                    <li><img src = {share}/><span style = {{fontWeight: "normal"}}>Share</span> and compare results</li>
-                  </ul>
-              </div>
-            </Col>
-            <Col md = {6} sm = {4}>
-              <Signup {...this.props} />
-            </Col>
-          </Row>
-      </div>
-      );
-    }
 
   render() {    
 
+    document.body.style.background = "black";
+
     return (
-        <div className = "Home">
-          {this.renderLander()}
+      <div className="lander">
+      <div id= "crossfade">
+        <img src={image1} />
+        <img src={image2} />
+        <img src={image3} />
+        <img src={image4} />
+        <img src={image5} />
+      </div>
+    <Row className = "row1">
+      <Col md = {6} sm = {8}>
+        <div className = "welcome">
+          <h1>Welcome To CloudFit</h1>
+          <p>A simple way to track workouts</p>
+            <ul>
+              <li><img src = {cloud}/><span style = {{fontWeight: "normal"}}>Upload</span> your workout sheets</li>
+              <li><img src = {runner}/><span style = {{fontWeight: "normal"}}>Track</span> your progress</li>
+              <li><img src = {share}/><span style = {{fontWeight: "normal"}}>Share</span> and compare results</li>
+            </ul>
         </div>
+      </Col>
+      <Col md = {6} sm = {4}>
+        <Signup {...this.props} />
+      </Col>
+    </Row>
+</div>
     );
   }
 }

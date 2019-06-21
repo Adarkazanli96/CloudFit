@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
-import "./Home.css";
+import "./LogsPage.css";
 import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
@@ -60,8 +60,6 @@ export default class NewNote extends Component {
   }
 
   async componentDidMount(){
-
-    window.scrollTo(0, 0)
 
     this.getSheets()
     
@@ -162,12 +160,28 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
       }.bind(this),2500);
     
     }
-  
-    renderSheets(popup) {
-    document.body.style.background = "white";
 
-      return (
-        <div className = "dashboard">
+
+  render() {
+    document.body.style.background = "white";
+    let popup;
+      
+      if(!this.state.error){
+        popup = <Popup
+          content = {"File upload successful"}
+          color = {"green"}
+          />
+      }
+      else{
+        popup = <Popup
+                    content = {"There was an error in uploading the file"}
+                    color = {"red"}
+                    />
+      }
+
+    return (
+
+        <div className = "logs">
       
         
 
@@ -199,32 +213,6 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         <Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>
       </div>
-      );
-    }
-
-  render() {
-    
-    let popup;
-      
-      if(!this.state.error){
-        popup = <Popup
-          content = {"File upload successful"}
-          color = {"green"}
-          />
-      }
-      else{
-        popup = <Popup
-                    content = {"There was an error in uploading the file"}
-                    color = {"red"}
-                    />
-      }
-
-      
-
-    return (
-        <div className = "Home">
-          {this.renderSheets()}
-        </div>
     );
   }
 }

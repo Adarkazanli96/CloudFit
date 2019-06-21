@@ -1,0 +1,73 @@
+.logs{
+    position: relative;
+    top: 45px;
+    color: #4B4B4B;
+    text-align: left;
+  }
+
+  .logs h1 img{
+    height: 50px;
+    width: auto;
+    margin: 10px;
+    position: relative;
+    bottom: 13px;
+    left: 5px;
+  }
+
+  .sheets{
+    padding-top: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .upload-btn{
+    background: none;
+    /*background-color: #89c9e1;*/
+    border: none;
+    border: 2px solid #00AA66;
+    border: none;
+    color: white;
+    background-color: #4594E9;
+    /*border-radius: 5px;*/
+    padding: 7px 15px 7px 15px;
+    float: right;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  
+  }
+  
+  .upload-btn img{
+    height: 16px;
+    width: auto;
+    position: relative;
+    bottom: 2px;
+    margin-right: 3px;
+  }
+  
+  .sort-btn{
+    float: left;
+      padding: 7px 15px 7px 15px;
+      background: none;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+      
+    }
+  
+    .sort-btn img{
+      position: relative;
+      bottom: 2px;
+    }
+    
+    .select-date-btn{
+      float: left;
+      padding: 7px 15px 7px 15px;
+      margin-right: 10px;
+      background: none;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    }
+  
+    .select-date-btn img{
+      height: 16px;
+      width: auto;
+      position: relative;
+      bottom: 2px;
+    }
