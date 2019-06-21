@@ -8,6 +8,13 @@ import Navbar from './components/Navbar'
 import Dropdown from './components/Dropdown'
 import Sidebar from "react-sidebar";
 
+import bookmarks from './assets/images/menu/bookmarks.png'
+import dashboard from './assets/images/menu/dashboard.png'
+import logs from './assets/images/menu/logs.png'
+import progress from './assets/images/menu/progress.png'
+import share from './assets/images/menu/share.png'
+import settings from './assets/images/menu/settings.png'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -98,12 +105,12 @@ class App extends React.Component {
         
       <ul>
       <li><h4 style = {{fontWeight: "bold"}}>Menu</h4></li>
-      <li>Dashboard</li>
-      <li>Logs</li>
-      <li>Progress</li>
-      <li>Bookmarks</li>
-      <li>Share</li>
-      <li>Settings</li>
+      <li><img src = {dashboard}/>Dashboard</li>
+      <li><img src = {logs}/>Logs</li>
+      <li><img src = {progress}/>Progress</li>
+      <li><img src = {bookmarks}/>Bookmarks</li>
+      <li><img src = {share}/>Share</li>
+      <li><img src = {settings}/>Settings</li>
     </ul>
       </div>
     )

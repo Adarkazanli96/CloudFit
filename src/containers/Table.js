@@ -1,9 +1,9 @@
 import React from 'react';
 import LineChart from '../components/LineChart'
 import Collapsible from 'react-collapsible';
-import triangleOpen from '../assets/images/triangle-open.png'
-import triangleClosed from '../assets/images/triangle-closed.png'
-
+import triangleOpen from '../assets/images/sheet_list_icons/triangle-open.png'
+import triangleClosed from '../assets/images/sheet_list_icons/triangle-closed.png'
+import ellipsisIcon from '../assets/images/sheet_list_icons/ellipsis.png'
 import './Table.css'
 
 class table extends React.Component {
@@ -19,7 +19,7 @@ class table extends React.Component {
            const { _id, workoutDate, workoutTime, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, filteredRecords} = sheet.data //destructuring
            return (
               <tr key={index}>
-                 <td>...</td>
+                 <td><button className = "more-btn"><img src = {ellipsisIcon}/></button></td>
                  <td>{workoutDate}{" "}{workoutTime}</td>
                  <td>{duration}</td>
                  <td>{caloriesBurned}</td>

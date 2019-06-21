@@ -13,13 +13,17 @@ import UploadModal from '../components/UploadModal'
 import cloud from '../assets/images/cloud-upload.png'
 import runner from '../assets/images/running.png'
 import share from '../assets/images/share.png'
-import image1 from '../assets/images/1.jpg'
-import image2 from '../assets/images/2.jpg'
-import image3 from '../assets/images/3.jpg'
-import image4 from '../assets/images/4.jpg'
-import image5 from '../assets/images/6.jpg'
+import image1 from '../assets/images/stock_backgrounds/1.jpg'
+import image2 from '../assets/images/stock_backgrounds/2.jpg'
+import image3 from '../assets/images/stock_backgrounds/3.jpg'
+import image4 from '../assets/images/stock_backgrounds/4.jpg'
+import image5 from '../assets/images/stock_backgrounds/6.jpg'
 import uploadIcon from '../assets/images/upload-icon.png'
+import calendarIcon from '../assets/images/calendar.png'
+import downArrow from '../assets/images/down-arrow.png'
 import Signup from '../containers/Signup'
+
+import logsIcon from '../assets/images/logs.png'
 
 
 export default class NewNote extends Component {
@@ -278,10 +282,10 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
         </Modal>
 
         <div className = "sheets">
-        <h2>Logging</h2>
+        <h1>Logs<img src = {logsIcon}/></h1>
         <hr/>
-          <button className = "select-date-btn">SELECT A DATE RANGE TO SEARCH</button>
-        <button className = "sort-btn">SORT BY</button>
+          <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+        <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
 
         <Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>

@@ -12,7 +12,6 @@
   
   #students td, #students th {
     border-bottom: 1px solid #ddd;
-    background-color: white;
   }
 
   #students td {
@@ -46,7 +45,18 @@
   .table-container{
     position: relative;
     min-height: 700px;
-    background-color: white;
+  }
+
+  .more-btn{
+    background: none;
+    border: none;
+    position: relative;
+    left: 3px;
+  }
+
+  .more-btn img{
+    width: 20px;
+    height: auto;
   }
 
 
