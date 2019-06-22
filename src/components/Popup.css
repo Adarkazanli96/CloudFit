@@ -1,37 +1,38 @@
 
 
 .popup-container{
-        position: absolute;
-    opacity: 0.6;
+    position: fixed;
     width: 480px;
     
     border-radius: 6px;
-    
-    margin-left: -9%;
+
+    text-align: center;
 
     
     padding-top: 12px;
     padding-bottom: 12px;
-    margin-top: -75px;
 
-    opacity: 0.6;
-    animation: fade 0.5s linear;
+    left: 50%;
+    margin-left: -240px;
+
+    animation: fade 0.8s linear;
     animation-delay: 2s;
+    z-index: 3000;
 }
 
 @keyframes fade {
-    from {opacity :0.6;}
+    from {opacity :1;}
     to {opacity :0;}
   }
 
 .popup-container.red{
-background-color: pink;
+background-color: #FADBE0;
 color: red;
 border: 1px solid red;
 }
 
 .popup-container.green{
-background-color: #Aff7A2;
+background-color: #D9f8cc;
 color: green;
 border: 1px solid green;
 }

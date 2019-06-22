@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
+import SubmitBar from '../components/LoadingBar'
 import config from "../config";
 import "./LogsPage.css";
 import { s3Upload } from "../libs/awsLib";
@@ -27,8 +28,8 @@ export default class NewNote extends Component {
       file: null,
       showPopup: false,
       error: false,
-      sheets : [],
-      sheetsLoading: false,
+      logs : [],
+      loading: false,
       showModal: false
     };
   }
@@ -61,37 +62,37 @@ export default class NewNote extends Component {
 
   async componentDidMount(){
 
-    this.getSheets()
+    this.getLogs()
     
     document.getElementById("the-nav").style.background = "#4594E9";
       
   
   }
 
-  getSheets = async () =>{
+  getLogs = async () =>{
   
-      this.setState({ sheetsLoading: true });
+      this.setState({ loading: true });
     
     try {
-      let sheets;
+      let logs;
 
       let t0 = await performance.now();
       await API.get('getSheets', '/').then(response => {
-        sheets = response
+        logs = response
         console.log(response)
     }).catch(error => console.log("there was an error", error))
 
     
 
-      await this.setState({ sheets });
+      await this.setState({ logs });
       let t1 = performance.now();
-console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+      console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     } catch (e) {
       alert(e);
     }
   
     
-    this.setState({ sheetsLoading: false });
+    this.setState({ loading: false });
   }
 
 
@@ -109,6 +110,8 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     try {
       let name;
       let userId;
+
+      this.handleModalClose();
 
       const attachment = this.state.file
         ? await s3Upload(this.state.file).then(response => {
@@ -132,11 +135,12 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
       }
       await API.post('postSheet', '/', params).then(response => {
         console.log(response.body);
-        if(this.state.sheets === null){ // sheets are empty
-          this.setState({sheets : [response.body]})
+        response.body.isAdded = true;
+        if(this.state.logs === null){ // logs are empty
+          this.setState({logs : [response.body]})
         }
-        else{ // sheets array not empty
-          this.setState({ sheets: [...this.state.sheets, response.body] })
+        else{ // logs array not empty
+          this.setState({ logs: [...this.state.logs, response.body] })
         }
         
       })
@@ -150,8 +154,7 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
       this.setState({ isSubmitting: false, error: true});
     }
 
-
-    document.getElementById('drop-form').reset();
+    //document.getElementById('drop-form').reset();
     this.setState({showPopup: true, file: null})
 
     // add a timer for the popup
@@ -163,6 +166,7 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
 
   render() {
+
     document.body.style.background = "white";
     let popup;
       
@@ -195,23 +199,22 @@ console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
           bsSize="large"
           disabled={!this.validateForm()}
           type="submit"
-          isLoading={this.state.isSubmitting}
           text="Submit"
-          loadingText="Submitting…"
         />
       </form>
 
           </UploadModal>
         </Modal>
-
         <div className = "logs-container">
+          {this.state.isSubmitting? <SubmitBar/> : null}
+        {this.state.showPopup? <div>{popup}</div> : null}
         <h1>Logs<img src = {logsIcon}/></h1>
         <hr/>
           <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
 
-        <Table  loading = {this.state.sheetsLoading} sheets = {this.state.sheets} /></div>
+        <Table  loading = {this.state.loading} logs = {this.state.logs} /></div>
       </div>
     );
   }

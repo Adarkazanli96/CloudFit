@@ -14,10 +14,35 @@
     border-bottom: 1px solid #ddd;
   }
 
+
+
+  
+
   #logs-table td {
     vertical-align: top;
     padding-top: 20px;
     padding-bottom: 20px;
+
+  }
+  
+  /* Safari 4.0 - 8.0 */
+  @-webkit-keyframes glow {
+    from {border-color: #9ecaed;
+      box-shadow: 0 0 10px #9ecaed;
+    background-color: rgb(204, 204, 255);}
+    to {border-color: none;
+      box-shadow: none;
+    background-color: white;}
+  }
+  
+  /* Standard syntax */
+  @keyframes glow {
+    from {border-color: #9ecaed;
+      box-shadow: 0 0 10px #9ecaed;
+    background-color: rgb(204, 204, 255);}
+    to {border-color: none;
+      box-shadow: none;
+    background-color: white;}
   }
 
   .trigger img{

@@ -5,7 +5,7 @@ let popups = props =>{
     
         return(
                 <div className = {"popup-container " + props.color}>
-                        <div style = {{textAlign: "center", opacity: 1}} className = "content">
+                        <div className = "content">
                         {props.content}
                         </div>
 
