@@ -1,26 +1,28 @@
 .submit-bar-container{
-    opacity: 1;
+
+  color: #4B4B4B;
+
+    position: absolute;
     width: 480px;
     
     border-radius: 6px;
 
+    text-align: center;
+
     
     padding-top: 12px;
     padding-bottom: 12px;
-    top: 10%;
 
     left: 50%;
     margin-left: -240px;
-
-    color: black;
-    position: absolute;
+    
 
 }
 
 
 .submit-bar-container .spinning.glyphicon {
-  color: black;
-    margin-right: 7px;
+  color: #4B4B4B;
+      margin-right: 7px;
     top: 2px;
     animation: spin 1s infinite linear;
   }

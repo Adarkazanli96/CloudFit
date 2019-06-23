@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal} from "react-bootstrap";
+import { Modal, Glyphicon} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import SubmitBar from '../components/LoadingBar'
 import config from "../config";
@@ -33,7 +33,8 @@ export default class NewNote extends Component {
       logs : [],
       loading: false,
       showModal: false,
-      selectedLog: null
+      selectedLog: null,
+      gettingSelectedLog: false
     };
   }
 
@@ -44,13 +45,9 @@ export default class NewNote extends Component {
     return false;
   }
 
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  }
 
   setSelectedLogHandler = (value) =>{
+    this.setState({gettingSelectedLog: true})
     this.getLog(value);
   }
 
@@ -167,10 +164,7 @@ export default class NewNote extends Component {
     this.setState({showPopup: true, file: null})
 
     // add a timer for the popup
-    setTimeout(function(){
-      this.setState({showPopup:false});
-      }.bind(this),2500);
-    
+
     }
 
     getLog = async (id) =>{
@@ -190,7 +184,11 @@ export default class NewNote extends Component {
 
       console.log("before set state", selectedLog)
 
-      this.setState({selectedLog})
+      this.setState({selectedLog, gettingSelectedLog: false})
+    }
+
+    dismissAlertHandler = () =>{
+      this.setState({showPopup: false})
     }
 
 
@@ -201,12 +199,15 @@ export default class NewNote extends Component {
       
       if(!this.state.error){
         popup = <Popup
+        close = {this.dismissAlertHandler}
           content = {"File upload successful"}
           color = {"green"}
           />
       }
       else{
         popup = <Popup
+        close = {this.dismissAlertHandler}
+
                     content = {"There was an error in uploading the file"}
                     color = {"red"}
                     />
@@ -235,25 +236,29 @@ export default class NewNote extends Component {
           </UploadModal>
         </Modal>
         <div className = "logs-container">
-          {this.state.isSubmitting? <SubmitBar/> : null}
         {this.state.showPopup? <div>{popup}</div> : null}
-        <h1>Logs<img src = {logsIcon}/></h1>
+        <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
         
-        <div style = { this.state.selectedLog? {visibility: "hidden", position: "absolute"} : {}}>
+        <div style = { this.state.selectedLog || this.state.gettingSelectedLog? {visibility: "hidden", position: "absolute"} : {}}>
         <div className = "btn-container">
           <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-        <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
+
+        {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
+        <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+        
+        
+        
         </div>
           
 
           <Table onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
           </div>
           
-          
-          <SelectedLog back = {this.clearSelectedLog} selected = {this.state.selectedLog} /> 
+          {this.state.gettingSelectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : null}
+          {this.state.selectedLog? <SelectedLog back = {this.clearSelectedLog} selected = {this.state.selectedLog} /> : null}
         
         </div>
       </div>

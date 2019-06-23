@@ -42,7 +42,7 @@ class table extends React.Component {
            let date = this.formatDate(workoutDate)
 
            return (
-              <tr style = {log.style} key={index}>
+              <tr key={index}>
                  <td><button className = "more-btn"><img src = {ellipsisIcon}/></button></td>
                  <td onClick = {() => this.props.onSelect(_id)}>{date}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{duration}</td>
