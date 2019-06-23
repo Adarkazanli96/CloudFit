@@ -18,6 +18,8 @@ import downArrow from '../assets/images/down-arrow.png'
 
 import logsIcon from '../assets/images/logs.png'
 
+import SelectedLog from '../components/SelectedLog'
+
 
 export default class NewNote extends Component {
   constructor(props) {
@@ -30,7 +32,8 @@ export default class NewNote extends Component {
       error: false,
       logs : [],
       loading: false,
-      showModal: false
+      showModal: false,
+      selectedLog: null
     };
   }
 
@@ -45,6 +48,10 @@ export default class NewNote extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
+  }
+
+  setSelectedLogHandler = (value) =>{
+    this.getLog(value);
   }
 
 
@@ -62,14 +69,14 @@ export default class NewNote extends Component {
 
   async componentDidMount(){
 
-    this.getLogs()
+    this.getAllLogs()
     
     document.getElementById("the-nav").style.background = "#4594E9";
       
   
   }
 
-  getLogs = async () =>{
+  getAllLogs = async () =>{
   
       this.setState({ loading: true });
     
@@ -79,7 +86,6 @@ export default class NewNote extends Component {
       let t0 = await performance.now();
       await API.get('getSheets', '/').then(response => {
         logs = response
-        console.log(response)
     }).catch(error => console.log("there was an error", error))
 
     
@@ -95,7 +101,9 @@ export default class NewNote extends Component {
     this.setState({ loading: false });
   }
 
-
+  clearSelectedLog = () =>{
+    this.setState({selectedLog: null})
+  }
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -123,6 +131,7 @@ export default class NewNote extends Component {
         await Auth.currentUserCredentials().then(
           res => {
             userId = res.data.IdentityId
+            console.log(userId)
           }
         )
 
@@ -133,8 +142,8 @@ export default class NewNote extends Component {
           userId
         }
       }
-      await API.post('postSheet', '/', params).then(response => {
-        console.log(response.body);
+      await API.post('CloudFit', '/', params).then(response => {
+       // console.log(response.body);
         response.body.isAdded = true;
         if(this.state.logs === null){ // logs are empty
           this.setState({logs : [response.body]})
@@ -162,6 +171,26 @@ export default class NewNote extends Component {
       this.setState({showPopup:false});
       }.bind(this),2500);
     
+    }
+
+    getLog = async (id) =>{
+      
+      let selectedLog;
+      try {
+  
+        
+        await API.get('CloudFit', `/logs/${id}`).then(response => {
+          selectedLog = response;
+  
+        }).catch(error => console.log("there was an error", error))
+  
+      } catch (e) {
+        alert(e);
+      }
+
+      console.log("before set state", selectedLog)
+
+      this.setState({selectedLog})
     }
 
 
@@ -210,11 +239,23 @@ export default class NewNote extends Component {
         {this.state.showPopup? <div>{popup}</div> : null}
         <h1>Logs<img src = {logsIcon}/></h1>
         <hr/>
+        
+        
+        <div style = { this.state.selectedLog? {visibility: "hidden", position: "absolute"} : {}}>
+        <div className = "btn-container">
           <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
         <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button>
+        </div>
+          
 
-        <Table  loading = {this.state.loading} logs = {this.state.logs} /></div>
+          <Table onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
+          </div>
+          
+          
+          <SelectedLog back = {this.clearSelectedLog} selected = {this.state.selectedLog} /> 
+        
+        </div>
       </div>
     );
   }

@@ -20,7 +20,6 @@ const data = {
   ]
   
 }
-console.log('this is final', props.records)
 
 /*let arr2 = [
 [0, 1], [1, 2], [2, 4], [3, 2], [4, 7],[5,6],[6,7],[7,10],[8,9],[9,10],[10,11],
@@ -42,8 +41,8 @@ return(
   // space of its parent element automatically
   <div
     style={{
-      width: "100%",
-      height: "300px",
+      width: props.width,
+      height: props.height,
     }}
   >
     <Chart
