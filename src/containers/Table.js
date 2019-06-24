@@ -14,7 +14,7 @@ class table extends React.Component {
     }
 
     compare = ( a, b ) => {
-      return b.timestamp - a.timestamp
+      return b.data.workoutDate - a.data.workoutDate
     }
 
 
