@@ -1,7 +1,6 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import SubmitBar from '../components/LoadingBar'
 import config from "../config";
 import "./LogsPage.css";
 import { s3Upload } from "../libs/awsLib";
@@ -51,12 +50,21 @@ export default class NewNote extends Component {
   }
 
 
-  setSelectedLogHandler = (value) =>{
+  // controls for each individual entry
+  setSelectedLogHandler = (id) =>{
     this.setState({showPopup: false, showTable: false})
-    this.getLog(value);
+    this.clearRecentTab(id) // sets recently inserted to false
+    this.getLog(id);
   }
 
 
+  // selected log component controls
+  clearSelectedLog = () =>{
+    this.setState({selectedLog: null, showTable: true})
+  }
+
+
+  // table component controls
   handleFileChange = event => {
       this.setState({file: event.target.files[0]})
   }
@@ -69,42 +77,12 @@ export default class NewNote extends Component {
     this.setState({showModal: true})
   }
 
-  async componentDidMount(){
-
-    this.getAllLogs()
+  showMenu = (event) =>{
+    event.preventDefault();
     
-    document.getElementById("the-nav").style.background = "#4594E9";
-      
-  
-  }
-
-  getAllLogs = async () =>{
-  
-      this.setState({ loading: true });
-    
-    try {
-      let logs;
-
-      let t0 = await performance.now();
-      await API.get('getSheets', '/').then(response => {
-        logs = response
-    }).catch(error => console.log("there was an error", error))
-
-    
-
-      await this.setState({ logs });
-      let t1 = performance.now();
-      console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-    } catch (e) {
-      alert(e);
-    }
-  
-    
-    this.setState({ loading: false });
-  }
-
-  clearSelectedLog = () =>{
-    this.setState({selectedLog: null, showTable: true})
+    this.setState({ showMenu: true }, () => {
+      document.addEventListener('click', this.closeMenu);
+    });
   }
 
   handleSubmit = async event => {
@@ -172,47 +150,93 @@ export default class NewNote extends Component {
 
     }
 
-    handleFileChange = event => {
-      this.setState({file: event.target.files[0]})
-  }
 
-    getLog = async (id) =>{
+
+  // API calls
+
+  getAllLogs = async () =>{
+    this.setState({ loading: true });
+    
+    try {
+      let logs;
+
+      let t0 = await performance.now();
+      await API.get('getSheets', '/').then(response => {
+        logs = response}
+        )
+      .catch(error => console.log("there was an error", error))
+
+      await this.setState({ logs });
+      let t1 = performance.now();
+      console.log("Call to get all logs took " + (t1 - t0) + " milliseconds.")
+    } catch (e) {
+      alert(e);
+    }
+    this.setState({ loading: false });
+  }
+  
+  getLog = async (id) =>{
+    let selectedLog;
       
-      let selectedLog;
-      try {
-  
-        
-        await API.get('CloudFit', `/logs/${id}`).then(response => {
-          selectedLog = response;
-  
-        }).catch(error => {
-          console.log("there was an error", error)
-        this.setState({showTable : true})})
-  
-      } catch (e) {
+    try {
+      await API.get('CloudFit', `/logs/${id}`).then(response => {
+      selectedLog = response;
+      }).catch(error => {
+      console.log("there was an error", error)
+      this.setState({showTable : true})})
+    } catch (e) {
         alert(e);
+    }
+
+    this.setState({selectedLog})
+    }
+
+    deleteLog = async (id) =>{
+        
+      try {
+        await API.del('CloudFit', `/logs/${id}`).then(response => {
+
+          console.log("the response is ", response)
+        if(response.status === true){ // remove entry from arraylist
+          let logs = [...this.state.logs]
+          console.log("before deletion", logs)
+          logs.forEach(log =>{
+            if(log._id === id){
+                //log.recentlyAdded = false
+            }
+          })
+          logs.splice(logs.findIndex(log => logs._id = id), 1)
+          console.log("after deletion", logs)
+          this.setState({logs});
+
+        }
+        }).catch(error => {
+        console.log("there was an error", error)})
+      } catch (e) {
+          alert(e);
+      }
+  
       }
 
-      console.log("before set state", selectedLog)
+  dismissAlertHandler = () =>{
+    this.setState({showPopup: false})
+  }
 
-      this.setState({selectedLog})
+  closeMenu = () => {
+    this.setState({ showMenu: false }, () => {
+      document.removeEventListener('click', this.closeMenu);
+    });
+  }
+
+  clearRecentTab = (id) =>{
+    let logs = [...this.state.logs];
+    logs.forEach(log =>{
+    if(log._id === id){
+        log.recentlyAdded = false
     }
-
-    dismissAlertHandler = () =>{
-      this.setState({showPopup: false})
-    }
-
-    clearRecentTab = (id) =>{
-      let logs = [...this.state.logs];
-      logs.forEach(log =>{
-        if(log._id === id){
-          log.recentlyAdded = false
-        }
        
-      })
-      
-      this.setState({logs})
-      console.log("clearing recent entries", logs)
+    })
+    this.setState({logs})
    }
 
    renderTable(){
@@ -221,14 +245,29 @@ export default class NewNote extends Component {
 
     {/*sort by and date range button */}
     <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-    <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+    <div className = "sort container">
+    <button className = "sort-btn" onClick = {this.showMenu}>Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+    {this.state.showMenu
+            ? (
+              <ul className="menu">
+                <li> Workout Date </li>
+                <li> Calories </li>
+                <li> Submission Date </li>
+              </ul>
+            )
+            : (
+              null
+            )
+        }
+    </div>
+    
 
     {/* upload file button*/}
     {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
     <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
     
     {/* table */}
-      <Table clear = {this.clearRecentTab} onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
+      <Table onSelect = {this.setSelectedLogHandler} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />
   </div>)
    }
 
@@ -240,6 +279,12 @@ export default class NewNote extends Component {
      </div>)
 
    }
+   
+   
+  async componentDidMount(){
+    this.getAllLogs()
+    document.getElementById("the-nav").style.background = "#4594E9"; 
+  }
 
 
   render() {

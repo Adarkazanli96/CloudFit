@@ -54,9 +54,9 @@ class table extends React.Component {
            let date = this.formatDate(workoutDate)
 
            return (
-              <tr onClick = {() => this.props.clear(_id)} key={index}>
-                 <td onClick = {() => this.props.onSelect(_id)}>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
-                 <td onClick = {() => this.props.onSelect(_id)}>{date}</td>
+              <tr key={index}>
+                 <td onClick = {() => this.props.onDelete(_id)}>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
+                 <td onClick = {() => this.props.onDelete(_id)}>{date}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{duration}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{caloriesBurned}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{notes}</td>

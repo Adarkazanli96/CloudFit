@@ -39,6 +39,15 @@
 
   }
 
+  .menu{
+    position: absolute;
+    list-style: none;
+  }
+
+  .menu li{
+    
+  }
+
   .alert{
     width: 30%;
     float: left;
