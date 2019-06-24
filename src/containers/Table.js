@@ -14,7 +14,7 @@ class table extends React.Component {
     }
 
     compare = ( a, b ) => {
-      return b.data.workoutDate - a.data.workoutDate
+      return b.timestamp - a.timestamp
     }
 
 
@@ -26,23 +26,21 @@ class table extends React.Component {
       date = res[1] + " " + res[2] + ", " + res[3] + " " + time;
       return date;
     }
-
-    componentDidUpdate(newProps){
-       console.log("calling from componentDidUpdate", newProps)
-    }
     
     shouldComponentUpdate(nextProps, nextState){
-       console.log(this.props.logs)
-       console.log("next", nextProps.logs)
-
+      
+ 
        if(nextProps.logs.length !== this.props.logs.length || nextProps.loading != this.props.loading){
           return true;
        }
+
        else{
           return false;
        }
        
     }
+
+
  
     renderTableData() {
        let logs = this.props.logs.slice();
@@ -56,8 +54,8 @@ class table extends React.Component {
            let date = this.formatDate(workoutDate)
 
            return (
-              <tr className = {log.recentlyInserted? "new" : ""} key={index}>
-                 <td>{log.isAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
+              <tr onClick = {() => this.props.clear(_id)} key={index}>
+                 <td onClick = {() => this.props.onSelect(_id)}>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{date}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{duration}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{caloriesBurned}</td>

@@ -18,7 +18,6 @@ let selectedLog = props =>{
     if(props.selected === null){
         return <div></div>;
     }
-    console.log("within the selected log component", props.selected)
     const {timestamp} = props.selected
     const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, records} = props.selected.data //destructuring
 
@@ -27,7 +26,6 @@ let selectedLog = props =>{
     
         return(
                 <div style = {{fontSize : "12px", margin: "0 auto"}}>
-                    <button className = "back-btn" onClick = {props.back}><img src = {backIcon}/>Back</button>
                     <div>
 
                     

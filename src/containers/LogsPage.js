@@ -20,6 +20,9 @@ import logsIcon from '../assets/images/logs.png'
 
 import SelectedLog from '../components/SelectedLog'
 
+import backIcon from '../assets/images/back-icon.png'
+
+
 //const Table = lazy(() => import('./Table'))
 
 
@@ -36,7 +39,7 @@ export default class NewNote extends Component {
       loading: false,
       showModal: false,
       selectedLog: null,
-      gettingSelectedLog: false
+      showTable: true,
     };
   }
 
@@ -49,7 +52,7 @@ export default class NewNote extends Component {
 
 
   setSelectedLogHandler = (value) =>{
-    this.setState({gettingSelectedLog: true, showPopup: false})
+    this.setState({showPopup: false, showTable: false})
     this.getLog(value);
   }
 
@@ -101,7 +104,7 @@ export default class NewNote extends Component {
   }
 
   clearSelectedLog = () =>{
-    this.setState({selectedLog: null})
+    this.setState({selectedLog: null, showTable: true})
   }
 
   handleSubmit = async event => {
@@ -143,7 +146,7 @@ export default class NewNote extends Component {
       }
       await API.post('CloudFit', '/', params).then(response => {
        // console.log(response.body);
-        response.body.isAdded = true;
+        response.body.recentlyAdded = true;
         if(this.state.logs === null){ // logs are empty
           this.setState({logs : [response.body]})
         }
@@ -182,7 +185,9 @@ export default class NewNote extends Component {
         await API.get('CloudFit', `/logs/${id}`).then(response => {
           selectedLog = response;
   
-        }).catch(error => console.log("there was an error", error))
+        }).catch(error => {
+          console.log("there was an error", error)
+        this.setState({showTable : true})})
   
       } catch (e) {
         alert(e);
@@ -190,12 +195,51 @@ export default class NewNote extends Component {
 
       console.log("before set state", selectedLog)
 
-      this.setState({selectedLog, gettingSelectedLog: false})
+      this.setState({selectedLog})
     }
 
     dismissAlertHandler = () =>{
       this.setState({showPopup: false})
     }
+
+    clearRecentTab = (id) =>{
+      let logs = [...this.state.logs];
+      logs.forEach(log =>{
+        if(log._id === id){
+          log.recentlyAdded = false
+        }
+       
+      })
+      
+      this.setState({logs})
+      console.log("clearing recent entries", logs)
+   }
+
+   renderTable(){
+     return(
+    <div style = {this.state.showTable? {} : {display: "none"}}>
+
+    {/*sort by and date range button */}
+    <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+    <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+
+    {/* upload file button*/}
+    {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
+    <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+    
+    {/* table */}
+      <Table clear = {this.clearRecentTab} onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
+  </div>)
+   }
+
+   renderSelectedEntry(){
+     return(<div style = {!this.state.showTable? {} : {display: "none" }}>
+        <button className = "back-btn" onClick = {this.clearSelectedLog}><img src = {backIcon}/>Back</button>
+       {!this.state.selectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : 
+      <SelectedLog selected = {this.state.selectedLog} /> }
+     </div>)
+
+   }
 
 
   render() {
@@ -218,8 +262,6 @@ export default class NewNote extends Component {
                     color = {"red"}
                     />
       }
-
-      console.log("rerendering")
 
     return (
 
@@ -246,23 +288,10 @@ export default class NewNote extends Component {
         <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
-        
-        <div style = { this.state.selectedLog || this.state.gettingSelectedLog? {visibility: "hidden", position: "absolute"} : {}}>
-
-          {/*sort by and date range button */}
-          <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-          <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-
-          {/* upload file button*/}
-          {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
-          <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+    
+        {this.renderTable()}
+        {this.renderSelectedEntry()}
           
-          {/* table */}
-            <Table onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
-        </div>
-          
-          {this.state.gettingSelectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : null}
-          {this.state.selectedLog? <SelectedLog back = {this.clearSelectedLog} selected = {this.state.selectedLog} /> : null}
         
         </div>
       </div>
