@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import SubmitBar from '../components/LoadingBar'
@@ -19,6 +19,8 @@ import downArrow from '../assets/images/down-arrow.png'
 import logsIcon from '../assets/images/logs.png'
 
 import SelectedLog from '../components/SelectedLog'
+
+//const Table = lazy(() => import('./Table'))
 
 
 export default class NewNote extends Component {
@@ -47,7 +49,7 @@ export default class NewNote extends Component {
 
 
   setSelectedLogHandler = (value) =>{
-    this.setState({gettingSelectedLog: true})
+    this.setState({gettingSelectedLog: true, showPopup: false})
     this.getLog(value);
   }
 
@@ -110,7 +112,7 @@ export default class NewNote extends Component {
       return;
     }
   
-    this.setState({ isSubmitting: true });
+    this.setState({ isSubmitting: true, showPopup: false });
   
     try {
       let name;
@@ -167,6 +169,10 @@ export default class NewNote extends Component {
 
     }
 
+    handleFileChange = event => {
+      this.setState({file: event.target.files[0]})
+  }
+
     getLog = async (id) =>{
       
       let selectedLog;
@@ -213,27 +219,27 @@ export default class NewNote extends Component {
                     />
       }
 
+      console.log("rerendering")
+
     return (
 
         <div className = "logs-page">
-      
-        
-
         <Modal show={this.state.showModal} onHide={this.handleModalClose}>
           <UploadModal close = {this.handleModalClose}>
           <form onSubmit={this.handleSubmit} id = "drop-form">
         
-        <input type="file" onChange={this.handleFileChange}/>
-        <LoaderButton
+          <input type="file" onChange={this.handleFileChange}/>
+
+          <LoaderButton
           bsStyle="primary"
           bsSize="large"
           disabled={!this.validateForm()}
           type="submit"
           text="Submit"
-        />
-      </form>
+          />
+          </form>
 
-          </UploadModal>
+        </UploadModal>
         </Modal>
         <div className = "logs-container">
         {this.state.showPopup? <div>{popup}</div> : null}
@@ -242,20 +248,18 @@ export default class NewNote extends Component {
         
         
         <div style = { this.state.selectedLog || this.state.gettingSelectedLog? {visibility: "hidden", position: "absolute"} : {}}>
-        <div className = "btn-container">
+
+          {/*sort by and date range button */}
           <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-        <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
+          <button className = "sort-btn">Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
 
-        {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
-        <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
-        
-        
-        
-        </div>
+          {/* upload file button*/}
+          {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
+          <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
           
-
-          <Table onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
-          </div>
+          {/* table */}
+            <Table onSelect = {this.setSelectedLogHandler} loading = {this.state.loading} logs = {this.state.logs} />
+        </div>
           
           {this.state.gettingSelectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : null}
           {this.state.selectedLog? <SelectedLog back = {this.clearSelectedLog} selected = {this.state.selectedLog} /> : null}

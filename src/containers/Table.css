@@ -71,11 +71,12 @@
     background: none;
     border: none;
     position: relative;
-    left: 3px;
+    left: 23px;
+    bottom: 1px;
   }
 
   .more-btn img{
-    width: 20px;
+    width: 10px;
     height: auto;
   }
 
