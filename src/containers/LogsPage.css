@@ -36,7 +36,8 @@
   }
 
   .btn-container{
-
+    position: relative;
+    max-width: 900px;
   }
 
   .menu{
@@ -46,6 +47,10 @@
 
   .menu li{
     
+  }
+  
+  .dd-wrap{
+    float: left;
   }
 
   .alert{

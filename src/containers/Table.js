@@ -6,7 +6,7 @@ import triangleClosed from '../assets/images/sheet_list_icons/triangle-closed.pn
 import ellipsisIcon from '../assets/images/sheet_list_icons/ellipsis.png'
 import './Table.css'
 
-class table extends React.Component {
+class table extends React.PureComponent {
     constructor(props) {
        super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
        this.state = { //state is by default an object
@@ -27,7 +27,7 @@ class table extends React.Component {
       return date;
     }
     
-    shouldComponentUpdate(nextProps, nextState){
+    /*shouldComponentUpdate(nextProps, nextState){
       
  
        if(nextProps.logs.length !== this.props.logs.length || nextProps.loading != this.props.loading){
@@ -38,7 +38,7 @@ class table extends React.Component {
           return false;
        }
        
-    }
+    }*/
 
 
  
@@ -54,9 +54,9 @@ class table extends React.Component {
            let date = this.formatDate(workoutDate)
 
            return (
-              <tr key={index}>
-                 <td onClick = {() => this.props.onDelete(_id)}>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
-                 <td onClick = {() => this.props.onDelete(_id)}>{date}</td>
+              <tr className = "data-row" style = {log.recentlyAdded ? {fontWeight: "600", color: "black", backgroundColor: "#f0f6fe"} : {}} key={index}>
+                 <td>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
+                 <td onClick = {() => this.props.onSelect(_id)}>{date}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{duration}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{caloriesBurned}</td>
                  <td onClick = {() => this.props.onSelect(_id)}>{notes}</td>
@@ -66,6 +66,7 @@ class table extends React.Component {
                <div className = "heart-rates">Mean Heart Rate: {meanHeartRate}</div></Collapsible>
                  
                  </td>
+                 {/*<td><img className = "trash-img"/></td>}*/}
               </tr>
            )
         })

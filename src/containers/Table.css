@@ -8,50 +8,31 @@
     table-layout: fixed;
     font-size: 10pt;
     position: relative;
+    cursor: pointer;
   }
   
   #logs-table td, #logs-table th {
     border-bottom: 1px solid #ddd;
   }
 
-
-
-  
-
   #logs-table td {
     vertical-align: top;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
-  }
-  
-  /* Safari 4.0 - 8.0 */
-  @-webkit-keyframes glow {
-    from {border-color: #9ecaed;
-      box-shadow: 0 0 10px #9ecaed;
-    background-color: rgb(204, 204, 255);}
-    to {border-color: none;
-      box-shadow: none;
-    background-color: white;}
-  }
-  
-  /* Standard syntax */
-  @keyframes glow {
-    from {border-color: #9ecaed;
-      box-shadow: 0 0 10px #9ecaed;
-    background-color: rgb(204, 204, 255);}
-    to {border-color: none;
-      box-shadow: none;
-    background-color: white;}
   }
 
   .trigger img{
     height: 20px;
     width: auto;
   }
-  
-  #logs-table tr:hover {background-color: #ddd;}
-  
+
+
+  #logs-table .data-row:hover {
+    background-color: #ddd !important;
+
+  }
+
   #logs-table th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -59,6 +40,8 @@
     color: #4B4B4B;
   }
 
+  
+  
   .heart-rates{
     font-size: 10pt;
     color: #4B4B4B;
@@ -71,7 +54,7 @@
     background: none;
     border: none;
     position: relative;
-    left: 23px;
+    left: 20px;
     bottom: 1px;
   }
 

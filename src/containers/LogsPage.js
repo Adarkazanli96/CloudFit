@@ -21,6 +21,9 @@ import SelectedLog from '../components/SelectedLog'
 
 import backIcon from '../assets/images/back-icon.png'
 
+//import {Dropdown} from 'reactjs-dropdown-component';
+import SortBy from './SortBy'
+
 
 //const Table = lazy(() => import('./Table'))
 
@@ -39,7 +42,45 @@ export default class NewNote extends Component {
       showModal: false,
       selectedLog: null,
       showTable: true,
+
+      sortOptions: [
+        {
+          id: 0,
+          title: 'Workout Date',
+          selected: false,
+          key: 'sortOptions'
+        },
+        {
+          id: 1,
+          title: 'Submission Date',
+          selected: false,
+          key: 'sortOptions'
+        },
+        {
+          id: 2,
+          title: 'Calories',
+          selected: false,
+          key: 'sortOptions'
+        }
+      ]
     };
+  }
+
+  resetThenSet = (id, key) => {
+    let temp = JSON.parse(JSON.stringify(this.state[key]));
+    temp.forEach(item => item.selected = false);
+    temp[id].selected = true;
+    this.setState({
+      [key]: temp
+    });
+  }
+
+  toggleSelected = (id, key) => {
+    let temp = JSON.parse(JSON.stringify(this.state[key]));
+    temp[id].selected = !temp[id].selected;
+    this.setState({
+      [key]: temp
+    });
   }
 
   validateForm() {
@@ -123,7 +164,7 @@ export default class NewNote extends Component {
         }
       }
       await API.post('CloudFit', '/', params).then(response => {
-       // console.log(response.body);
+       console.log(response.body);
         response.body.recentlyAdded = true;
         if(this.state.logs === null){ // logs are empty
           this.setState({logs : [response.body]})
@@ -205,7 +246,7 @@ export default class NewNote extends Component {
                 //log.recentlyAdded = false
             }
           })
-          logs.splice(logs.findIndex(log => logs._id = id), 1)
+          logs.splice(logs.findIndex(log => log._id = id), 1)
           console.log("after deletion", logs)
           this.setState({logs});
 
@@ -240,12 +281,22 @@ export default class NewNote extends Component {
    }
 
    renderTable(){
+     console.log("these are the logs being render", this.state.logs)
+     
      return(
     <div style = {this.state.showTable? {} : {display: "none"}}>
 
     {/*sort by and date range button */}
+    <div className = "btn-container">
     <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-    <div className = "sort container">
+    
+    <div className = "dd-wrap"><SortBy
+    title="Sort By"
+    list={this.state.sortOptions}
+    resetThenSet={this.resetThenSet}
+  />
+      </div>
+    <div className = "sort-container">
     <button className = "sort-btn" onClick = {this.showMenu}>Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
     {this.state.showMenu
             ? (
@@ -265,9 +316,10 @@ export default class NewNote extends Component {
     {/* upload file button*/}
     {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
     <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+    </div>
     
     {/* table */}
-      <Table onSelect = {this.setSelectedLogHandler} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />
+      <Table onSelect = {this.setSelectedLogHandler} sort = {this.state.sortOptions} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />
   </div>)
    }
 
