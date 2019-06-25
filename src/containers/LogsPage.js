@@ -21,11 +21,10 @@ import SelectedLog from '../components/SelectedLog'
 
 import backIcon from '../assets/images/back-icon.png'
 
-//import {Dropdown} from 'reactjs-dropdown-component';
 import SortBy from './SortBy'
 
-
-//const Table = lazy(() => import('./Table'))
+import trashIcon from '../assets/images/trash.png'
+import bookmarkIcon from '../assets/images/bookmark.png'
 
 
 export default class NewNote extends Component {
@@ -92,10 +91,15 @@ export default class NewNote extends Component {
 
 
   // controls for each individual entry
-  setSelectedLogHandler = (id) =>{
+  setSelectedLogHandler = (log) =>{
     this.setState({showPopup: false, showTable: false})
-    this.clearRecentTab(id) // sets recently inserted to false
-    this.getLog(id);
+    this.getLog(log._id);
+    if(log.recentlyAdded === true){
+      this.clearRecentTab(log._id) // sets recently inserted to false
+      console.log("clearing recent tab")
+    }
+    
+    
   }
 
 
@@ -241,14 +245,14 @@ export default class NewNote extends Component {
         if(response.status === true){ // remove entry from arraylist
           let logs = [...this.state.logs]
           console.log("before deletion", logs)
-          logs.forEach(log =>{
+          /*logs.forEach(log =>{
             if(log._id === id){
                 //log.recentlyAdded = false
             }
-          })
+          })*/
           logs.splice(logs.findIndex(log => log._id = id), 1)
           console.log("after deletion", logs)
-          this.setState({logs});
+          this.setState({logs, showTable: true});
 
         }
         }).catch(error => {
@@ -258,6 +262,10 @@ export default class NewNote extends Component {
       }
   
       }
+
+  bookmarkLog = (id) =>{
+
+  }
 
   dismissAlertHandler = () =>{
     this.setState({showPopup: false})
@@ -272,12 +280,16 @@ export default class NewNote extends Component {
   clearRecentTab = (id) =>{
     let logs = [...this.state.logs];
     logs.forEach(log =>{
-    if(log._id === id){
+    if(log._id === id && log.recentlyAdded === true){
         log.recentlyAdded = false
+        this.setState({logs})
     }
        
     })
-    this.setState({logs})
+    /*let i = logs.findIndex(log => log._id = id)
+    logs[i].recentlyAdded = false
+    this.setState({logs})*/
+    
    }
 
    renderTable(){
@@ -325,7 +337,11 @@ export default class NewNote extends Component {
 
    renderSelectedEntry(){
      return(<div style = {!this.state.showTable? {} : {display: "none" }}>
+       <div className = "btn-container">
         <button className = "back-btn" onClick = {this.clearSelectedLog}><img src = {backIcon}/>Back</button>
+        <button className = "delete-btn" onClick = {() => this.deleteLog(this.state.selectedLog._id)}><img src = {trashIcon}/></button>
+        <button className = "bookmark-btn" onClick = {() => this.bookmarkLog(this.state.selectedLog._id)}><img src = {bookmarkIcon}/></button>
+  </div>
        {!this.state.selectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : 
       <SelectedLog selected = {this.state.selectedLog} /> }
      </div>)
@@ -385,9 +401,9 @@ export default class NewNote extends Component {
         <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
-    
+    {this.renderSelectedEntry()}
         {this.renderTable()}
-        {this.renderSelectedEntry()}
+        
           
         
         </div>

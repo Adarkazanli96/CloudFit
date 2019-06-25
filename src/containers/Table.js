@@ -46,6 +46,7 @@ class table extends React.PureComponent {
        let logs = this.props.logs.slice();
 
        logs.sort(this.compare) // sort by timestamp
+       console.log("entries going into the table", logs)
 
         return logs.map((log, index) => {
            const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, filteredRecords} = log.data //destructuring
@@ -55,11 +56,11 @@ class table extends React.PureComponent {
 
            return (
               <tr className = "data-row" style = {log.recentlyAdded ? {fontWeight: "600", color: "black", backgroundColor: "#f0f6fe"} : {}} key={index}>
-                 <td>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
-                 <td onClick = {() => this.props.onSelect(_id)}>{date}</td>
-                 <td onClick = {() => this.props.onSelect(_id)}>{duration}</td>
-                 <td onClick = {() => this.props.onSelect(_id)}>{caloriesBurned}</td>
-                 <td onClick = {() => this.props.onSelect(_id)}>{notes}</td>
+                 <td onClick = {() => this.props.onSelect(log)}>{log.recentlyAdded ? <button className = "more-btn"><img src = {ellipsisIcon}/></button> : null}</td>
+                 <td onClick = {() => this.props.onSelect(log)}>{date}</td>
+                 <td onClick = {() => this.props.onSelect(log)}>{duration}</td>
+                 <td onClick = {() => this.props.onSelect(log)}>{caloriesBurned}</td>
+                 <td onClick = {() => this.props.onSelect(log)}>{notes}</td>
                <td><Collapsible transitionTime = {100}
                trigger={<span className = "trigger"><img src = {triangleClosed}/>Show</span>}
                triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {filteredRecords} width = {"100%"} height = {"300px"} /><div className = "heart-rates">Max Heart Rate: {maximumHeartRate}</div>
