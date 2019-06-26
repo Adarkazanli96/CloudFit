@@ -27,6 +27,9 @@ import trashIcon from '../assets/images/trash.png'
 import bookmarkIcon from '../assets/images/bookmark.png'
 
 
+import ReactTable from './ReactTable'
+
+
 export default class NewNote extends Component {
   constructor(props) {
     super(props);
@@ -331,7 +334,10 @@ export default class NewNote extends Component {
     </div>
     
     {/* table */}
-      <Table onSelect = {this.setSelectedLogHandler} sort = {this.state.sortOptions} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />
+
+      
+    
+      {/*<Table onSelect = {this.setSelectedLogHandler} sort = {this.state.sortOptions} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />*/}
   </div>)
    }
 
@@ -401,10 +407,9 @@ export default class NewNote extends Component {
         <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
-    {this.renderSelectedEntry()}
-        {this.renderTable()}
-        
-          
+        {this.renderSelectedEntry()}
+        <ReactTable logs = {this.state.logs}/>
+         
         
         </div>
       </div>
