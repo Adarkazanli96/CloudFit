@@ -21,8 +21,6 @@ import SelectedLog from '../components/SelectedLog'
 
 import backIcon from '../assets/images/back-icon.png'
 
-import SortBy from './SortBy'
-
 import trashIcon from '../assets/images/trash.png'
 import bookmarkIcon from '../assets/images/bookmark.png'
 
@@ -294,28 +292,6 @@ export default class NewNote extends Component {
     {/*sort by and date range button */}
     <div className = "btn-container">
     <button className = "select-date-btn"><img src = {calendarIcon} style = {{marginRight: "7px"}}/>Select a Date Range<img src = {downArrow} style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-    
-    <div className = "dd-wrap"><SortBy
-    title="Sort By"
-    list={this.state.sortOptions}
-    resetThenSet={this.resetThenSet}
-  />
-      </div>
-    <div className = "sort-container">
-    <button className = "sort-btn" onClick = {this.showMenu}>Sort By<img src = {downArrow}  style = {{marginLeft: "7px", height: "10px", width: "auto"}}/></button>
-    {this.state.showMenu
-            ? (
-              <ul className="menu">
-                <li> Workout Date </li>
-                <li> Calories </li>
-                <li> Submission Date </li>
-              </ul>
-            )
-            : (
-              null
-            )
-        }
-    </div>
     
 
     {/* upload file button*/}

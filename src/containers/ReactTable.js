@@ -50,7 +50,7 @@ class table extends React.PureComponent{
         [
           {
             id: 1,
-        Header: "Workout Date",
+        Header: "DATE",
         accessor: (d) => d,
         Cell: d => <span onClick = {() => this.props.delete(d.value._id)}>{this.formatDate(d.value.data.workoutDate)}</span>,
         width: 150,
@@ -59,14 +59,14 @@ class table extends React.PureComponent{
 
       },
       {
-        Header: "Duration",
+        Header: "DURATION",
         accessor: "data.duration",
         width: 150,
         className : "react-row"
 
       },
       {
-        Header: "Calories",
+        Header: "CALORIES",
         accessor: "data.caloriesBurned",
         width: 150,
         className : "react-row"
@@ -74,14 +74,14 @@ class table extends React.PureComponent{
       },
       {
         id: 'notes',
-        Header: "Notes",
+        Header: "NOTES",
         accessor: d => d.data.notes,
         width: 200,
         className : "react-row"
 
       },
       {
-        Header: "Graph",
+        Header: "GRAPH",
         accessor: "data.filteredRecords",
         sortable: false,
         Cell: props => <div><Collapsible transitionTime = {100}
@@ -103,7 +103,6 @@ class table extends React.PureComponent{
         <ReactTable
         
         PaginationComponent={Pagination}
-        showPaginationTop = {true}
         data={this.state.logs}
         defaultPageSize= {12}
         className = {"react-tab"}
