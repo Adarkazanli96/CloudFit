@@ -243,23 +243,13 @@ export default class NewNote extends Component {
         
       try {
         await API.del('CloudFit', `/logs/${id}`).then(response => {
-
-          console.log("the response is ", response)
         if(response.status === true){ // remove entry from arraylist
-          let logs = [...this.state.logs]
-          console.log("before deletion", logs)
-          /*logs.forEach(log =>{
-            if(log._id === id){
-                //log.recentlyAdded = false
-            }
-          })*/
-          logs.splice(logs.findIndex(log => log._id = id), 1)
-          console.log("after deletion", logs)
-          this.setState({logs, showTable: true});
-
+          this.getAllLogs();
+          this.clearSelectedLog();
         }
         }).catch(error => {
         console.log("there was an error", error)})
+        
       } catch (e) {
           alert(e);
       }
@@ -362,6 +352,7 @@ export default class NewNote extends Component {
 
 
   render() {
+    console.log("logs page rerendering")
 
     document.body.style.background = "white";
     let popup;
@@ -408,7 +399,9 @@ export default class NewNote extends Component {
         <hr/>
         
         {this.renderSelectedEntry()}
-        <ReactTable logs = {this.state.logs}/>
+        {this.renderTable()}
+        <ReactTable delete = {this.deleteLog} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
+
          
         
         </div>

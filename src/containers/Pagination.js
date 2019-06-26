@@ -4,7 +4,7 @@ import './Pagination.css'
 
 const defaultButton = props => <button {...props}>{props.children}</button>;
 
-export default class Pagination extends React.Component {
+export default class Pagination extends React.PureComponent {
   constructor(props) {
     super();
 
@@ -69,6 +69,7 @@ export default class Pagination extends React.Component {
   }
 
   render() {
+    console.log("pagination rerendering")
     const { PageButtonComponent = defaultButton } = this.props;
     const { visiblePages } = this.state;
     const activePage = this.props.page + 1;

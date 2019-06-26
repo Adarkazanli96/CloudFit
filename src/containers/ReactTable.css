@@ -6,15 +6,13 @@
     text-align: left;
     border-collapse: collapse;
     color: #7C7C7C;
-
+    width: 100%;
+    table-layout: fixed;
     font-size: 10pt;
     position: relative;
     cursor: pointer;
     border: none;
     box-shadow: none;
-
-    
-
 }
 
 .react-row{
@@ -22,6 +20,11 @@
     vertical-align: top;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+
+.ReactTable .rt-tr:hover .rt-td {
+    background: yellow;
 }
 
 
@@ -43,4 +46,11 @@ div.-sort-desc::after {
 div.-sort-asc::after {
     content: " \25B2";
     float: right;
+}
+
+.react-header{
+text-align: left;
+box-shadow: none;
+text-shadow: none;
+border: none;
 }

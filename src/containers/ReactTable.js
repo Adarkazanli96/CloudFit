@@ -21,24 +21,42 @@ import 'react-table/react-table.css'
 
 
 class table extends React.PureComponent{
+  constructor(props){
+    super(props)
+    this.state = {
+      logs: []
+    }
+  }
+
+  formatDate = (d) =>{
+    let date = new Date(d);
+       let day = date.toDateString();
+      let res = day.split(" ")
+      let time = date.toLocaleTimeString();
+      date = res[1] + " " + res[2] + ", " + res[3] + " " + time;
+      return date;
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.state.logs.length != nextProps.logs.length){
+      this.setState({logs: nextProps.logs})
+    }
+  }
 
     render(){
-        console.log('table is rerendering')
-        return(
+      
 
-        <ReactTable
-        resizable={false}
-        PaginationComponent={Pagination}
-        data={this.props.logs}
-        defaultPageSize= {12}
-        className = {"react-tab"}
-        columns={[
+      const columns = 
+        [
           {
+            id: 1,
         Header: "Workout Date",
-        accessor: "data.workoutDate",
-        Cell: props => <span onClick = {() => alert("suh dude")}>{props.value}</span>,
+        accessor: (d) => d,
+        Cell: d => <span onClick = {() => this.props.delete(d.value._id)}>{this.formatDate(d.value.data.workoutDate)}</span>,
         width: 150,
-        className : "react-row"
+        className : "react-row",
+        headerClassName : "react-header"
+
       },
       {
         Header: "Duration",
@@ -65,6 +83,7 @@ class table extends React.PureComponent{
       {
         Header: "Graph",
         accessor: "data.filteredRecords",
+        sortable: false,
         Cell: props => <div><Collapsible transitionTime = {100}
         trigger={<span className = "trigger"><img src = {triangleClosed}/>Show</span>}
         triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {props.value} width = {"100%"} height = {"300px"} /><div className = "heart-rates">Max Heart Rate: {"maximumHeartRate"}</div>
@@ -72,10 +91,26 @@ class table extends React.PureComponent{
           
           </div>,
         width: 300,
+        
         className : "react-row"
 
       }
-    ]}
+    ]
+
+        /*resizable={false}*/
+        console.log('table is rerendering with these logs', this.props.logs)
+        return(
+        <ReactTable
+        
+        PaginationComponent={Pagination}
+        showPaginationTop = {true}
+        data={this.state.logs}
+        defaultPageSize= {12}
+        className = {"react-tab"}
+        columns={columns}
+        loading = {false}
+        loadingText= {'LOADING...'}
+        noDataText = {''}
   />
 
         )
