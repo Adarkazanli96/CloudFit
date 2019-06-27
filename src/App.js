@@ -131,7 +131,7 @@ class App extends React.Component {
         transitions = {false}
       >
       </Sidebar> : null}
-        <div style = {this.state.isAuthenticated? {position: "absolute", left: "250px"} : {}}><Routes childProps={childProps} /></div>
+        <div style = {this.state.isAuthenticated? {position: "absolute", left: "250px", width: "calc(100% - 250px)"} : {}}><Routes childProps={childProps} /></div>
       </div>
     );
   }  

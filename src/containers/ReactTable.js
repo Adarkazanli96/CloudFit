@@ -18,6 +18,16 @@ import ellipsisIcon from '../assets/images/sheet_list_icons/ellipsis.png'
 import './ReactTable.css'
 import 'react-table/react-table.css'
 
+const onRowClick = (state, rowInfo, column, instance) => {
+  return {
+      onClick: e => {
+          console.log('A Td Element was clicked!')
+          console.log('It was in this column:', column)
+          console.log('It was in this row:', rowInfo)
+      }
+  }
+}
+
 
 
 class table extends React.PureComponent{
@@ -50,37 +60,43 @@ class table extends React.PureComponent{
         [
           {
             id: 1,
+        Header: "",
+        accessor: (d) => d,
+        Cell: d => <span>{}</span>,
+        minWidth: 50
+
+      },
+          {
+            id: 2,
         Header: "DATE",
         accessor: (d) => d,
         Cell: d => <span onClick = {() => this.props.delete(d.value._id)}>{this.formatDate(d.value.data.workoutDate)}</span>,
-        width: 150,
-        className : "react-row",
-        headerClassName : "react-header"
+        minWidth: 200,
 
       },
       {
+        id: 3,
         Header: "DURATION",
         accessor: "data.duration",
-        width: 150,
-        className : "react-row"
+        minWidth: 150,
 
       },
       {
+        id: 4,
         Header: "CALORIES",
         accessor: "data.caloriesBurned",
-        width: 150,
-        className : "react-row"
+        minWidth: 150,
 
       },
       {
-        id: 'notes',
+        id: 5,
         Header: "NOTES",
         accessor: d => d.data.notes,
-        width: 200,
-        className : "react-row"
+        minWidth: 200,
 
       },
       {
+        id: 6,
         Header: "GRAPH",
         accessor: "data.filteredRecords",
         sortable: false,
@@ -90,9 +106,8 @@ class table extends React.PureComponent{
         <div className = "heart-rates">Mean Heart Rate: {"meanHeartRate"}</div></Collapsible>
           
           </div>,
-        width: 300,
+        minWidth: 300,
         
-        className : "react-row"
 
       }
     ]
@@ -101,7 +116,7 @@ class table extends React.PureComponent{
         console.log('table is rerendering with these logs', this.props.logs)
         return(
         <ReactTable
-        
+        resizable={false}
         PaginationComponent={Pagination}
         data={this.state.logs}
         defaultPageSize= {12}
@@ -110,6 +125,8 @@ class table extends React.PureComponent{
         loading = {false}
         loadingText= {'LOADING...'}
         noDataText = {''}
+        minRows = {0}
+        getTdProps={onRowClick}
   />
 
         )

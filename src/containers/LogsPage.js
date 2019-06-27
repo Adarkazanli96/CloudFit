@@ -300,6 +300,7 @@ export default class NewNote extends Component {
     </div>
     
     {/* table */}
+    <ReactTable delete = {this.deleteLog} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     
@@ -376,7 +377,6 @@ export default class NewNote extends Component {
         
         {this.renderSelectedEntry()}
         {this.renderTable()}
-        <ReactTable delete = {this.deleteLog} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
          
         
