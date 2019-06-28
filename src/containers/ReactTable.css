@@ -7,8 +7,6 @@
   }
 
 .ReactTable{
-    
-
     text-align: left;
     border-collapse: collapse;
     color: #7C7C7C;
@@ -21,9 +19,6 @@
     border: none;
     box-shadow: none;
     padding-top: 15px;
-
-
-    
 }
 
 
@@ -44,13 +39,11 @@
     border-top: none;
     border-collapse: collapse;
 
-    background: white;
+    /* changed for dynamic background */
+    /*background: white;*/
 
     /*padding-left: 30px;
     padding-right: 30px;*/
-
-
-
 
 }
 
@@ -82,9 +75,71 @@
 
     border:none;
 
+}
 
+.ReactTable .rt-thead .rt-th.-sort-asc,
+.ReactTable .rt-thead .rt-td.-sort-asc {
+    box-shadow: inset 0 0px 0 0 rgba(0, 0, 0, 0.6)
+}
+.ReactTable .rt-thead .rt-th.-sort-desc,
+.ReactTable .rt-thead .rt-td.-sort-desc {
+    box-shadow: inset 0 0px 0 0 rgba(0, 0, 0, 0.6)
+}
+/*div.-sort-desc::after {
+    content: '';
+    position: absolute;
+
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+    clear: both;
+    right: 0px;
+    top: 0px;
+}*/
+/*div.-sort-asc::after {
+    content: " \25B2";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 12px;
 
 }
 
+div.-sort-desc::after {
+    content: "\25BC";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 12px;
+}*/
 
 
+.ReactTable .rt-thead .rt-th {
+    background-repeat: no-repeat;
+    background-size: 23px 23px;
+    background-position: right 24px center;
+    
+
+}
+.ReactTable .rt-thead .rt-th.-sort-asc {
+    background-image: url('../assets/images/ascend.png');
+}
+.ReactTable .rt-thead .rt-th.-sort-desc {
+    background-image: url('../assets/images/descend.png');
+}
+
+.new{
+    font-weight: "600" !important;
+    color: "black" !important;
+     background-color: "#f0f6fe" !important;
+}
+
+.dot{
+    height: 9px;
+  width: 9px;
+  background-color: #4aa4ec;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  left: 25px;
+}

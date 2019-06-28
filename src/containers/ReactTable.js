@@ -14,20 +14,11 @@ import triangleOpen from '../assets/images/sheet_list_icons/triangle-open.png'
 import triangleClosed from '../assets/images/sheet_list_icons/triangle-closed.png'
 import ellipsisIcon from '../assets/images/sheet_list_icons/ellipsis.png'
 
+import Loader from '../components/Loader'
+
 
 import './ReactTable.css'
 import 'react-table/react-table.css'
-
-const onRowClick = (state, rowInfo, column, instance) => {
-  return {
-      onClick: e => {
-          console.log('A Td Element was clicked!')
-          console.log('It was in this column:', column)
-          console.log('It was in this row:', rowInfo)
-      }
-  }
-}
-
 
 
 class table extends React.PureComponent{
@@ -53,6 +44,18 @@ class table extends React.PureComponent{
     }
   }
 
+  onRowClick = (state, rowInfo, column, instance) => {
+    return {
+        onClick: e => {
+          if(column.id === 1 || column.id === 6){
+            return;
+          }
+
+          this.props.select(rowInfo.original);
+        }
+    }
+  }
+
     render(){
       
 
@@ -62,17 +65,16 @@ class table extends React.PureComponent{
             id: 1,
         Header: "",
         accessor: (d) => d,
-        Cell: d => <span>{}</span>,
-        minWidth: 50
+        sortable: false,
+        Cell: d => d.value.recentlyAdded? <span className = "dot">{}</span> : <span>{}</span>,
+        minWidth: 50,
 
       },
-          {
-            id: 2,
+        {
         Header: "DATE",
-        accessor: (d) => d,
-        Cell: d => <span onClick = {() => this.props.delete(d.value._id)}>{this.formatDate(d.value.data.workoutDate)}</span>,
+        accessor: "data.workoutDate",
+        Cell: d => <span>{this.formatDate(d.value)}</span>,
         minWidth: 200,
-
       },
       {
         id: 3,
@@ -92,18 +94,19 @@ class table extends React.PureComponent{
         id: 5,
         Header: "NOTES",
         accessor: d => d.data.notes,
+        sortable: false,
         minWidth: 200,
 
       },
       {
         id: 6,
         Header: "GRAPH",
-        accessor: "data.filteredRecords",
+        accessor: (d) => d,
         sortable: false,
         Cell: props => <div><Collapsible transitionTime = {100}
         trigger={<span className = "trigger"><img src = {triangleClosed}/>Show</span>}
-        triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {props.value} width = {"100%"} height = {"300px"} /><div className = "heart-rates">Max Heart Rate: {"maximumHeartRate"}</div>
-        <div className = "heart-rates">Mean Heart Rate: {"meanHeartRate"}</div></Collapsible>
+        triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {props.value.data.filteredRecords} width = {"100%"} height = {"300px"} /><div className = "heart-rates">Max Heart Rate: {props.value.data.maximumHeartRate}</div>
+        <div className = "heart-rates">Mean Heart Rate: {props.value.data.meanHeartRate}</div></Collapsible>
           
           </div>,
         minWidth: 300,
@@ -118,15 +121,25 @@ class table extends React.PureComponent{
         <ReactTable
         resizable={false}
         PaginationComponent={Pagination}
+        NoDataComponent={Loader}
         data={this.state.logs}
-        defaultPageSize= {12}
-        className = {"react-tab"}
+        defaultPageSize= {10}
         columns={columns}
-        loading = {false}
-        loadingText= {'LOADING...'}
-        noDataText = {''}
+        getTrProps={(state, rowInfo, column) => {
+          return {
+            style: rowInfo.original.recentlyAdded? {fontWeight: "600", color: "black", backgroundColor: "#f0f6fe"} : {backgroundColor: "white"}
+            //className: rowInfo.original.recentlyAdded? "new" : null
+          }
+        }}
+        
         minRows = {0}
-        getTdProps={onRowClick}
+        getTdProps={this.onRowClick}
+        defaultSorted={[
+          {
+            id: "data.workoutDate",
+            asc: true
+          }
+        ]}
   />
 
         )

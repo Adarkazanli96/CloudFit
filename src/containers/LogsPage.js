@@ -283,9 +283,7 @@ export default class NewNote extends Component {
     
    }
 
-   renderTable(){
-     console.log("these are the logs being render", this.state.logs)
-     
+   renderTable(){     
      return(
     <div style = {this.state.showTable? {} : {display: "none"}}>
 
@@ -329,7 +327,6 @@ export default class NewNote extends Component {
 
 
   render() {
-    console.log("logs page rerendering")
 
     document.body.style.background = "white";
     let popup;
