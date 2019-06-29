@@ -1,11 +1,12 @@
 import React from 'react'
 import './Popup.css'
+import closeIcon from '../assets/images/close.png'
 
 let popups = props =>{
     
         return(
                 <div className = {"popup-container " + props.color}>
-                        <button onClick = {props.close} className = "close-btn">X</button>
+                        <button onClick = {props.close} className = "close-btn"><img src = {closeIcon}/></button>
                         <div className = "content">
                         {props.content}
                         </div>

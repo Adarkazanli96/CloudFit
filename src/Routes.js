@@ -5,9 +5,12 @@ import Login from './containers/Login'
 import AppliedRoute from "./components/AppliedRoute";
 import Lander from "./containers/Lander";
 import Signup from "./containers/Signup";
-import LogsPage from './containers/LogsPage'
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+
+import LogsPage from './containers/LogsPage'
+import BookmarksPage from './pages/BookmarksPage'
+
 
 
 export default ({ childProps }) =>
@@ -16,6 +19,7 @@ export default ({ childProps }) =>
     {/*     <UnauthenticatedRoute path="/login" exact component={Login} props={childProps} />
     <UnauthenticatedRoute path="/signup" exact component={Signup} props={childProps} />*/}
   <AuthenticatedRoute path = "/logs" exact component = {LogsPage} props = {childProps}/>
+  <AuthenticatedRoute path = "/bookmarks" exact component = {BookmarksPage} props = {childProps}/>
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
   </Switch>;

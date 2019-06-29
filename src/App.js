@@ -15,6 +15,8 @@ import progress from './assets/images/menu/progress.png'
 import share from './assets/images/menu/share.png'
 import settings from './assets/images/menu/settings.png'
 
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -106,9 +108,9 @@ class App extends React.Component {
       <ul>
       <li><h4 style = {{fontWeight: "bold"}}>Menu</h4></li>
       <li><img src = {dashboard}/>Dashboard</li>
-      <li><img src = {logs}/>Logs</li>
+      <li><img src = {logs}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/logs">Logs</Link></li>
       <li><img src = {progress}/>Progress</li>
-      <li><img src = {bookmarks}/>Bookmarks</li>
+      <li><img src = {logs}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/bookmarks">Bookmarks</Link></li>
       <li><img src = {share}/>Share</li>
       <li><img src = {settings}/>Settings</li>
     </ul>

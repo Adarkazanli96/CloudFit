@@ -2,12 +2,11 @@ import React, { Component, lazy, Suspense } from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
-import "./LogsPage.css";
+import "./BookmarksPage.css";
 import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 
-import Table from './Table'
 import UploadModal from '../components/UploadModal'
 
 
@@ -25,7 +24,7 @@ import trashIcon from '../assets/images/trash.png'
 import bookmarkIcon from '../assets/images/bookmark.png'
 
 
-import ReactTable from './ReactTable'
+//import ReactTable from './ReactTable'
 
 
 export default class NewNote extends Component {
@@ -44,6 +43,8 @@ export default class NewNote extends Component {
       showPopup: false,
       error: false,
       popupContent: null,
+
+      isDeleting: false
     };
   }
 
@@ -284,7 +285,6 @@ export default class NewNote extends Component {
     </div>
     
     {/* table */}
-    <ReactTable select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     

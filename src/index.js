@@ -23,13 +23,8 @@ Amplify.configure({
     API: {
       endpoints: [
         {
-          name: 'getSheets',
-          endpoint: config.apiGateway.URL,
-          region: config.apiGateway.REGION
-        },
-        {
           name: 'CloudFit',
-          endpoint: 'https://ml7j1zkvo2.execute-api.us-east-1.amazonaws.com/test',
+          endpoint: config.apiGateway.URL,
           region: config.apiGateway.REGION
         }
       ]
