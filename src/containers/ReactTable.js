@@ -38,6 +38,7 @@ class table extends React.PureComponent{
       return date;
   }
 
+  // only chanage the state if the length changes, should not change depending on order change
   componentWillReceiveProps(nextProps){
     if(this.state.logs.length != nextProps.logs.length){
       this.setState({logs: nextProps.logs})

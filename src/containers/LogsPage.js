@@ -28,7 +28,7 @@ import bookmarkIcon from '../assets/images/bookmark.png'
 import ReactTable from './ReactTable'
 
 
-export default class NewNote extends Component {
+export default class LogsPage extends Component {
   constructor(props) {
     super(props);
 
@@ -57,11 +57,14 @@ export default class NewNote extends Component {
 
 
   // controls for each individual entry
-  setSelectedLogHandler = (log) =>{
-    this.setState({showPopup: false, showTable: false})
-    this.getLog(log._id);
+  setSelectedLogHandler = async (log) =>{
+    this.setState({showTable: false, showPopup: false})
+    await this.getLog(log._id);
     if(log.recentlyAdded === true){
-      this.clearRecentTab(log._id) // sets recently inserted to false
+      let logs = [...this.state.logs];
+      const index = logs.map(e => e._id).indexOf(log._id)
+      logs[index].recentlyAdded = false
+      this.setState({logs})
       console.log("clearing recent tab")
     }
     
@@ -71,7 +74,7 @@ export default class NewNote extends Component {
 
   // selected log component controls
   clearSelectedLog = () =>{
-    this.setState({selectedLog: null, showTable: true})
+    this.setState({showTable: true, selectedLog: null})
   }
 
 
@@ -154,6 +157,24 @@ export default class NewNote extends Component {
 
 
 
+    mapFromArray = (list , keyByProp) => {
+      let map = [];
+      for (let i=0, item; item = list[i]; i++) {
+          map[item[keyByProp]] = item;
+      }
+      return map;
+    };
+
+    convertToIndexArr = (logs) =>{
+      let numeric_array = [];
+      console.log("invoking func")
+      for(let index in logs){
+        //console.log(index);
+        //console.log(logs[index])
+        numeric_array.push(logs[index]);
+      }
+    return numeric_array
+    }
   // API calls
 
   getAllLogs = async () =>{
@@ -164,7 +185,10 @@ export default class NewNote extends Component {
 
       let t0 = await performance.now();
       await API.get('CloudFit', '/logs').then(response => {
-        logs = response}
+        logs = response
+        //this.mapFromArray(response, "_id")
+        //this.convertToIndexArr(logs)
+      }
         )
       .catch(error => console.log("there was an error", error))
 
@@ -204,10 +228,19 @@ export default class NewNote extends Component {
       }
         
       try {
-        await API.del('CloudFit', `/logs/${id}`)
+        
+        
+        let logs = [...this.state.logs];
+        const index = logs.map(e => e._id).indexOf(id)
+        logs.splice(index, 1)
+        this.setState({logs})
+
+        API.del('CloudFit', `/logs/${id}`)
         
         this.clearSelectedLog();
-        this.getAllLogs();
+        
+        
+        //this.getAllLogs();
 
         this.setState({error: false, popupContent: "File successfully deleted!",})
 
@@ -224,14 +257,20 @@ export default class NewNote extends Component {
 
   bookmarkLog = async (id) =>{
     console.log("ivoking bookmark log function")
-    const params = {
-      body: {
-          bookmark: true,
-          man: "suh"
-      }
-    }
+    
 
     try{
+      let logs = [...this.state.logs];
+      const index = logs.map(e => e._id).indexOf(id)
+      logs[index].bookmark = !logs[index].bookmark
+      this.setState({logs})
+
+      const params = {
+        body: {
+            bookmark: logs[index].bookmark,
+        }
+      }
+
       await API.put('CloudFit', `/logs/${id}`, params).then(response => {
       console.log(response);
     }).catch(err =>{
@@ -255,7 +294,14 @@ export default class NewNote extends Component {
   }
 
   clearRecentTab = (id) =>{
+    
     let logs = [...this.state.logs];
+      const index = logs.map(e => e._id).indexOf(id)
+      if(logs[index].recentlyAdded === true){
+      logs[index].recentlyAdded = false}
+      this.setState({logs})
+    
+    /*let logs = [...this.state.logs];
     logs.forEach(log =>{
     if(log._id === id && log.recentlyAdded === true){
         log.recentlyAdded = false
