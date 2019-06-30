@@ -21,8 +21,12 @@ return(
     style={{
       width: this.props.width,
       height: this.props.height,
+      textAlign:"center",
+      fontWeight: "bold",
+      fontSize: "15px"
     }}
   >
+    {this.props.header}
     <Chart
       data={data}
       getSeries={data => data.lines}
@@ -40,6 +44,7 @@ return(
       }
         
       }
+
       tooltip
     />
   </div>

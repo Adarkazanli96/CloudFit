@@ -3,6 +3,7 @@ import { Auth, API } from 'aws-amplify';
 import LineChart from './LineChart'
 import './SelectedLog.css'
 import backIcon from '../assets/images/back-icon.png'
+import Cards from './Cards'
 
 
 export default class SelectedLog extends React.PureComponent {
@@ -71,7 +72,7 @@ export default class SelectedLog extends React.PureComponent {
             return <div></div>;
         }
         const {timestamp} = this.props.selected
-        const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, records} = this.props.selected.data //destructuring
+        const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, records, filteredRecords} = this.props.selected.data //destructuring
 
         let date = this.formatDate(workoutDate)
         let submissionDate = this.formatDate(timestamp)
@@ -79,32 +80,28 @@ export default class SelectedLog extends React.PureComponent {
         
         return(
                 <div className = "selected-log">
-                    <div>
-
-                    <div className = "dates">
-                    <span style = {{fontWeight: "bold", marginRight: "17px"}}>{"Workout Date: "}</span>{date}
-                    <span style = {{fontWeight: "bold", marginRight: "17px", marginLeft: "90px"}}>{"Submission Date: "}</span>{submissionDate}
+                    <div style = {{marginTop: "30px"}}>
+                    <Cards max = {maximumHeartRate} mean = {meanHeartRate} duration = {duration} calories = {caloriesBurned}/>
+                    </div>
+                    <div style = {{width: "900px"}}>
+                    <div style = {{minWidth: "550px", float: "left", padding: "20px", paddingBottom: "30px"
+}}>
+                        <LineChart height = {"400px"} width = {"100%"} records = {records} header = {date}/>
+                        
                     </div>
                     
-                    </div>
-                    <div style = {{width: "600px"}}>
-                        <div style = {{float: "left"}}>
-                            <div>Time v Heart Rate</div>
-                        <LineChart height = {"300px"} width = {"400px"} records = {records}/>
-                        <form onSubmit={this.onSubmit}>
-                           <input type = "text" value={this.state.input} onChange={this.onChange}/> 
-                           <button type="submit" text="Submit">Submit</button>
-                                {/*<input type="submit" value="Submit" />*/}
-                        </form>
-                        output: {this.state.output}
-                        
-                    </div>
                         
                             
-                    <div style = {{float: "right"}}>
-                        <div className = "heart-rates">Max Heart Rate: {maximumHeartRate}</div>
-                    <div className = "heart-rates">Mean Heart Rate: {meanHeartRate}</div>
-                    <div className = 'heart-rates'>{"Notes: "}{notes}</div>
+                    <div style = {{float: "right", border: "1px solid grey", marginTop: "25px", minHeight: "400px", width: "300px", padding: "20px"}}>
+                        <form onSubmit={this.onSubmit}>
+                           <input style = {{width: "40px", marginRight: "10px"}} type = "text" value={this.state.input} onChange={this.onChange}/> 
+                           <button style = {{marginRight: "10px"}} type="submit" text="Submit">Submit</button>
+                                {/*<input type="submit" value="Submit" />*/}
+                        {this.state.output}
+                        </form>
+                        
+
+                    <div style = {{fontWeight: "bold", marginTop: "20px"}}>{"Notes: "}</div>{notes}
                     </div>
                     
                     </div>
