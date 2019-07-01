@@ -38,9 +38,11 @@ export default class LogsPage extends Component {
       logs : [],
       loading: false,
       showModal: false,
-      selectedLog: null,
+      
       showTable: true,
-      showBookmark: true,
+
+      selectedLog: null,
+      selectedRecords: [],
       
       showPopup: false,
       error: false,
@@ -59,10 +61,32 @@ export default class LogsPage extends Component {
 
   // controls for each individual entry
   setSelectedLogHandler = async (log) =>{
-    // find the index so it can load everything before getting the main data
-    
+    try {
+      API.get('CloudFit', `/logs/${log._id}`).then(response => {
+      let records = response.data.records;
+      this.setState({selectedRecords: records})
+
+      }).catch(error => {
+      console.log("there was an error", error)
+      this.setState({showTable : true})})
+        
+    } catch (e) {
+        alert(e);
+    }
+
     this.setState({showTable: false, showPopup: false})
-    await this.getLog(log._id);
+    
+
+        // find the index so it can load everything before getting the main records
+    for(let i = 0; i<this.state.logs.length; i++){
+      if(this.state.logs[i]._id === log._id){
+        this.setState({selectedLog: this.state.logs[i]})
+        break;
+      }
+    }
+    
+    //const index = this.state.logs.map(e => e._id).indexOf(log._id)
+    //this.setState({selectedLog: this.state.logs[index]})
     if(log.recentlyAdded === true){
       let logs = [...this.state.logs];
       //const index = logs.map(e => e._id).indexOf(log._id)
@@ -74,17 +98,18 @@ export default class LogsPage extends Component {
           break;
         }
       }
+      
       this.setState({logs})
+      
       console.log("clearing recent tab")
     }
-    
     
   }
 
 
   // selected log component controls
-  clearSelectedLog = () =>{
-    this.setState({showTable: true, selectedLog: null})
+  showTable = () =>{
+    this.setState({showTable: true})
   }
 
 
@@ -187,7 +212,7 @@ export default class LogsPage extends Component {
     try {
       let logs;
 
-      let t0 = await performance.now();
+      let t0 = performance.now();
       await API.get('CloudFit', '/logs').then(response => {
         logs = response
         this.setState({ logs });
@@ -207,19 +232,19 @@ export default class LogsPage extends Component {
   }
   
   getLog = async (id) =>{
-    let selectedLog;
-      
+    let records
     try {
       await API.get('CloudFit', `/logs/${id}`).then(response => {
-      selectedLog = response;
+      records = response.data.records;
+          
+
       }).catch(error => {
       console.log("there was an error", error)
       this.setState({showTable : true})})
+        this.setState({selectedRecords: records})
     } catch (e) {
         alert(e);
     }
-
-    this.setState({selectedLog})
     }
 
     handleDelete = async (id) =>{
@@ -242,11 +267,7 @@ export default class LogsPage extends Component {
         /*const index = logs.map(e => e._id).indexOf(id)
         logs.splice(index, 1)*/
 
-        this.setState({logs})
-
-        API.del('CloudFit', `/logs/${id}`)
-        
-        this.clearSelectedLog();
+        this.setState({logs, showTable: true})
         
         
         //this.getAllLogs();
@@ -258,7 +279,9 @@ export default class LogsPage extends Component {
           alert(e);
           this.setState({error: true, popupContent: "An error occured", showPopup: true})
 
-      }  
+      }
+      
+      API.del('CloudFit', `/logs/${id}`)
       }
     
 
@@ -285,7 +308,7 @@ export default class LogsPage extends Component {
         }
       }
 
-      await API.put('CloudFit', `/logs/${id}`, params).then(response => {
+      API.put('CloudFit', `/logs/${id}`, params).then(response => {
       console.log(response);
     }).catch(err =>{
       console.log("there was an error", err)
@@ -307,28 +330,6 @@ export default class LogsPage extends Component {
     });
   }
 
-  clearRecentTab = (id) =>{
-    
-    let logs = [...this.state.logs];
-      const index = logs.map(e => e._id).indexOf(id)
-      if(logs[index].recentlyAdded === true){
-      logs[index].recentlyAdded = false}
-      this.setState({logs})
-    
-    /*let logs = [...this.state.logs];
-    logs.forEach(log =>{
-    if(log._id === id && log.recentlyAdded === true){
-        log.recentlyAdded = false
-        this.setState({logs})
-    }
-       
-    })
-    /*let i = logs.findIndex(log => log._id = id)
-    logs[i].recentlyAdded = false
-    this.setState({logs})*/
-    
-   }
-
    renderTable(){     
      return(
     <div style = {this.state.showTable? {} : {display: "none"}}>
@@ -344,7 +345,7 @@ export default class LogsPage extends Component {
     </div>
     
     {/* table */}
-    <ReactTable select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
+    <ReactTable loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     
@@ -355,12 +356,11 @@ export default class LogsPage extends Component {
    renderSelectedEntry(){
      return(<div style = {!this.state.showTable? {} : {display: "none" }}>
        <div className = "btn-container">
-        <button className = "back-btn" onClick = {this.clearSelectedLog}><img src = {backIcon}/>Back</button>
+        <button className = "back-btn" onClick = {this.showTable}><img src = {backIcon}/>Back</button>
         <button className = "delete-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id)}><img src = {trashIcon}/></button>
         <button className = "bookmark-btn" onClick = {() => this.bookmarkLog(this.state.selectedLog._id)}><img src = {bookmarkIcon}/></button>
   </div>
-       {!this.state.selectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : 
-      <SelectedLog selected = {this.state.selectedLog} /> }
+      <SelectedLog selected = {this.state.selectedLog} records = {this.state.selectedRecords} />
      </div>)
 
    }

@@ -122,7 +122,7 @@ class table extends React.PureComponent{
         <ReactTable
         resizable={false}
         PaginationComponent={Pagination}
-        NoDataComponent={Loader}
+        NoDataComponent={this.props.loading? Loader : () => <div style = {{width: "100%", fontWeight: "bold", textAlign: "center"}}>No Data Found</div>}
         data={this.state.logs}
         defaultPageSize= {10}
         columns={columns}

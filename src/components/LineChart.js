@@ -1,5 +1,8 @@
 import React from "react";
-import { Chart } from "react-charts";
+
+import {XYPlot, FlexibleXYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries, MarkSeries, Highlight, VerticalGridLines} from 'react-vis';
+//import {highlightPoint} from 'react-vis/highlight'
+import './LineChart.css' 
  
 export default class lineChart extends React.PureComponent {
 
@@ -27,26 +30,21 @@ return(
     }}
   >
     {this.props.header}
-    <Chart
-      data={data}
-      getSeries={data => data.lines}
-      getDatums={series => series.data}
-      getPrimary={datum => datum.time}
-      getSecondary={datum => datum.heartrate}
+    <FlexibleXYPlot
 
-      axes={[
-        { primary: true, type: "linear", position: "bottom" },
-        { type: "linear", position: "left" }
-      ]}
-      
-      series = {{
-        showPoints: false
-      }
-        
-      }
-
-      tooltip
-    />
+                animation = {10}
+                getX={d => d.time}
+                getY={d => d.heartrate}
+                >
+                  
+                <VerticalGridLines />
+                <HorizontalGridLines />
+                <XAxis />
+                <YAxis />
+                <LineSeries
+                color= "#64B4E6"
+                    data={this.props.records}/>
+            </FlexibleXYPlot>
   </div>
 );
     }

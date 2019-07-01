@@ -67,10 +67,11 @@ export default class SelectedLog extends React.PureComponent {
     render(){
         
         if(this.props.selected === null){
-            return <div></div>;
+            return null;
         }
+
         const {timestamp} = this.props.selected
-        const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, records, filteredRecords} = this.props.selected.data //destructuring
+        const { workoutDate, duration, caloriesBurned, maximumHeartRate, meanHeartRate, notes, filteredRecords} = this.props.selected.data //destructuring
 
         let date = this.formatDate(workoutDate)
         let submissionDate = this.formatDate(timestamp)
@@ -84,7 +85,7 @@ export default class SelectedLog extends React.PureComponent {
                     <div style = {{width: "900px"}}>
                     <div style = {{minWidth: "550px", float: "left", padding: "20px", paddingBottom: "30px"
 }}>
-                        <LineChart height = {"400px"} width = {"100%"} records = {records} header = {date}/>
+                        <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} header = {date}/>
                         
                     </div>
                     
