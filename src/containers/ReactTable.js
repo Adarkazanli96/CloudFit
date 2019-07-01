@@ -135,10 +135,11 @@ class table extends React.PureComponent{
         
         minRows = {0}
         getTdProps={this.onRowClick}
+        defaultSortDesc = {true}
         defaultSorted={[
           {
             id: "data.workoutDate",
-            asc: true
+            desc: true
           }
         ]}
   />

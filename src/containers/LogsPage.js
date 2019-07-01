@@ -40,6 +40,7 @@ export default class LogsPage extends Component {
       showModal: false,
       selectedLog: null,
       showTable: true,
+      showBookmark: true,
       
       showPopup: false,
       error: false,
@@ -58,12 +59,21 @@ export default class LogsPage extends Component {
 
   // controls for each individual entry
   setSelectedLogHandler = async (log) =>{
+    // find the index so it can load everything before getting the main data
+    
     this.setState({showTable: false, showPopup: false})
     await this.getLog(log._id);
     if(log.recentlyAdded === true){
       let logs = [...this.state.logs];
-      const index = logs.map(e => e._id).indexOf(log._id)
-      logs[index].recentlyAdded = false
+      //const index = logs.map(e => e._id).indexOf(log._id)
+      //logs[index].recentlyAdded = false
+      for(let i = logs.length-1; i>=0; i--){
+        console.log("loopin")
+        if(logs[i]._id === log._id){
+          logs[i].recentlyAdded = false;
+          break;
+        }
+      }
       this.setState({logs})
       console.log("clearing recent tab")
     }
@@ -123,35 +133,29 @@ export default class LogsPage extends Component {
       const params = {
         body: {
           name,
-          bucket: "excel-sheets-storage",
-          userId: "us-east-1:206e4858-adef-4cb9-9520-7de2247ccbef"
-        }
+          bucket: "excel-sheets-storage"        }
       }
-      await API.post('CloudFit', '/', params).then(response => {
-       console.log(response.body);
-        response.body.recentlyAdded = true;
+      await API.post('CloudFit', '/logs', params).then(response => {
+       console.log(response);
+        response.recentlyAdded = true;
         if(this.state.logs === null){ // logs are empty
-          this.setState({logs : [response.body]})
+          this.setState({logs : [response]})
         }
         else{ // logs array not empty
-          this.setState({ logs: [...this.state.logs, response.body] })
+          this.setState({ logs: [...this.state.logs, response] })
         }
         
       })
 
-      this.setState({isSubmitting: false, error: false, popupContent: "File upload successful!"})
+      this.setState({isSubmitting: false, error: false, popupContent: "File upload successful!", showPopup: true, file: null})
 
 
     } catch (e) {
       alert(e);
       console.log("there was an error")
-      this.setState({ isSubmitting: false, error: true, popupContent: "An error occured"});
+      this.setState({ isSubmitting: false, error: true, popupContent: "An error occured", showPopup: true, file: null});
     }
 
-    //document.getElementById('drop-form').reset();
-    this.setState({showPopup: true, file: null})
-
-    // add a timer for the popup
 
     }
 
@@ -186,13 +190,14 @@ export default class LogsPage extends Component {
       let t0 = await performance.now();
       await API.get('CloudFit', '/logs').then(response => {
         logs = response
+        this.setState({ logs });
         //this.mapFromArray(response, "_id")
         //this.convertToIndexArr(logs)
       }
         )
       .catch(error => console.log("there was an error", error))
 
-      this.setState({ logs });
+      
       let t1 = performance.now();
       console.log("Call to get all logs took " + (t1 - t0) + " milliseconds.")
     } catch (e) {
@@ -231,8 +236,12 @@ export default class LogsPage extends Component {
         
         
         let logs = [...this.state.logs];
-        const index = logs.map(e => e._id).indexOf(id)
-        logs.splice(index, 1)
+        logs = logs.filter(log => {
+          return log._id !== id;
+        });
+        /*const index = logs.map(e => e._id).indexOf(id)
+        logs.splice(index, 1)*/
+
         this.setState({logs})
 
         API.del('CloudFit', `/logs/${id}`)
@@ -242,16 +251,14 @@ export default class LogsPage extends Component {
         
         //this.getAllLogs();
 
-        this.setState({error: false, popupContent: "File successfully deleted!",})
+        this.setState({error: false, popupContent: "File successfully deleted!", showPopup: true})
 
         
       } catch (e) {
           alert(e);
-          this.setState({error: true, popupContent: "An error occured"})
+          this.setState({error: true, popupContent: "An error occured", showPopup: true})
 
-      }
-      this.setState({showPopup: true})
-  
+      }  
       }
     
 
@@ -261,8 +268,15 @@ export default class LogsPage extends Component {
 
     try{
       let logs = [...this.state.logs];
-      const index = logs.map(e => e._id).indexOf(id)
-      logs[index].bookmark = !logs[index].bookmark
+      let index;
+      for(index = 0; index<logs.length; index++){
+        if(logs[index]._id === id){
+          logs[index].bookmark = !logs[index].bookmark;
+          break;
+        }
+      }
+      /*const index = logs.map(e => e._id).indexOf(id)
+      logs[index].bookmark = !logs[index].bookmark*/
       this.setState({logs})
 
       const params = {

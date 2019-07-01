@@ -18,7 +18,7 @@ export default class SelectedLog extends React.PureComponent {
     onSubmit = async (event) => {
         event.preventDefault();
         let entry = this.state.input;
-        entry = parseInt(entry)
+        entry = parseFloat(entry)
         //entry = this.round(entry);
         let index = await this.binary_search(this.props.selected.data.records, entry) //(arr, value), only execute if the time is between 0 and max duration
 
@@ -66,8 +66,6 @@ export default class SelectedLog extends React.PureComponent {
 
     render(){
         
-
-        console.log(this.state.input)
         if(this.props.selected === null){
             return <div></div>;
         }
