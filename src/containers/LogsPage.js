@@ -109,7 +109,7 @@ export default class LogsPage extends Component {
 
   // selected log component controls
   showTable = () =>{
-    this.setState({showTable: true})
+    this.setState({showTable: true, selectedRecords: []})
   }
 
 
@@ -267,7 +267,7 @@ export default class LogsPage extends Component {
         /*const index = logs.map(e => e._id).indexOf(id)
         logs.splice(index, 1)*/
 
-        this.setState({logs, showTable: true})
+        this.setState({logs, showTable: true, selectedRecords: []})
         
         
         //this.getAllLogs();
@@ -411,7 +411,7 @@ export default class LogsPage extends Component {
         <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
-        {this.renderSelectedEntry()}
+        {this.state.showTable? null:this.renderSelectedEntry()}
         {this.renderTable()}
 
          

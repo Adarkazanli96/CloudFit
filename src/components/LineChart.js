@@ -1,11 +1,22 @@
 import React from "react";
+import { Chart } from "react-charts";
 
-import {XYPlot, FlexibleXYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries, MarkSeries, Highlight, VerticalGridLines} from 'react-vis';
-//import {highlightPoint} from 'react-vis/highlight'
-import './LineChart.css' 
  
 export default class lineChart extends React.PureComponent {
+constructor(props){
+  super(props)
+  this.state = {
+    min: null,
+    max: null
+  }
+}
 
+/*componentWillReceiveProps(nextProps){
+  if(nextProps.records.length > 0){
+    this.setState({min: nextProps.records[0].time,
+      max: nextProps.records[nextProps.records.length-1].time
+  })
+}}*/
 
 
 render(){
@@ -16,6 +27,17 @@ const data = {
   ]
   
 }
+
+const def = {
+  lines: [{
+    data: [{
+      time: 0,
+      heartrate: 0
+    }]
+  }
+  ]
+}
+
 
 return(
   // A react-chart hyper-responsively and continuusly fills the available
@@ -29,22 +51,59 @@ return(
       fontSize: "15px"
     }}
   >
+    <button
+        onClick={() =>
+          this.setState({
+            min: this.props.records[0].time,
+            max: this.props.records[this.props.records.length-1].time
+          })
+        }
+      >
+        Reset Zoom
+      </button>
+      <div>{Math.round(this.state.min) + "s - " +  Math.round(this.state.max) + "s"}</div>
     {this.props.header}
-    <FlexibleXYPlot
+    <Chart
+      data={data}
+      getSeries={data => data.lines}
+      getDatums={series => series.data}
+      getPrimary={datum => datum.time}
+      getSecondary={datum => datum.heartrate}
 
-                animation = {10}
-                getX={d => d.time}
-                getY={d => d.heartrate}
-                >
-                  
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <LineSeries
-                color= "#64B4E6"
-                    data={this.props.records}/>
-            </FlexibleXYPlot>
+      axes={[
+        {
+          primary: true,
+          type: 'linear',
+          position: 'bottom',
+          hardMin: this.state.min,
+          hardMax: this.state.max
+        },
+        {
+          type: 'linear',
+          position: 'left'
+        }
+      ]}
+      
+      series = {{
+        showPoints: false
+      }
+        
+      }
+
+      tooltip
+
+      primaryCursor
+
+
+      brush={{
+        onSelect: brushData => {
+          this.setState({
+            min: Math.min(brushData.start, brushData.end),
+            max: Math.max(brushData.start, brushData.end)
+          })
+        }
+      }}
+    />
   </div>
 );
     }
