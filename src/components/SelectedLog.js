@@ -4,7 +4,6 @@ import LineChart from './LineChart'
 import './SelectedLog.css'
 import backIcon from '../assets/images/back-icon.png'
 import Cards from './Cards'
-import Loader from './Loader'
 
 
 export default class SelectedLog extends React.PureComponent {
@@ -15,7 +14,6 @@ export default class SelectedLog extends React.PureComponent {
             output: "",
             min: null,
             max: null,
-            loading: true
         }
     }
 
@@ -87,9 +85,9 @@ export default class SelectedLog extends React.PureComponent {
       static getDerivedStateFromProps(nextProps, prevState){
         console.log(nextProps.records.length)
         if(nextProps.records.length === 0){
-          return {min: null, max: null, loading: true}
+          return {min: null, max: null}
         }
-        return {loading: false};
+        return null
       }
 
     render(){
@@ -116,7 +114,7 @@ export default class SelectedLog extends React.PureComponent {
 }}>
   <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>{date}</div>
   <div style = {{fontWeight: "bold", fontSize: "15px", position: "absolute", left: "-60px", top: "200px", transform: "rotate(-90deg)"}}>Heart Rate (bpm)</div>
-                        {this.state.loading? <div style = {{height: "400px", width: "100%"}}><Loader/></div> : <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} setRange = {this.setRange} min = {this.state.min} max = {this.state.max}/>}
+                        <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} setRange = {this.setRange} min = {this.state.min} max = {this.state.max}/>
                         <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>Time (s)</div>
 
                     </div>
