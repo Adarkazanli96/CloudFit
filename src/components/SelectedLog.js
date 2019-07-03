@@ -11,7 +11,9 @@ export default class SelectedLog extends React.PureComponent {
         super(props)
         this.state = {
             input: "",
-            output: ""
+            output: "",
+            min: null,
+            max: null
         }
     }
 
@@ -62,7 +64,23 @@ export default class SelectedLog extends React.PureComponent {
         }
         return mid; 
       }
+
+      setRange = (min, max) =>{
+        this.setState({min: min, max: max})
+      }
+
+      resetZoom = () =>{
+        this.setState({min: null, max: null})
+      }
     
+      componentDidMount(){
+        console.log("it mounted")
+      }
+
+      static getDerivedStateFromProps(props, state){
+        console.log(props.records)
+        return null;
+      }
 
     render(){
         
@@ -83,22 +101,28 @@ export default class SelectedLog extends React.PureComponent {
                     <Cards max = {maximumHeartRate} mean = {meanHeartRate} duration = {duration} calories = {caloriesBurned}/>
                     </div>
                     <div style = {{width: "900px"}}>
-                    <div style = {{minWidth: "550px", float: "left", padding: "20px", paddingBottom: "30px"
+                    <div style = {{minWidth: "700px", float: "left", padding: "20px", paddingBottom: "50px", position: "relative",
 }}>
-                        <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} header = {date}/>
-                        
+  <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>{date}</div>
+  <div style = {{fontWeight: "bold", fontSize: "15px", position: "absolute", left: "-60px", top: "200px", transform: "rotate(-90deg)"}}>Heart Rate (bpm)</div>
+                        <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} setRange = {this.setRange} min = {this.state.min} max = {this.state.max}/>
+                        <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>Time (s)</div>
+
                     </div>
                     
                         
                             
-                    <div style = {{float: "right", border: "1px solid grey", marginTop: "25px", minHeight: "400px", width: "300px", padding: "20px"}}>
+                    <div style = {{float: "left", border: "1px solid grey", marginTop: "25px", minHeight: "400px", width: "200px", padding: "20px"}}>
                         <form onSubmit={this.onSubmit}>
                            <input style = {{width: "40px", marginRight: "10px"}} type = "text" value={this.state.input} onChange={this.onChange}/> 
                            <button style = {{marginRight: "10px"}} type="submit" text="Submit">Submit</button>
+                           
+                           
                                 {/*<input type="submit" value="Submit" />*/}
                         {this.state.output}
                         </form>
-                        
+                        <button onClick = {this.resetZoom}>Reset Zoom</button>
+                        <div>{Math.round(this.state.min) + "s - " +  Math.round(this.state.max) + "s"}</div>
 
                     <div style = {{fontWeight: "bold", marginTop: "20px"}}>{"Notes: "}</div>{notes}
                     </div>
