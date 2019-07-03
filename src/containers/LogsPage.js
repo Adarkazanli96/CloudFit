@@ -411,7 +411,7 @@ export default class LogsPage extends Component {
         <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
-        {this.state.showTable? null:this.renderSelectedEntry()}
+        {this.renderSelectedEntry()}
         {this.renderTable()}
 
          

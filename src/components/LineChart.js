@@ -2,30 +2,12 @@ import React from "react";
 import { Chart } from "react-charts";
 
  
-export default class lineChart extends React.Component {
-constructor(props){
-  super(props)
-  this.state = {
-    /*min: null,
-    max: null*/
-  }
-}
-
-componentWillReceiveProps(nextProps){
-  /*if(nextProps.records.length > 0){
-    this.setState({min: nextProps.records[0].time,
-      max: nextProps.records[nextProps.records.length-1].time
-  })*/
-  /*if(nextProps.records.length === 0){
-    this.setState({min: null, max: null})
-  }*/
-}
+export default (props) => {
 
 
-render(){
 const data = {
   lines: [{
-    data: this.props.records
+    data: props.records
   }
   ]
   
@@ -47,8 +29,8 @@ return(
   // space of its parent element automatically
   <div
     style={{
-      width: this.props.width,
-      height: this.props.height,
+      width: props.width,
+      height: props.height,
     }}
   >
 
@@ -65,8 +47,8 @@ return(
           primary: true,
           type: 'linear',
           position: 'bottom',
-          hardMin: this.props.min,
-          hardMax: this.props.max
+          hardMin: props.min,
+          hardMax: props.max
         },
         {
           type: 'linear',
@@ -87,11 +69,11 @@ return(
 
       brush={{
         onSelect: brushData => {
-          this.props.setRange(Math.min(brushData.start, brushData.end), Math.max(brushData.start, brushData.end))
+          props.setRange(Math.min(brushData.start, brushData.end), Math.max(brushData.start, brushData.end))
         }
       }}
     />
   </div>
 );
-    }
+    
     }
