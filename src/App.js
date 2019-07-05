@@ -110,7 +110,7 @@ class App extends React.Component {
       <li><img src = {dashboard}/>Dashboard</li>
       <li><img src = {logs}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/logs">Logs</Link></li>
       <li><img src = {progress}/>Progress</li>
-      <li><img src = {logs}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/bookmarks">Bookmarks</Link></li>
+      <li><img src = {bookmarks}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/bookmarks">Bookmarks</Link></li>
       <li><img src = {share}/>Share</li>
       <li><img src = {settings}/>Settings</li>
     </ul>

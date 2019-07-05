@@ -2,12 +2,22 @@ import React from "react";
 import { Chart } from "react-charts";
 
  
-export default (props) => {
+export default class lineChart extends React.Component {
+
+  // only update the graph if the number of records change or if the min/max changes, should work since the records get set to 0 each time
+  shouldComponentUpdate(nextProps, nextState){
+    if(this.props.records.length != nextProps.records.length || this.props.min != nextProps.min || this.props.max != nextProps.max){
+      return true;
+    }
+    return false;
+  }
 
 
+
+render () {
 const data = {
   lines: [{
-    data: props.records
+    data: this.props.records
   }
   ]
   
@@ -29,8 +39,8 @@ return(
   // space of its parent element automatically
   <div
     style={{
-      width: props.width,
-      height: props.height,
+      width: this.props.width,
+      height: this.props.height,
     }}
   >
 
@@ -47,8 +57,8 @@ return(
           primary: true,
           type: 'linear',
           position: 'bottom',
-          hardMin: props.min,
-          hardMax: props.max
+          hardMin: this.props.min,
+          hardMax: this.props.max
         },
         {
           type: 'linear',
@@ -64,16 +74,18 @@ return(
 
       tooltip
 
-      primaryCursor
+      primaryCursor = {this.props.superChart}
 
+      getLabel = {(series) => "heart rate"}
 
-      brush={{
+      brush={this.props.superChart? {
         onSelect: brushData => {
-          props.setRange(Math.min(brushData.start, brushData.end), Math.max(brushData.start, brushData.end))
+          this.props.setRange(Math.min(brushData.start, brushData.end), Math.max(brushData.start, brushData.end))
         }
-      }}
+      } : false}
     />
   </div>
 );
     
     }
+  }

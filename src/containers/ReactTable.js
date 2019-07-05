@@ -93,9 +93,8 @@ class table extends React.PureComponent{
       },
       {
         id: 5,
-        Header: "NOTES",
+        Header: "CATEGORY",
         accessor: d => d.data.notes,
-        sortable: false,
         minWidth: 200,
 
       },
@@ -106,7 +105,7 @@ class table extends React.PureComponent{
         sortable: false,
         Cell: props => <div><Collapsible transitionTime = {100}
         trigger={<span className = "trigger"><img src = {triangleClosed}/>Show</span>}
-        triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {props.value.data.filteredRecords} width = {"100%"} height = {"300px"} /><div className = "heart-rates">Max Heart Rate: {props.value.data.maximumHeartRate}</div>
+        triggerWhenOpen = {<span className = "trigger"><img src = {triangleOpen}/>Hide</span>}><LineChart records = {props.value.data.filteredRecords} width = {"100%"} height = {"300px"} superChart = {false}/><div className = "heart-rates">Max Heart Rate: {props.value.data.maximumHeartRate}</div>
         <div className = "heart-rates">Mean Heart Rate: {props.value.data.meanHeartRate}</div></Collapsible>
           
           </div>,

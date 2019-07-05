@@ -21,8 +21,6 @@ import SelectedLog from '../components/SelectedLog'
 
 import backIcon from '../assets/images/back-icon.png'
 
-import trashIcon from '../assets/images/trash.png'
-import bookmarkIcon from '../assets/images/bookmark.png'
 
 
 import ReactTable from './ReactTable'
@@ -41,7 +39,19 @@ export default class LogsPage extends Component {
       
       showTable: true,
 
-      selectedLog: null,
+      selectedLog: {
+        timestamp: null,
+        bookmark: null,
+        data: {
+          workoutDate: null,
+          duration: null,
+          caloriesBurned: null,
+          maximumHeartRate: null,
+          meanHeartRate: null,
+          notes: null,
+          filteredRecords: null
+        }
+      },
       selectedRecords: [],
       
       showPopup: false,
@@ -109,7 +119,21 @@ export default class LogsPage extends Component {
 
   // selected log component controls
   showTable = () =>{
-    this.setState({showTable: true, selectedRecords: []})
+    
+    let selectedLog= {
+      timestamp: null,
+      bookmark: null,
+      data: {
+        workoutDate: null,
+        duration: null,
+        caloriesBurned: null,
+        maximumHeartRate: null,
+        meanHeartRate: null,
+        notes: null,
+        filteredRecords: null
+      }
+    }
+    this.setState({showTable: true, selectedRecords: [], selectedLog})
   }
 
 
@@ -289,8 +313,12 @@ export default class LogsPage extends Component {
     console.log("ivoking bookmark log function")
     
 
+    let selectedLog = this.state.selectedLog
+    selectedLog.bookmark = !selectedLog.bookmark;
+    this.setState({selectedLog})
+    
     try{
-      let logs = [...this.state.logs];
+      /*let logs = [...this.state.logs];
       let index;
       for(index = 0; index<logs.length; index++){
         if(logs[index]._id === id){
@@ -300,11 +328,11 @@ export default class LogsPage extends Component {
       }
       /*const index = logs.map(e => e._id).indexOf(id)
       logs[index].bookmark = !logs[index].bookmark*/
-      this.setState({logs})
+      //this.setState({logs})
 
       const params = {
         body: {
-            bookmark: logs[index].bookmark,
+            bookmark: selectedLog.bookmark,
         }
       }
 
@@ -356,11 +384,15 @@ export default class LogsPage extends Component {
    renderSelectedEntry(){
      return(<div style = {!this.state.showTable? {} : {display: "none" }}>
        <div className = "btn-container">
-        <button className = "back-btn" onClick = {this.showTable}><img src = {backIcon}/>Back</button>
-        <button className = "delete-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id)}><img src = {trashIcon}/></button>
-        <button className = "bookmark-btn" onClick = {() => this.bookmarkLog(this.state.selectedLog._id)}><img src = {bookmarkIcon}/></button>
-  </div>
-      <SelectedLog selected = {this.state.selectedLog} records = {this.state.selectedRecords} />
+        <button className = "tool-btn" onClick = {this.showTable} style = {{float: "left"}}><i class="material-icons-sharp">arrow_back</i></button>
+        <button className = "tool-btn" style = {{float: "right"}}><i class="material-icons">more_vert</i></button>
+        <button className = "tool-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id) } style = {{float: "right"}}><i class="material-icons-sharp">delete</i></button>
+        <button className = {this.state.selectedLog.bookmark? "tool-btn bookmarked" : "tool-btn"}  onClick = {() => this.bookmarkLog(this.state.selectedLog._id)} style = {{float: "right", transform: "scaleX(0.8)"
+}}><i class="material-icons-sharp">bookmark</i></button>
+        
+        
+        </div>
+      <SelectedLog selected = {this.state.selectedLog} records = {this.state.selectedRecords}/>
      </div>)
 
    }
@@ -383,6 +415,8 @@ export default class LogsPage extends Component {
 
 
   render() {
+
+    console.log("renderin")
 
     document.body.style.background = "white";
 
