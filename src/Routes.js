@@ -9,7 +9,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 import LogsPage from './containers/LogsPage'
-import BookmarksPage from './pages/BookmarksPage'
+import BookmarksPage from './containers/BookmarksPage'
 
 
 

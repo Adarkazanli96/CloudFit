@@ -1,5 +1,5 @@
-import React, { Component, lazy, Suspense } from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
+import React from 'react'
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./BookmarksPage.css";
@@ -7,6 +7,7 @@ import { s3Upload } from "../libs/awsLib";
 import Popup from '../components/Popup'
 import { Auth, API } from 'aws-amplify';
 
+import Table from './Table'
 import UploadModal from '../components/UploadModal'
 
 
@@ -20,14 +21,12 @@ import SelectedLog from '../components/SelectedLog'
 
 import backIcon from '../assets/images/back-icon.png'
 
-import trashIcon from '../assets/images/trash.png'
-import bookmarkIcon from '../assets/images/bookmark.png'
 
 
-//import ReactTable from './ReactTable'
+import ReactTable from './ReactTable'
 
 
-export default class NewNote extends Component {
+export default class LogsPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,14 +36,27 @@ export default class NewNote extends Component {
       logs : [],
       loading: false,
       showModal: false,
-      selectedLog: null,
+      
       showTable: true,
+
+      selectedLog: {
+        timestamp: null,
+        bookmark: null,
+        data: {
+          workoutDate: null,
+          duration: null,
+          caloriesBurned: null,
+          maximumHeartRate: null,
+          meanHeartRate: null,
+          notes: null,
+          filteredRecords: null
+        }
+      },
+      selectedRecords: [],
       
       showPopup: false,
       error: false,
       popupContent: null,
-
-      isDeleting: false
     };
   }
 
@@ -58,21 +70,70 @@ export default class NewNote extends Component {
 
 
   // controls for each individual entry
-  setSelectedLogHandler = (log) =>{
-    this.setState({showPopup: false, showTable: false})
-    this.getLog(log._id);
-    if(log.recentlyAdded === true){
-      this.clearRecentTab(log._id) // sets recently inserted to false
-      console.log("clearing recent tab")
+  setSelectedLogHandler = async (log) =>{
+    try {
+      API.get('CloudFit', `/logs/${log._id}`).then(response => {
+      let records = response.data.records;
+      this.setState({selectedRecords: records})
+
+      }).catch(error => {
+      console.log("there was an error", error)
+      this.setState({showTable : true})})
+        
+    } catch (e) {
+        alert(e);
+    }
+
+    this.setState({showTable: false, showPopup: false})
+    
+
+        // find the index so it can load everything before getting the main records
+    for(let i = 0; i<this.state.logs.length; i++){
+      if(this.state.logs[i]._id === log._id){
+        this.setState({selectedLog: this.state.logs[i]})
+        break;
+      }
     }
     
+    //const index = this.state.logs.map(e => e._id).indexOf(log._id)
+    //this.setState({selectedLog: this.state.logs[index]})
+    if(log.recentlyAdded === true){
+      let logs = [...this.state.logs];
+      //const index = logs.map(e => e._id).indexOf(log._id)
+      //logs[index].recentlyAdded = false
+      for(let i = logs.length-1; i>=0; i--){
+        console.log("loopin")
+        if(logs[i]._id === log._id){
+          logs[i].recentlyAdded = false;
+          break;
+        }
+      }
+      
+      this.setState({logs})
+      
+      console.log("clearing recent tab")
+    }
     
   }
 
 
   // selected log component controls
-  clearSelectedLog = () =>{
-    this.setState({selectedLog: null, showTable: true})
+  showTable = () =>{
+    
+    let selectedLog= {
+      timestamp: null,
+      bookmark: null,
+      data: {
+        workoutDate: null,
+        duration: null,
+        caloriesBurned: null,
+        maximumHeartRate: null,
+        meanHeartRate: null,
+        notes: null,
+        filteredRecords: null
+      }
+    }
+    this.setState({showTable: true, selectedRecords: [], selectedLog})
   }
 
 
@@ -121,40 +182,52 @@ export default class NewNote extends Component {
       const params = {
         body: {
           name,
-          bucket: "excel-sheets-storage",
-          userId: "us-east-1:206e4858-adef-4cb9-9520-7de2247ccbef"
-        }
+          bucket: "excel-sheets-storage"        }
       }
-      await API.post('CloudFit', '/', params).then(response => {
-       console.log(response.body);
-        response.body.recentlyAdded = true;
+      await API.post('CloudFit', '/logs', params).then(response => {
+       console.log(response);
+        response.recentlyAdded = true;
         if(this.state.logs === null){ // logs are empty
-          this.setState({logs : [response.body]})
+          this.setState({logs : [response]})
         }
         else{ // logs array not empty
-          this.setState({ logs: [...this.state.logs, response.body] })
+          this.setState({ logs: [...this.state.logs, response] })
         }
         
       })
 
-      this.setState({isSubmitting: false, error: false, popupContent: "File upload successful!"})
+      this.setState({isSubmitting: false, error: false, popupContent: "File upload successful!", showPopup: true, file: null})
 
 
     } catch (e) {
       alert(e);
       console.log("there was an error")
-      this.setState({ isSubmitting: false, error: true, popupContent: "An error occured"});
+      this.setState({ isSubmitting: false, error: true, popupContent: "An error occured", showPopup: true, file: null});
     }
 
-    //document.getElementById('drop-form').reset();
-    this.setState({showPopup: true, file: null})
-
-    // add a timer for the popup
 
     }
 
 
 
+    mapFromArray = (list , keyByProp) => {
+      let map = [];
+      for (let i=0, item; item = list[i]; i++) {
+          map[item[keyByProp]] = item;
+      }
+      return map;
+    };
+
+    convertToIndexArr = (logs) =>{
+      let numeric_array = [];
+      console.log("invoking func")
+      for(let index in logs){
+        //console.log(index);
+        //console.log(logs[index])
+        numeric_array.push(logs[index]);
+      }
+    return numeric_array
+    }
   // API calls
 
   getAllLogs = async () =>{
@@ -163,13 +236,24 @@ export default class NewNote extends Component {
     try {
       let logs;
 
-      let t0 = await performance.now();
-      await API.get('CloudFit', '/logs').then(response => {
-        logs = response}
+      const params = {
+        queryStringParameters: {  // OPTIONAL
+          bookmark: 'true'
+        }
+      }
+
+      let t0 = performance.now();
+      await API.get('CloudFit', '/logs', params).then(response => {
+        console.log(response);
+        logs = response
+        this.setState({ logs });
+        //this.mapFromArray(response, "_id")
+        //this.convertToIndexArr(logs)
+      }
         )
       .catch(error => console.log("there was an error", error))
 
-      this.setState({ logs });
+      
       let t1 = performance.now();
       console.log("Call to get all logs took " + (t1 - t0) + " milliseconds.")
     } catch (e) {
@@ -179,19 +263,19 @@ export default class NewNote extends Component {
   }
   
   getLog = async (id) =>{
-    let selectedLog;
-      
+    let records
     try {
       await API.get('CloudFit', `/logs/${id}`).then(response => {
-      selectedLog = response;
+      records = response.data.records;
+          
+
       }).catch(error => {
       console.log("there was an error", error)
       this.setState({showTable : true})})
+        this.setState({selectedRecords: records})
     } catch (e) {
         alert(e);
     }
-
-    this.setState({selectedLog})
     }
 
     handleDelete = async (id) =>{
@@ -205,35 +289,61 @@ export default class NewNote extends Component {
       }
         
       try {
-        await API.del('CloudFit', `/logs/${id}`)
         
-        this.clearSelectedLog();
-        this.getAllLogs();
+        
+        let logs = [...this.state.logs];
+        logs = logs.filter(log => {
+          return log._id !== id;
+        });
+        /*const index = logs.map(e => e._id).indexOf(id)
+        logs.splice(index, 1)*/
 
-        this.setState({error: false, popupContent: "File successfully deleted!",})
+        this.setState({logs, showTable: true, selectedRecords: []})
+        
+        
+        //this.getAllLogs();
+
+        this.setState({error: false, popupContent: "File successfully deleted!", showPopup: true})
 
         
       } catch (e) {
           alert(e);
-          this.setState({error: true, popupContent: "An error occured"})
+          this.setState({error: true, popupContent: "An error occured", showPopup: true})
 
       }
-      this.setState({showPopup: true})
-  
+      
+      API.del('CloudFit', `/logs/${id}`)
       }
     
 
   bookmarkLog = async (id) =>{
     console.log("ivoking bookmark log function")
-    const params = {
-      body: {
-          bookmark: true,
-          man: "suh"
-      }
-    }
+    
 
+    let selectedLog = this.state.selectedLog
+    selectedLog.bookmark = !selectedLog.bookmark;
+    this.setState({selectedLog})
+    
     try{
-      await API.put('CloudFit', `/logs/${id}`, params).then(response => {
+      /*let logs = [...this.state.logs];
+      let index;
+      for(index = 0; index<logs.length; index++){
+        if(logs[index]._id === id){
+          logs[index].bookmark = !logs[index].bookmark;
+          break;
+        }
+      }
+      /*const index = logs.map(e => e._id).indexOf(id)
+      logs[index].bookmark = !logs[index].bookmark*/
+      //this.setState({logs})
+
+      const params = {
+        body: {
+            bookmark: selectedLog.bookmark,
+        }
+      }
+
+      API.put('CloudFit', `/logs/${id}`, params).then(response => {
       console.log(response);
     }).catch(err =>{
       console.log("there was an error", err)
@@ -255,21 +365,6 @@ export default class NewNote extends Component {
     });
   }
 
-  clearRecentTab = (id) =>{
-    let logs = [...this.state.logs];
-    logs.forEach(log =>{
-    if(log._id === id && log.recentlyAdded === true){
-        log.recentlyAdded = false
-        this.setState({logs})
-    }
-       
-    })
-    /*let i = logs.findIndex(log => log._id = id)
-    logs[i].recentlyAdded = false
-    this.setState({logs})*/
-    
-   }
-
    renderTable(){     
      return(
     <div style = {this.state.showTable? {} : {display: "none"}}>
@@ -280,11 +375,11 @@ export default class NewNote extends Component {
     
 
     {/* upload file button*/}
-    {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
-    <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+   
     </div>
     
     {/* table */}
+    <ReactTable loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     
@@ -295,12 +390,15 @@ export default class NewNote extends Component {
    renderSelectedEntry(){
      return(<div style = {!this.state.showTable? {} : {display: "none" }}>
        <div className = "btn-container">
-        <button className = "back-btn" onClick = {this.clearSelectedLog}><img src = {backIcon}/>Back</button>
-        <button className = "delete-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id)}><img src = {trashIcon}/></button>
-        <button className = "bookmark-btn" onClick = {() => this.bookmarkLog(this.state.selectedLog._id)}><img src = {bookmarkIcon}/></button>
-  </div>
-       {!this.state.selectedLog? <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div> : 
-      <SelectedLog selected = {this.state.selectedLog} /> }
+        <button className = "tool-btn" onClick = {this.showTable} style = {{float: "left"}}><i class="material-icons-sharp">arrow_back</i></button>
+        <button className = "tool-btn" style = {{float: "right"}}><i class="material-icons">more_vert</i></button>
+        <button className = "tool-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id) } style = {{float: "right"}}><i class="material-icons-sharp">delete</i></button>
+        <button className = {this.state.selectedLog.bookmark? "tool-btn bookmarked" : "tool-btn"}  onClick = {() => this.bookmarkLog(this.state.selectedLog._id)} style = {{float: "right", transform: "scaleX(0.8)"
+}}><i class="material-icons-sharp">bookmark</i></button>
+        
+        
+        </div>
+      <SelectedLog selected = {this.state.selectedLog} records = {this.state.selectedRecords}/>
      </div>)
 
    }
@@ -323,6 +421,8 @@ export default class NewNote extends Component {
 
 
   render() {
+
+    console.log("renderin")
 
     document.body.style.background = "white";
 
@@ -348,7 +448,7 @@ export default class NewNote extends Component {
         </Modal>
         <div className = "logs-container">
         {this.state.showPopup? this.showPopupHandler() : null}
-        <h1>Logs<img src = {logsIcon}/></h1> 
+        <h1>Bookmarks<img src = {logsIcon}/></h1> 
         <hr/>
         
         {this.renderSelectedEntry()}
