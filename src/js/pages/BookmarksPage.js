@@ -1,27 +1,27 @@
-import React, { Component, lazy, Suspense } from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
-import config from "../config";
-import "./LogsPage.css";
-import { s3Upload } from "../libs/awsLib";
-import Popup from '../components/Popup'
-import { Auth, API } from 'aws-amplify';
+import React from 'react'
+import LoaderButton from "../components/Reusables/LoaderButton";
+import config from "../../config";
+import "./BookmarksPage.css";
+import { s3Upload } from "../../libs/awsLib";
+import Popup from '../components/Reusables/Popup'
+import { API } from 'aws-amplify';
 
 import UploadModal from '../components/Modals/UploadModal'
 
 
-import uploadIcon from '../assets/images/upload-icon.png'
-import calendarIcon from '../assets/images/calendar.png'
-import downArrow from '../assets/images/down-arrow.png'
+import calendarIcon from '../../assets/images/calendar.png'
+import downArrow from '../../assets/images/down-arrow.png'
 
-import logsIcon from '../assets/images/logs.png'
+import logsIcon from '../../assets/images/logs.png'
 
 import SelectedLog from '../components/SelectedLog/SelectedLog'
 
-import ReactTable from '../components/Table/ReactTable.js'
+
+import Table from '../components/Table/Table'
 
 
-export default class LogsPage extends Component {
+export default class LogsPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -231,8 +231,15 @@ export default class LogsPage extends Component {
     try {
       let logs;
 
+      const params = {
+        queryStringParameters: {  // OPTIONAL
+          bookmark: 'true'
+        }
+      }
+
       let t0 = performance.now();
-      await API.get('CloudFit', '/logs').then(response => {
+      await API.get('CloudFit', '/logs', params).then(response => {
+        console.log(response);
         logs = response
         this.setState({ logs });
         //this.mapFromArray(response, "_id")
@@ -363,12 +370,11 @@ export default class LogsPage extends Component {
     
 
     {/* upload file button*/}
-    {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
-    <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
+   
     </div>
     
     {/* table */}
-    <ReactTable loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
+    <Table loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     
@@ -437,7 +443,7 @@ export default class LogsPage extends Component {
         </Modal>
         <div className = "logs-container">
         {this.state.showPopup? this.showPopupHandler() : null}
-        <h1>Logs<img src = {logsIcon}/></h1> 
+        <h1>Bookmarks<img src = {logsIcon}/></h1> 
         <hr/>
         
         {this.renderSelectedEntry()}

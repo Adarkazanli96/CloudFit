@@ -1,5 +1,5 @@
 import React from 'react'
-import LineChart from '../LineChart'
+import LineChart from '../Reusables/LineChart'
 import './SelectedLog.css'
 import Cards from './Cards'
 

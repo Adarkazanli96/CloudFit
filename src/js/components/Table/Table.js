@@ -2,19 +2,19 @@ import Pagination from './Pagination'
 import React from 'react'
 import ReactTable from "react-table";
 
-import LineChart from '../LineChart'
+import LineChart from '../Reusables/LineChart'
 
 import "react-table/react-table.css";
 
 import Collapsible from 'react-collapsible';
 
-import triangleOpen from '../../assets/images/sheet_list_icons/triangle-open.png'
-import triangleClosed from '../../assets/images/sheet_list_icons/triangle-closed.png'
+import triangleOpen from '../../../assets/images/sheet_list_icons/triangle-open.png'
+import triangleClosed from '../../../assets/images/sheet_list_icons/triangle-closed.png'
 
 import Loader from './Loader'
 
 
-import './ReactTable.css'
+import './Table.css'
 import 'react-table/react-table.css'
 
 

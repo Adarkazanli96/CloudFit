@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/images/navbar_icons/logo.png'
+import logo from '../../../assets/images/navbar_icons/logo.png'
 import './Navbar.css';
 
 const toolbar = props => (

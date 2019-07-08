@@ -1,6 +1,6 @@
 import React from 'react'
 import './Dropdown.css'
-import account from '../../assets/images/navbar_icons/account.png'
+import account from '../../../assets/images/navbar_icons/account.png'
 
 let dropdown = (props) =>(
 <div className="dropdown">

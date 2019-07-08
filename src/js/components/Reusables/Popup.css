@@ -33,7 +33,7 @@ border: 1px solid red;
 
 .popup-container.green{
       
-  background-image: url('../assets/images/success.png');
+  background-image: url('../../../assets/images/success.png');
 
   background-repeat: no-repeat;
   background-size: 40px 40px;

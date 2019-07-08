@@ -1,6 +1,6 @@
 import React from 'react'
 import Login from '../Forms/Login'
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 let loginmodal = (props) =>{
     return(

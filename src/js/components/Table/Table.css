@@ -127,10 +127,10 @@ div.-sort-desc::after {
 
 }
 .ReactTable .rt-thead .rt-th.-sort-asc {
-    background-image: url('../../assets/images/ascend.png');
+    background-image: url('../../../assets/images/ascend.png');
 }
 .ReactTable .rt-thead .rt-th.-sort-desc {
-    background-image: url('../../assets/images/descend.png');
+    background-image: url('../../../assets/images/descend.png');
 }
 
 .new{

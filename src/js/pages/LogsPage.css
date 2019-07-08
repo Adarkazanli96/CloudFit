@@ -1,4 +1,4 @@
-.upload-form{
+.logs-page .upload-form{
   position: relative;
   top: 50px;
   width: 450px; /*changed the width of the overall form to match drop-area width*/
@@ -29,55 +29,40 @@
     left: 5px;
   }
 
-  .logs-container{
+  .logs-page .logs-container{
     padding-top: 45px;/* to make the header a bit lower */
     padding-right: 30px;
     padding-left: 30px;
   }
 
-  .btn-container{
+  .logs-page .btn-container{
     position: relative;
     min-width: 600px;
     height: 40px;
   }
 
-  .menu{
-    position: absolute;
-    list-style: none;
-  }
-  
-  .dd-wrap{
-    float: left;
-  }
 
-  .alert{
-    width: 30%;
-    float: left;
-  }
-
-
-
-.tool-btn{
+.logs-page .menu-btn{
   border: none;
     background: none;
     font-weight: bold;
     height: 40px;
 }
 
-.tool-btn i{
+.logs-page .menu-btn i{
   vertical-align: middle;
   transform: scale(1.2);
 }
 
-.tool-btn:hover{
+.logs-page .menu-btn:hover{
   opacity: 0.5;
 }
 
-.bookmarked{
+.logs-page .bookmarked{
   color: #4594E9;
 }
 
-  .upload-btn{
+.logs-page .upload-btn{
     background: none;
     /*background-color: #89c9e1;*/
     border: none;
@@ -92,7 +77,7 @@
   
   }
   
-  .upload-btn img{
+  .logs-page .upload-btn img{
     height: 16px;
     width: auto;
     position: relative;
@@ -100,7 +85,7 @@
     margin-right: 3px;
   }
 
-  .upload-btn-submitting{
+  .logs-page .upload-btn-submitting{
     background: none;
     /*background-color: #89c9e1;*/
     border: none;
@@ -114,7 +99,7 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   }
 
-  .upload-btn-submitting .spinning.glyphicon {
+  .logs-page .upload-btn-submitting .spinning.glyphicon {
     color: white;
       margin-right: 7px;
       top: 2px;
@@ -125,21 +110,8 @@
       to { transform: scale(1) rotate(360deg); }
     }
   
-  .sort-btn{
-    float: left;
-      padding: 7px 15px 7px 15px;
-      background: none;
-      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 15px;
-      
-    }
-  
-    .sort-btn img{
-      position: relative;
-      bottom: 2px;
-    }
     
-    .select-date-btn{
+  .logs-page .select-date-btn{
       float: left;
       padding: 7px 15px 7px 15px;
       margin-right: 10px;
@@ -147,7 +119,7 @@
       box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     }
   
-    .select-date-btn img{
+  .logs-page .select-date-btn img{
       height: 16px;
       width: auto;
       position: relative;

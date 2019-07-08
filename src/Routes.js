@@ -1,15 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import NotFound from "./pages/NotFound";
-import Login from './components/Forms/Login'
-import AppliedRoute from "./containers/AppliedRoute";
-import Lander from "./pages/Lander";
-import Signup from "./components/Forms/Signup";
-import AuthenticatedRoute from "./containers/AuthenticatedRoute";
-import UnauthenticatedRoute from "./containers/UnauthenticatedRoute";
+import NotFound from "./js/pages/NotFound";
+import Lander from "./js/pages/Lander";
+import AuthenticatedRoute from "./js/containers/AuthenticatedRoute";
+import UnauthenticatedRoute from "./js/containers/UnauthenticatedRoute";
 
-import LogsPage from './pages/LogsPage'
-import BookmarksPage from './pages/BookmarksPage'
+import LogsPage from './js/pages/LogsPage'
+import BookmarksPage from './js/pages/BookmarksPage'
 
 
 

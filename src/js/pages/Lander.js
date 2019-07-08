@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import {Row, Col} from "react-bootstrap";
 import "./Lander.css";
 
-import cloud from '../assets/images/cloud-upload.png'
-import runner from '../assets/images/running.png'
-import share from '../assets/images/share.png'
-import image1 from '../assets/images/stock_backgrounds/1.jpg'
-import image2 from '../assets/images/stock_backgrounds/2.jpg'
-import image3 from '../assets/images/stock_backgrounds/3.jpg'
-import image4 from '../assets/images/stock_backgrounds/4.jpg'
-import image5 from '../assets/images/stock_backgrounds/6.jpg'
+import cloud from '../../assets/images/cloud-upload.png'
+import runner from '../../assets/images/running.png'
+import share from '../../assets/images/share.png'
+import image1 from '../../assets/images/stock_backgrounds/1.jpg'
+import image2 from '../../assets/images/stock_backgrounds/2.jpg'
+import image3 from '../../assets/images/stock_backgrounds/3.jpg'
+import image4 from '../../assets/images/stock_backgrounds/4.jpg'
+import image5 from '../../assets/images/stock_backgrounds/6.jpg'
 
 import Signup from '../components/Forms/Signup'
 

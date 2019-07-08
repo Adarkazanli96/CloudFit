@@ -1,31 +1,27 @@
+import React, { Component} from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
-import React from 'react'
-import LoaderButton from "../components/LoaderButton";
-import config from "../config";
-import "./BookmarksPage.css";
-import { s3Upload } from "../libs/awsLib";
-import Popup from '../components/Popup'
-import { Auth, API } from 'aws-amplify';
+import LoaderButton from "../components/Reusables/LoaderButton";
+import config from "../../config";
+import "./LogsPage.css";
+import { s3Upload } from "../../libs/awsLib";
+import Popup from '../components/Reusables/Popup'
+import { API } from 'aws-amplify';
 
 import UploadModal from '../components/Modals/UploadModal'
 
 
-import uploadIcon from '../assets/images/upload-icon.png'
-import calendarIcon from '../assets/images/calendar.png'
-import downArrow from '../assets/images/down-arrow.png'
+import uploadIcon from '../../assets/images/upload-icon.png'
+import calendarIcon from '../../assets/images/calendar.png'
+import downArrow from '../../assets/images/down-arrow.png'
 
-import logsIcon from '../assets/images/logs.png'
+import logsIcon from '../../assets/images/logs.png'
 
 import SelectedLog from '../components/SelectedLog/SelectedLog'
 
-import backIcon from '../assets/images/back-icon.png'
+import Table from '../components/Table/Table.js'
 
 
-
-import ReactTable from '../components/Table/ReactTable'
-
-
-export default class LogsPage extends React.Component {
+export default class LogsPage extends Component {
   constructor(props) {
     super(props);
 
@@ -235,15 +231,8 @@ export default class LogsPage extends React.Component {
     try {
       let logs;
 
-      const params = {
-        queryStringParameters: {  // OPTIONAL
-          bookmark: 'true'
-        }
-      }
-
       let t0 = performance.now();
-      await API.get('CloudFit', '/logs', params).then(response => {
-        console.log(response);
+      await API.get('CloudFit', '/logs').then(response => {
         logs = response
         this.setState({ logs });
         //this.mapFromArray(response, "_id")
@@ -374,11 +363,12 @@ export default class LogsPage extends React.Component {
     
 
     {/* upload file button*/}
-   
+    {!this.state.isSubmitting? <button className = "upload-btn" onClick = {this.handleModalShow}><img src = {uploadIcon}/>Upload File<img/></button> : 
+    <button className = "upload-btn-submitting"><Glyphicon glyph="refresh" className="spinning"/>Submitting</button>}
     </div>
     
     {/* table */}
-    <ReactTable loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
+    <Table loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
     
@@ -389,10 +379,10 @@ export default class LogsPage extends React.Component {
    renderSelectedEntry(){
      return(<div style = {!this.state.showTable? {} : {display: "none" }}>
        <div className = "btn-container">
-        <button className = "tool-btn" onClick = {this.showTable} style = {{float: "left"}}><i class="material-icons-sharp">arrow_back</i></button>
-        <button className = "tool-btn" style = {{float: "right"}}><i class="material-icons">more_vert</i></button>
-        <button className = "tool-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id) } style = {{float: "right"}}><i class="material-icons-sharp">delete</i></button>
-        <button className = {this.state.selectedLog.bookmark? "tool-btn bookmarked" : "tool-btn"}  onClick = {() => this.bookmarkLog(this.state.selectedLog._id)} style = {{float: "right", transform: "scaleX(0.8)"
+        <button className = "menu-btn" onClick = {this.showTable} style = {{float: "left"}}><i class="material-icons-sharp">arrow_back</i></button>
+        <button className = "menu-btn" style = {{float: "right"}}><i class="material-icons">more_vert</i></button>
+        <button className = "menu-btn" onClick = {() => this.handleDelete(this.state.selectedLog._id) } style = {{float: "right"}}><i class="material-icons-sharp">delete</i></button>
+        <button className = {this.state.selectedLog.bookmark? "menu-btn bookmarked" : "menu-btn"}  onClick = {() => this.bookmarkLog(this.state.selectedLog._id)} style = {{float: "right", transform: "scaleX(0.8)"
 }}><i class="material-icons-sharp">bookmark</i></button>
         
         
@@ -447,7 +437,7 @@ export default class LogsPage extends React.Component {
         </Modal>
         <div className = "logs-container">
         {this.state.showPopup? this.showPopupHandler() : null}
-        <h1>Bookmarks<img src = {logsIcon}/></h1> 
+        <h1>Logs<img src = {logsIcon}/></h1> 
         <hr/>
         
         {this.renderSelectedEntry()}

@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import './App.css';
 import Routes from './Routes'
 import { Link, withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import LoginModal from './components/Modals/LoginModal'
-import Navbar from './components/Navigation/Navbar'
-import Dropdown from './components/Navigation/Dropdown'
+import LoginModal from './js/components/Modals/LoginModal'
+import Navbar from './js/components/Navigation/Navbar'
+import Dropdown from './js/components/Navigation/Dropdown'
 import Sidebar from "react-sidebar";
 
 import bookmarks from './assets/images/menu/bookmarks.png'

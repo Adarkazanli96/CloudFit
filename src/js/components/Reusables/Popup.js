@@ -1,6 +1,6 @@
 import React from 'react'
 import './Popup.css'
-import closeIcon from '../assets/images/close.png'
+import closeIcon from '../../../assets/images/close.png'
 
 let popups = props =>{
     
