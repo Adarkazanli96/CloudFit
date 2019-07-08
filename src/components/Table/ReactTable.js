@@ -1,20 +1,17 @@
 import Pagination from './Pagination'
 import React from 'react'
-import PropTypes from "prop-types";
-import { render } from "react-dom";
 import ReactTable from "react-table";
 
-import LineChart from '../components/LineChart'
+import LineChart from '../LineChart'
 
 import "react-table/react-table.css";
 
 import Collapsible from 'react-collapsible';
 
-import triangleOpen from '../assets/images/sheet_list_icons/triangle-open.png'
-import triangleClosed from '../assets/images/sheet_list_icons/triangle-closed.png'
-import ellipsisIcon from '../assets/images/sheet_list_icons/ellipsis.png'
+import triangleOpen from '../../assets/images/sheet_list_icons/triangle-open.png'
+import triangleClosed from '../../assets/images/sheet_list_icons/triangle-closed.png'
 
-import Loader from '../components/Loader'
+import Loader from './Loader'
 
 
 import './ReactTable.css'

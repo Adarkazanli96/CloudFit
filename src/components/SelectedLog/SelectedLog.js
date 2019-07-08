@@ -1,8 +1,6 @@
 import React from 'react'
-import { Auth, API } from 'aws-amplify';
-import LineChart from './LineChart'
+import LineChart from '../LineChart'
 import './SelectedLog.css'
-import backIcon from '../assets/images/back-icon.png'
 import Cards from './Cards'
 
 

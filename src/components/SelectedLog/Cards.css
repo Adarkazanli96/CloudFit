@@ -38,33 +38,22 @@
 
   .card .stats{
     display: inline-block;
-position: relative;
-bottom: 10px;
-left: 20px;
-
+    position: relative;
+    bottom: 10px;
+    left: 20px;
   }
 
-  .card .stats p{
 
-
-  }
-
-  .card .stats h3{
-
-
-  }
   .card .material-icons{
     font-size: 48px;
     /*height: 60px;
     width: 60px;*/
-    position: relative;
-    line-height: 60px;
-    vertical-align: top;
-    top: 4px;
     text-align: center;
     /*border: 2px solid rgb(236, 236, 236);
     border-radius: 50%;*/
     color: #4594E9;
+    position: relative;
+    bottom: 8px;
   }
 
   .card i{
@@ -72,8 +61,7 @@ left: 20px;
     /*height: 60px;
     width: 60px;*/
     position: relative;
-    line-height: 60px;
-    vertical-align: top;
+
     text-align: center;
     /*border: 1px solid lightgrey;
     border-radius: 50%;*/

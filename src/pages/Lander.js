@@ -11,7 +11,7 @@ import image3 from '../assets/images/stock_backgrounds/3.jpg'
 import image4 from '../assets/images/stock_backgrounds/4.jpg'
 import image5 from '../assets/images/stock_backgrounds/6.jpg'
 
-import Signup from './Signup'
+import Signup from '../components/Forms/Signup'
 
 
 

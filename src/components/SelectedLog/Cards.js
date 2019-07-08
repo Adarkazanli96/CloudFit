@@ -1,8 +1,8 @@
 import React from 'react'
 import './Cards.css'
-import { ReactComponent as FireIcon} from '../assets/images/selected_log_display/fire.svg'
-import { ReactComponent as MaxIcon} from '../assets/images/selected_log_display/max.svg'
-import { ReactComponent as AvgIcon} from '../assets/images/selected_log_display/avg.svg'
+import { ReactComponent as FireIcon} from '../../assets/images/selected_log_display/fire.svg'
+import { ReactComponent as MaxIcon} from '../../assets/images/selected_log_display/max.svg'
+import { ReactComponent as AvgIcon} from '../../assets/images/selected_log_display/avg.svg'
 
 function fancyTimeFormat(time)
 {   
@@ -54,7 +54,7 @@ let cards = (props) =>(
           <i class="material-icons"><MaxIcon/></i>
           <span className = "stats">
               <h3 style = {{fontWeight: "bold"}}>{props.max}</h3>
-              <p className = "title">Max Heart Rate (bpm)</p>
+              <p className = "title">Max Heart Rate</p>
             </span>
             
           </div>
@@ -65,7 +65,7 @@ let cards = (props) =>(
           <i class="material-icons"><AvgIcon/></i>
           <span className = "stats">
             <h3 style = {{fontWeight: "bold"}}>{props.mean}</h3>
-            <p className = "title">Avg Heart Rate (bpm)</p>
+            <p className = "title">Avg Heart Rate</p>
           </span>
           </div>
         </div>

@@ -3,9 +3,9 @@ import './App.css';
 import Routes from './Routes'
 import { Link, withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import LoginModal from './components/LoginModal'
-import Navbar from './components/Navbar'
-import Dropdown from './components/Dropdown'
+import LoginModal from './components/Modals/LoginModal'
+import Navbar from './components/Navigation/Navbar'
+import Dropdown from './components/Navigation/Dropdown'
 import Sidebar from "react-sidebar";
 
 import bookmarks from './assets/images/menu/bookmarks.png'
