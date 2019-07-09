@@ -36,10 +36,20 @@ class table extends React.PureComponent{
   }
 
   // only chanage the state if the length changes, should not change depending on order change
-  componentWillReceiveProps(nextProps){
+  /*componentWillReceiveProps(nextProps){
     if(this.state.logs.length != nextProps.logs.length){
       this.setState({logs: nextProps.logs})
     }
+  }*/
+
+  static getDerivedStateFromProps(nextProps, currentState){
+    if(currentState.logs.length != nextProps.logs.length){
+      return({
+        logs: nextProps.logs
+      })
+    }
+
+    return null;
   }
 
   onRowClick = (state, rowInfo, column, instance) => {

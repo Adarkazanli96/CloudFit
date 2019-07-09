@@ -2,13 +2,10 @@ import React, { Component} from "react";
 import { Modal, Glyphicon} from "react-bootstrap";
 import LoaderButton from "../components/Reusables/LoaderButton";
 import config from "../../config";
-import "./LogsPage.css";
+
 import { s3Upload } from "../../libs/awsLib";
 import Popup from '../components/Reusables/Popup'
 import { API } from 'aws-amplify';
-
-import UploadModal from '../components/Modals/UploadModal'
-
 
 import uploadIcon from '../../assets/images/upload-icon.png'
 import calendarIcon from '../../assets/images/calendar.png'
@@ -19,6 +16,8 @@ import logsIcon from '../../assets/images/logs.png'
 import SelectedLog from '../components/SelectedLog/SelectedLog'
 
 import Table from '../components/Table/Table.js'
+
+import "../../css/pages/LogsPage.css";
 
 
 export default class LogsPage extends Component {
@@ -371,9 +370,7 @@ export default class LogsPage extends Component {
     <Table loading = {this.state.loading} select = {this.setSelectedLogHandler} logs = {this.state.logs}/>
 
       
-    
-      {/*<Table onSelect = {this.setSelectedLogHandler} sort = {this.state.sortOptions} onDelete = {this.deleteLog} loading = {this.state.loading} logs = {this.state.logs} />*/}
-  </div>)
+    </div>)
    }
 
    renderSelectedEntry(){
@@ -418,13 +415,16 @@ export default class LogsPage extends Component {
     return (
 
         <div className = "logs-page">
-        <Modal show={this.state.showModal} onHide={this.handleModalClose}>
-          <UploadModal close = {this.handleModalClose}>
+
+        <Modal show = {this.state.showModal} onHide = {this.handleModalClose}>
+          <Modal.Header closeButton onClick = {this.handleModalClose}>
+          </Modal.Header>
+          <Modal.Body>
           <form onSubmit={this.handleSubmit} id = "drop-form">
         
           <input type="file" onChange={this.handleFileChange}/>
 
-          <LoaderButton
+         <LoaderButton
           bsStyle="primary"
           bsSize="large"
           disabled={!this.validateForm()}
@@ -432,9 +432,9 @@ export default class LogsPage extends Component {
           text="Submit"
           />
           </form>
-
-        </UploadModal>
+        </Modal.Body>
         </Modal>
+
         <div className = "logs-container">
         {this.state.showPopup? this.showPopupHandler() : null}
         <h1>Logs<img src = {logsIcon}/></h1> 

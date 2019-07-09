@@ -3,10 +3,11 @@ import './App.css';
 import Routes from './Routes'
 import { Link, withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import LoginModal from './js/components/Modals/LoginModal'
 import Navbar from './js/components/Navigation/Navbar'
 import Dropdown from './js/components/Navigation/Dropdown'
 import Sidebar from "react-sidebar";
+
+import {Modal} from 'react-bootstrap'
 
 import bookmarks from './assets/images/menu/bookmarks.png'
 import dashboard from './assets/images/menu/dashboard.png'
@@ -14,6 +15,8 @@ import logs from './assets/images/menu/logs.png'
 import progress from './assets/images/menu/progress.png'
 import share from './assets/images/menu/share.png'
 import settings from './assets/images/menu/settings.png'
+
+import Login from './js/components/Forms/Login'
 
 
 
@@ -120,7 +123,13 @@ class App extends React.Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-          <LoginModal {...childProps} show = {this.state.showModal} onHide = {this.handleModalClose}/>
+          <Modal show = {this.state.showModal} onHide = {this.handleModalClose}>
+            <Modal.Header closeButton onClick = {this.handleModalClose}>
+            </Modal.Header>
+            <Modal.Body>
+              <Login {...childProps} close = {this.handleModalClose}/>
+            </Modal.Body>
+          </Modal>
 
         <Navbar {...childProps}>
         {this.state.isAuthenticated? <Dropdown logout = {this.handleLogout} /> : <button className = "login-btn" onClick = {this.handleModalShow}>LOG IN</button>}
