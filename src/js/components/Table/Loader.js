@@ -1,9 +1,9 @@
 import React from 'react'
-import './Loader.css'
+import '../../../css/components/Table/Loader.css'
 
 export default () => {
     return (
-            <div><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div>
+            <div className = "Loader"><div className = "spinner-container"><div className="lds-ellipsis"><div></div>LOADING<div></div><div></div><div></div></div></div></div>
         )
 
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import './Cards.css'
-import { ReactComponent as FireIcon} from '../../../assets/images/selected_log_display/fire.svg'
-import { ReactComponent as MaxIcon} from '../../../assets/images/selected_log_display/max.svg'
-import { ReactComponent as AvgIcon} from '../../../assets/images/selected_log_display/avg.svg'
+import { ReactComponent as FireIcon} from '../../../assets/images/card_vectors/fire.svg'
+import { ReactComponent as MaxIcon} from '../../../assets/images/card_vectors/max.svg'
+import { ReactComponent as AvgIcon} from '../../../assets/images/card_vectors/avg.svg'
 
 function fancyTimeFormat(time)
 {   

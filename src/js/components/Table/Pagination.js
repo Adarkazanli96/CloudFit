@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import './Pagination.css'
+import '../../../css/components/Table/Pagination.css'
 
 const defaultButton = props => <button {...props}>{props.children}</button>;
 

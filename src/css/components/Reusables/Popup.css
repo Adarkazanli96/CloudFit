@@ -26,9 +26,11 @@
 }
 
 .popup-container.red{
-background-color: #FADBE0;
-color: black;
-border: 1px solid red;
+  background-image: url('../../../assets/images/success.png');
+
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  background-position: left 0 center;
 }
 
 .popup-container.green{

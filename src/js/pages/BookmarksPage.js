@@ -1,6 +1,5 @@
-import { Modal } from "react-bootstrap";
+
 import React from 'react'
-import LoaderButton from "../components/Reusables/LoaderButton";
 import config from "../../config";
 import { s3Upload } from "../../libs/awsLib";
 import Popup from '../components/Reusables/Popup'

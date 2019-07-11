@@ -8,13 +8,13 @@ import "react-table/react-table.css";
 
 import Collapsible from 'react-collapsible';
 
-import triangleOpen from '../../../assets/images/sheet_list_icons/triangle-open.png'
-import triangleClosed from '../../../assets/images/sheet_list_icons/triangle-closed.png'
+import triangleOpen from '../../../assets/images/toggle_graph_icons/triangle-open.png'
+import triangleClosed from '../../../assets/images/toggle_graph_icons/triangle-closed.png'
 
 import Loader from './Loader'
 
 
-import './Table.css'
+import '../../../css/components/Table/Table.css'
 import 'react-table/react-table.css'
 
 

@@ -9,7 +9,7 @@
     padding: 20px 10px;
   }
   
-  .Table__pageButton {
+  .Table__pagination .Table__pageButton {
     font-size: 15px;
     outline: none;
     border: none;
@@ -17,12 +17,12 @@
     cursor: pointer;
   }
   
-  .Table__pageButton:disabled {
+  .Table__pagination .Table__pageButton:disabled {
     cursor: not-allowed;
     color: gray;
   }
   
-  .Table__pageButton--active {
+  .Table__pagination .Table__pageButton--active {
     color: #45b3e3;
     font-weight: bold;
   }

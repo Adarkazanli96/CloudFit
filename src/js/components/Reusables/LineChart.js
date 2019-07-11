@@ -1,6 +1,8 @@
 import React from "react";
 import { Chart } from "react-charts";
 
+// import '../../../css/components/Reusables/LineChart.css' // <-- import to change the charts css styles
+
  
 export default class lineChart extends React.Component {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Popup.css'
+import '../../../css/components/Reusables/Popup.css'
 import closeIcon from '../../../assets/images/close.png'
 
 let popups = props =>{
@@ -10,7 +10,6 @@ let popups = props =>{
                         <div className = "content">
                         {props.content}
                         </div>
-
                 </div>
         
         );

@@ -9,12 +9,12 @@ import Sidebar from "react-sidebar";
 
 import {Modal} from 'react-bootstrap'
 
-import bookmarks from './assets/images/menu/bookmarks.png'
-import dashboard from './assets/images/menu/dashboard.png'
-import logs from './assets/images/menu/logs.png'
-import progress from './assets/images/menu/progress.png'
-import share from './assets/images/menu/share.png'
-import settings from './assets/images/menu/settings.png'
+import bookmarks from './assets/images/sidebar_icons/bookmarks.png'
+import dashboard from './assets/images/sidebar_icons/dashboard.png'
+import logs from './assets/images/sidebar_icons/logs.png'
+import progress from './assets/images/sidebar_icons/progress.png'
+import share from './assets/images/sidebar_icons/share.png'
+import settings from './assets/images/sidebar_icons/settings.png'
 
 import Login from './js/components/Forms/Login'
 
