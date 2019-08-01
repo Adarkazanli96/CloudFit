@@ -1,5 +1,5 @@
 import React from 'react'
-import LineChart from '../Reusables/LineChart'
+import LineChart from '../Reusables/ReactChart'
 import './SelectedLog.css'
 import Cards from './Cards'
 
@@ -110,9 +110,7 @@ export default class SelectedLog extends React.PureComponent {
                     <div style = {{width: "900px", position: "relative", left: "30px"}}>
                     <div style = {{minWidth: "700px", float: "left", padding: "20px", paddingBottom: "50px", position: "relative"}}>
                     <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>{date}</div>
-                    <div style = {{fontWeight: "bold", fontSize: "15px", position: "absolute", left: "-60px", top: "200px", transform: "rotate(-90deg)"}}>Heart Rate (bpm)</div>
-                        <LineChart height = {"400px"} width = {"100%"} records = {this.props.records} setRange = {this.setRange} min = {this.state.min} max = {this.state.max} superChart = {true}/>
-                        <div style = {{fontWeight: "bold", textAlign: "center", fontSize: "15px"}}>Time (s)</div>
+                        <LineChart heartrate = {true} height = {"400px"} width = {"100%"} records = {this.props.records} setRange = {this.setRange} min = {this.state.min} max = {this.state.max} superChart = {true} xLabel={"Time(s)"} yLabel={"Heart Rate (bpm)"}/>
 
                     </div>
                     

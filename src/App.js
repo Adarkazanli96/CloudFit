@@ -15,6 +15,7 @@ import logs from './assets/images/sidebar_icons/logs.png'
 import progress from './assets/images/sidebar_icons/progress.png'
 import share from './assets/images/sidebar_icons/share.png'
 import settings from './assets/images/sidebar_icons/settings.png'
+import streams from './assets/images/sidebar_icons/streams.png'
 
 import Login from './js/components/Forms/Login'
 
@@ -111,6 +112,7 @@ class App extends React.Component {
       <ul>
       <li><h4 style = {{fontWeight: "bold"}}>Menu</h4></li>
       <li><img src = {dashboard}/>Dashboard</li>
+      <li><img src = {streams}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/streams">Live Streams</Link></li>
       <li><img src = {logs}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/logs">Logs</Link></li>
       <li><img src = {progress}/>Progress</li>
       <li><img src = {bookmarks}/><Link style = {{color: "#4B4B4B", textDecoration: "none"}} to="/bookmarks">Bookmarks</Link></li>
@@ -142,7 +144,7 @@ class App extends React.Component {
         transitions = {false}
       >
       </Sidebar> : null}
-        <div style = {this.state.isAuthenticated? {position: "absolute", left: "250px", width: "calc(100% - 250px)"} : {}}><Routes childProps={childProps} /></div>
+        <div style = {this.state.isAuthenticated? {position: "absolute", left: "250px", width: "calc(100% - 250px)", top: "65px"} : {}}><Routes childProps={childProps} /></div>
       </div>
     );
   }  

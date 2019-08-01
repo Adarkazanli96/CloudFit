@@ -24,8 +24,13 @@ Amplify.configure({
       endpoints: [
         {
           name: 'CloudFit',
-          endpoint: config.apiGateway.URL,
-          region: config.apiGateway.REGION
+          endpoint: config.apiGateway[1].URL,
+          region: config.apiGateway[1].REGION
+        },
+        {
+          name: 'Movesense',
+          endpoint: config.apiGateway[0].URL,
+          region: config.apiGateway[0].REGION
         }
       ]
     }

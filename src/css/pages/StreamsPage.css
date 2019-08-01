@@ -1,0 +1,30 @@
+.streams-page{
+    color: #4B4B4B;
+    position: relative;
+}
+
+.streams-page .graph{
+    height: 400px;
+    width: 400px;
+    background-color: blue;
+}
+
+.streams-page h1{
+    display: inline;
+    position: relative;
+}
+
+.streams-page h1 img{
+    height: 35px;
+    width: auto;
+    margin: 10px;
+    position: relative;
+    bottom: 4px;
+    left: 5px;
+}
+
+.streams-page .streams-container{
+    padding-top: 45px;/* to make the header a bit lower */
+    padding-right: 30px;
+    padding-left: 30px;
+  }

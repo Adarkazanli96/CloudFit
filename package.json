@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "aws-amplify": "^1.1.28",
+    "highcharts": "^7.1.2",
+    "highcharts-react-official": "^2.2.2",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
     "react-charts": "^2.0.0-alpha.12",
@@ -16,7 +18,11 @@
     "react-sidebar": "^3.0.2",
     "react-table": "^6.10.0",
     "reactjs-dropdown-component": "^1.0.6",
-    "uuid": "^3.3.2"
+    "socket.io-client": "^2.2.0",
+    "sockette": "^2.0.6",
+    "uuid": "^3.3.2",
+    "websocket": "^1.0.29",
+    "ws": "^7.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

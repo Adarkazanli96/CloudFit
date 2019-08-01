@@ -144,14 +144,6 @@ export default class LogsPage extends Component {
     this.setState({showModal: true})
   }
 
-  showMenu = (event) =>{
-    event.preventDefault();
-    
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
-
   handleSubmit = async event => {
     event.preventDefault();
   
@@ -344,12 +336,6 @@ export default class LogsPage extends Component {
 
   dismissAlertHandler = () =>{
     this.setState({showPopup: false})
-  }
-
-  closeMenu = () => {
-    this.setState({ showMenu: false }, () => {
-      document.removeEventListener('click', this.closeMenu);
-    });
   }
 
    renderTable(){     

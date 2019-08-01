@@ -25,16 +25,6 @@ const data = {
   
 }
 
-const def = {
-  lines: [{
-    data: [{
-      time: 0,
-      heartrate: 0
-    }]
-  }
-  ]
-}
-
 
 return(
   // A react-chart hyper-responsively and continuusly fills the available
@@ -43,10 +33,11 @@ return(
     style={{
       width: this.props.width,
       height: this.props.height,
+      position: "relative"
     }}
   >
 
-    
+    <div style = {{fontWeight: "bold", fontSize: "15px", position: "absolute", left: "-40px", top: "50%", transform: "rotate(-90deg)"}}>{this.props.yLabel}</div>
     <Chart
       data={data}
       getSeries={data => data.lines}
@@ -54,11 +45,19 @@ return(
       getPrimary={datum => datum.time}
       getSecondary={datum => datum.heartrate}
 
+      getSeriesStyle={() => ({
+        transition: 'all .5s ease'
+      })}
+      getDatumStyle={() => ({
+        transition: 'all .5s ease'
+      })}
+
       axes={[
         {
           primary: true,
           type: 'linear',
           position: 'bottom',
+          //type: 'time',
           hardMin: this.props.min,
           hardMax: this.props.max
         },
@@ -78,7 +77,7 @@ return(
 
       primaryCursor = {this.props.superChart}
 
-      getLabel = {(series) => "heart rate"}
+      /*getLabel = {(series) => "heart rate"}*/
 
       brush={this.props.superChart? {
         onSelect: brushData => {
@@ -86,6 +85,9 @@ return(
         }
       } : false}
     />
+
+<div style = {{textAlign: "center", fontWeight: "bold", fontSize: "15px"}}>{this.props.xLabel}</div>
+
   </div>
 );
     
