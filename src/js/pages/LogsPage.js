@@ -394,7 +394,7 @@ export default class LogsPage extends Component {
 
   render() {
 
-    console.log("renderin")
+    //console.log("renderin")
 
     document.body.style.background = "white";
 

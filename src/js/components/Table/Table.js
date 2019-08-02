@@ -123,7 +123,7 @@ class table extends React.PureComponent{
     ]
 
         /*resizable={false}*/
-        console.log('table is rerendering with these logs', this.props.logs)
+        //console.log('table is rerendering with these logs', this.props.logs)
         return(
         <ReactTable
         resizable={false}

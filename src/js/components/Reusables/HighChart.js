@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import { nullLiteral } from '@babel/types';
  
 class LineChart extends Component {
   constructor(props) {
@@ -16,24 +17,51 @@ class LineChart extends Component {
         },
         xAxis: {
           min: null,
-          max: null
+          max: null,
+
+          type: 'datetime',
+          dateTimeLabelFormats: {
+          hour: '%I:%M %P'
+        }
         },
 
-        series: [
-          { data: [] }
-        ],
+        //animation: false,
+
+        series:{
+          data: []
+        },
 
         plotOptions: {
           series: {
-            point: {
+            /*point: {
               events: {
                 mouseOver: this.setHoverData.bind(this)
               }
-            }
+            },*/
+            turboThreshold: 0
+          },
+
+          column: {
+            //animation:{
+              //duration:3000
+            //}
           }
+        },
+
+        time: {
+          useUTC: false
         }
+
       },
-      hoverData: null
+      hoverData: null,
+      
+
+      //type: 'column',
+      //marginLeft: 150,
+      //panning: true
+      //scrollbar: {
+        //enabled: true
+      //}
     };
   }
  
@@ -58,7 +86,7 @@ class LineChart extends Component {
       chartOptions.xAxis.min = nextProps.min
       chartOptions.xAxis.max = nextProps.max
       //chartOptions.xAxis.categories = nextProps.categories
-      chartOptions.series[0].data = nextProps.data
+      chartOptions.series.data = nextProps.data
 
 
       return {
