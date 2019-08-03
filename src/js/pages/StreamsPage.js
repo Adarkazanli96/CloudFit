@@ -12,59 +12,73 @@ export default class LogsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        records: [],
-        count: 0,
-        input: null
+        data: {},
+        input: null,
     };
-  
+
   }
    
   async componentDidMount(){
+    this.maintainWSConnection = true;
     this.connectWebSocket()
 
-    //this.getAllDevices();
+    this.getAllDevices();
 
     document.getElementById("the-nav").style.background = "#4594E9";
   }
 
-
+  componentWillUnmount(){
+    this.maintainWSConnection = false;
+    this.client.close()
+  }
 
   connectWebSocket = () => {
     let that = this;
 
-    let client = new W3CWebSocket('wss://vwqdp14cx5.execute-api.us-east-1.amazonaws.com/dev/', null, null, { "x-api-key": "hRQzyXRDSva1cuXolJeP2aDGuL26g4zl641suxx6" });
+    this.client = new W3CWebSocket('wss://vwqdp14cx5.execute-api.us-east-1.amazonaws.com/dev/', null, null, { "x-api-key": "hRQzyXRDSva1cuXolJeP2aDGuL26g4zl641suxx6" });
 
-    client.onopen = () => {
+    this.client.onopen = () => {
       console.log('WebSocket Client Connected');
       let json = { "action": "setClientType", "clientType": "web" };
-      client.send(JSON.stringify(json))
+      this.client.send(JSON.stringify(json))
     };
 
-    client.onmessage = (message) => {
-      console.log(JSON.parse(message.data));
+    this.client.onmessage = (message) => {
+      //console.log(JSON.parse(message.data));
       if(JSON.parse(message.data).data){
         let samples = JSON.parse(message.data).data.Samples
-        let timestamp = JSON.parse(message.data).data.phoneTimestamp
-        this.addDataToGraph(samples, timestamp)
+        let timestamp = JSON.parse(message.data).data.Timestamp
+        let serial = JSON.parse(message.data).device.serial
+        this.addDataToGraph(samples, timestamp, serial)
       }
     };
 
-    client.onclose = (e) => {
-      console.log('Socket is closed. Reconnect well be attempted shortly');
-      setTimeout(function(){that.start()}, 5000);
-    }
+    this.client.onclose = (e) => {
+      console.log('Socket is closed');
+      if(this.maintainWSConnection){
+      setTimeout(function(){
+          that.connectWebSocket()
+      }, 5000);
+    }}
   }
 
-  addDataToGraph = (samples, timestamp) =>{
+  addDataToGraph = (samples, timestamp, serial) =>{
     let temp = [];
 
     // transform the data
     for(let i = 0; i<samples.length; i++){
       temp.push([parseFloat(timestamp)+(i*7.8125),samples[i]])
     }
-    console.log(temp)
-    this.setState({records: [...this.state.records, ...temp]})
-
+    
+    this.setState({
+      data: {
+         ...this.state.data,
+         [serial]: [
+            ...this.state.data[serial],
+            ...temp]
+         }
+      }
+  );
   }
 
   handleChange = event => {
@@ -74,18 +88,24 @@ export default class LogsPage extends React.Component {
   }
 
   getAllDevices = async () => {
-    this.setState({ loading: true });
-    
     try {
-      await API.get('CloudFit', '/devices').then(response => {
-      console.log(response)
-      }
-      )
+      await API.get('Movesense', '/devices').then(response => {
+        console.log(response)
+
+        //convert to associative
+        let data = {}
+        response.forEach(res => {
+          data[res.serial.toString()] = []
+        })
+
+        //console.log(arr)
+        this.setState({data: data})
+
+      })
       .catch(error => console.log("there was an error", error))
     } catch (e) {
       alert(e);
     }
-
   }
 
   handleSubmit = async event => {
@@ -97,7 +117,7 @@ export default class LogsPage extends React.Component {
         }
       }
       await API.post('Movesense', '/devices', params).then(response => {
-         console.log(JSON.stringify(response)); 
+         //console.log(response); 
       })  
     }catch (e) {
         alert(e);
@@ -118,9 +138,16 @@ export default class LogsPage extends React.Component {
     </Popover>
   )
 
+  mapChart = () =>{
+    return Object.keys(this.state.data).map((serial, index) => {
+      return <LineChart key = {serial} serialNumber = {serial} data = {this.state.data[serial]}/>
+    })
+
+  }
 
   render() {
 
+    //console.log(this.state.data)
     return (
         <div className = "streams-page">
           
@@ -136,7 +163,7 @@ export default class LogsPage extends React.Component {
             >
             <Button>+ Add Device</Button>
             </OverlayTrigger>
-            <div><LineChart data = {this.state.records}/></div>
+            {this.mapChart()}
           </div>
       
         </div>

@@ -11,15 +11,14 @@ class LineChart extends Component {
       chartOptions: {
         //type: "spline",
         title: {
-            text:"Device# "
+            text:`Device# `
         },
         xAxis: {
-          //min: null,
-          //max: null,
+          
           //tickInterval: 3,
-
+          //tickAmount: 3,
           tickPixelInterval: 200,
-          tickInterval: 10,
+
           type: 'datetime',
           dateTimeLabelFormats: {
             millisecond: '%I:%M:%S.%L %p',
@@ -57,6 +56,7 @@ class LineChart extends Component {
   static getDerivedStateFromProps(nextProps, prevState){
       let chartOptions = {...prevState.chartOptions}
       chartOptions.series.data = nextProps.data
+      chartOptions.title.text = `Device# ${nextProps.serialNumber}`
 
       return {
         chartOptions: chartOptions
